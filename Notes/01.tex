@@ -1,0 +1,109 @@
+\chapter{From Riemann to Lebesgue}
+
+\section{Riemann Integral}
+
+\begin{definition}
+  $P = \{a = x_0 < x_1 < \cdots < x_n = b\}$ is a partition of $[a,b]$. 
+\end{definition}
+\begin{definition}
+  If $P, P'$ are partitions of $[a, b]$ and $P \subseteq P'$, then $P'$ is a refinement of $P$. 
+\end{definition}
+
+\begin{definition}
+  Given a bounded function $f: [a, b] \to \RR$ and a partition $P = \{a = x_0 < x_1 < \cdots < x_n = b\}$
+  we define
+  \[ m_i(f) = \inf_{t\in[x_{i-1}, x_i]}f(t)\] 
+  \[ M_i(f) = \sup_{t\in[x_{i-1}, x_i]}f(t)\] 
+  define the lower sum as
+  \[L(f, P) = \sum_{i=1}^{n} m_i(f)(x_i - x_{i-1})\]
+  and the upper sum as
+  \[U(f, P) = \sum_{i=1}^{n} M_i(f)(x_i - x_{i-1})\]
+\end{definition}
+
+\begin{lemma}\label{lem:refinement}
+  Given a bounded function $f: [a, b] \to \RR$ and
+  partitons $P$ of $[a, b]$. Suppose that $P'$ is a refinement of $P$ then
+  \[(b-a)\inf_{t\in[a, b]}f(t)\le L(f, P) \le L(f, P') \le U(f, P') \le U(f, P) \le (b-a)\sup_{t\in[a, b]}f(t)\] 
+\end{lemma}
+
+\begin{corollary}
+  Suppose that $P_1, P_2$ are partitions of $[a, b]$ then $L(f, P_1) \le U(f, P_2)$
+\end{corollary}
+\begin{proof}
+  Let $P' = P_1 \cup P_2$ then $P'$ is a refinement of $P_1$ and $P_2$ and use Lemma~\ref{lem:refinement}
+\end{proof}
+
+\begin{lemma}
+  Suppose that $f: [a, b] \to \RR$ is bounded. Then
+  \[(b-a)\inf_{t\in[a, b]}f(t) \leq \sup_{P}L(f, P) \leq \inf_{P}U(f, P) \leq(b-a)\sup_{t\in[a, b]}f(t)\]
+\end{lemma}
+
+\begin{definition}
+  A function $f: [a, b] \to \RR$ is Riemann integrable if
+  \[\sup_{P}L(f, P) = \inf_{P}U(f, P)\]
+  and the common value is called the Riemann integral of $f$ and is denoted by $\int_a^b f$
+\end{definition}
+
+\begin{lemma}
+  Suppose that $f: [a, b] \to \RR$ is bounded. Then $f$ is Riemann integrable if and only if for any $\eps > 0$ there exists a partition $P$ such that
+  \[U(f, P) - L(f, P) < \eps\]
+\end{lemma}
+
+\begin{proof}
+  $(\Rightarrow)$ For any $\eps > 0$. Suppose that $f$ is Riemann integrable. Then there exists $P_1, P_2$ such that
+  \[L(f, P_1) \ge \int_a^b f - \frac{\eps}{2}\]
+  \[U(f, P_2) \le \int_a^b f + \frac{\eps}{2}\]
+  let $P = P_1 \cup P_2$ then
+  \[U(f, P) - L(f, P) \le \eps\]
+
+  $(\Leftarrow)$ For any $\eps > 0$, there exists $P_\eps$ such that 
+  \[U(f, P_\eps) - L(f, P_\eps) < \eps\] since $\eps$ is arbitrary, we have
+  \[\sup_{P}L(f, P) = \inf_{P}U(f, P)\]
+\end{proof}
+
+\begin{theorem}
+  If $f: [a, b]\to\RR$ is continuous on $[a, b]$ then $f$ is Riemann integrable.
+\end{theorem}
+
+
+\begin{proof}
+  $f$ is continuous on a compact set, so, $f$ is uniformly continous. For any $\eps > 0$, there exists
+  $\delta > 0$ such that for any $x, y \in [a, b]$ if $|x - y| < \delta$ then $|f(x) - f(y)| < \frac\eps{(b-a)}$.
+  Let $N$ be such that $\frac{(b-a)}{N} < \delta$ and let $P = \{x_i := a + \frac{(b-a)i}{N}\}$ then
+  \begin{align*}
+    U(f, P) - L(f, P) &= \sum_{i=1}^{N} (M_i(f) - m_i(f))\frac{(b-a)}{N}\\
+    &\le \sum_{i=1}^{N} \frac\eps{(b-a)}\frac{(b-a)}{N}\\
+    &= \eps
+  \end{align*}
+\end{proof}
+
+\section{Lebesgue null sets}
+
+\begin{definition}
+  For the closed interval $I = [a, b]$, the length of $I$, denoted as $\ell(I)$ is defined as $\ell(I) = b - a$ 
+\end{definition}
+
+\begin{definition}
+  A set $E$ is said to be a Lebesgue null set if for any $\eps > 0$ there exists a sequence of intervals $\{I_n\}_{n\in\NN}$ such that
+  \[E \subseteq \bigcup_{n=1}^{\infty}I_n\]
+  and
+  \[\sum_{n=1}^{\infty}\ell(I_n) < \eps\]
+\end{definition}
+
+\begin{lemma}
+  Countable unions of Lebesgue null sets are Lebesgue null sets.
+\end{lemma}
+
+\begin{proof}
+  For any $\eps > 0$ and for each Lebesgue null sets $E_n$ there exists $I_{E_n, i}$ such that 
+  \[E_n \subseteq \bigcup_{i=1}^{\infty}I_{E_n, i}\] and \[ \sum_{i=1}^{\infty}\ell(I_{E_n, i}) < \frac{\eps}{2^n}\]
+  then
+  \[ \sum_{n=1}^{\infty}\sum_{i=1}^{\infty}\ell(I_{E_n, i}) < \eps\]
+\end{proof}
+
+\begin{definition}
+  A set $E\subseteq [a, b]$ has content zero if for any $\eps > 0$ there exists $I_1, I_2, \ldots, I_n$ such that
+  \[E \subseteq \bigcup_{i=1}^{n}I_i\]
+  and
+  \[\sum_{i=1}^{n}\ell(I_i) < \eps\] 
+\end{definition}
