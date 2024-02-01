@@ -1,0 +1,44 @@
+\documentclass[11pt,titlepage=false]{scrreprt}
+\usepackage{evan}
+\usepackage[cache=false]{minted}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,fit}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=1.5pt] (char) {#1};}}
+
+% \title{MATH 421 Lecture notes}
+% \author{Pongsaphol Pongsawakul}
+\begin{document}
+
+% \setlength{\textwidth}{6.5in}
+\setlength{\textheight}{8.5in}
+\setlength{\parskip}{2ex plus 0.5ex minus 0.2ex}
+\setlength{\parindent}{0pt}
+
+\setuptoc{toc}{leveldown}
+
+\title{MATH 629 Lecture Notes}
+\author{Pongsaphol Pongsawakul}
+\date{Spring 2024}
+\maketitle
+\tableofcontents
+
+
+
+\setcounter{secnumdepth}{1}
+
+\include{Notes/01}
+% \include{Notes/02}
+% \include{Notes/03}
+% \include{Notes/04}
+% \include{Notes/05}
+% \include{Notes/06}
+
+% \appendix
+% \include{Notes/appendix}
+% \include{Notes/pracitce}
+
+\end{document}
