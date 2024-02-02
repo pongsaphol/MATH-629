@@ -77,6 +77,12 @@
   \end{align*}
 \end{proof}
 
+\begin{remark}
+  Let $f(x) = \mathbbm{1}_{\QQ}(x)$ defined on the $[0, 1]$. 
+  Then $U(f, P) = 1$ and $L(f, P) = 0$ for any partition $P$.
+  So, $f$ is not Riemann integrable.
+\end{remark}
+
 \section{Lebesgue null sets}
 
 \begin{definition}
@@ -107,3 +113,17 @@
   and
   \[\sum_{i=1}^{n}\ell(I_i) < \eps\] 
 \end{definition}
+
+\begin{lemma}
+  Suppose that $E \subseteq [a, b]$ is a compact Lebesgue null set then $E$ has content zero.
+\end{lemma}
+
+\begin{proof}
+  For any $\eps > 0$ there exists a sequnce of interval 
+  $\{I_n\}_{n \in \NN}$ such that $E\subseteq \bigcup I_n$ and $\sum \ell(I_n) < \frac\eps2$.
+  Suppose that $I_n = [a_n, b_n]$, then let $$J_n = \left(a_n - \frac\eps{2^{n+3}}, b_n + \frac\eps{2^{n+3}}\right) \supseteq E_n$$ then
+  from the compactness of $E$, there exists a finite subcover $J_{n_1}, J_{n_2}, \dotsc, J_{n_k}$ such that $E \subseteq \bigcup J_{n_i}$ 
+  then we construct a finite closed interval $K_i$ by 
+  $$K_i = \left[a_{n_i} - \frac\eps{2^{n_i+2}}, b_{n_i} + \frac\eps{2^{n_i+2}}\right]$$ then
+  $E \subseteq \bigcup K_i$ and $\sum \ell(K_i) < \eps$
+\end{proof}

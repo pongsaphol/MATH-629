@@ -1,0 +1,103 @@
+\chapter{Measures}
+\section{Introduction}
+
+We define the $\ell([c, d]) = d-c$ and If $E = [c_1, d_1] \cup[c_2, d_2]$ 
+where $d_1 < c_2$ then $\ell(E) = d_1 - c_1 + d_2 - c_2$.
+This is consistent with the definition
+\[\ell(E) = \int \mathbbm{1}_E(x) \ \mathrm{d}x\]
+where the integral denotes the Riemann integral.
+
+if $E \subseteq[a, b]$ reference interval is 
+\[\int_a^b \mathbbm{1}_E\ \mathrm{d}x\]
+
+\begin{remark}
+  The consistency of the definition also works with the set $(c, d)$, $[c, d)$, and $(c, d]$, 
+  where the length of all of them is $d-c$.
+\end{remark}
+
+\begin{remark}
+  we defnote $\mathbbm{1}_E$ to be such that
+  \[
+    \mathbbm{1}_E = 
+  \begin{cases}
+    1 & \text{if } x \in E\\
+    0 & \text{if } x \notin E 
+  \end{cases}
+  \]
+\end{remark}
+
+\begin{example}
+  Let $f(x) = \mathbbm{1}_{\QQ}(x)$ defined on the $[0, 1]$. 
+  Then $U(f, P) = 1$ and $L(f, P) = 0$ for any partition $P$. 
+\end{example}
+
+
+
+Fix the reference interval $[a, b]$ and consider subset of $[a, b]$
+
+Let $\mathcal{A}=$ collection of sets for which $\int_{[a, b]} \mathbbm{1}_E\ \mathrm{d}x$ exists.
+
+If $A_1, \dotsc, A_n \in \mathcal{A}$, we can make the set to be mutually disjoint by taking 
+$E_1 = A_1$, $E_2 = A_2 \setminus A_1$, $E_3 = A_3 \setminus (A_1 \cup A_2)$, and so on.
+
+\begin{example}
+  For $E_1, E_2 \in \mathcal{A}$, we have
+  \[\mathbbm{1}_{E_1 \cap E_2}(x) = \mathbbm{1}_{E_1}(x)\mathbbm{1}_{E_2}(x)\]
+\end{example}
+
+\begin{example}
+  For the Riemann integral, we have
+  \[\int_a^b f(y) = \int_{a-v}^{b-v} f(v+y)\]
+  and we want
+  \[\int \mathbbm{1}_E(x)\ \mathrm{d}x = \int \mathbbm{1}_{v+E}\]
+  where $v+E = \{v+x: x\in E\}$
+\end{example}
+
+Let $E = \QQ \cap [0, 1]$ countable set, we can enumerate
+$r_1, r_2, r_3, \dotsc$ such that 
+\[E = \bigcup_{n=1}^{\infty}\{r_n\}\] and 
+\[\int \mathbbm{1}_{\{r_k\}} = 0\]
+$E$ should have length zero but according $\mathbbm{1}_E$ is not 
+Riemann integrable.
+
+\section{Construction of Measure}
+
+Suppose that $\mathcal{C}$ be a collection of sets.
+
+Can we define on suitable large collection of subset of $\RR$?
+
+a set sunction $\mu: \mathcal{C} \to [0, \infty) \cup \{\infty\}$ such that
+if $\{E_j\}_{j=1}^\infty$ is a sequence of disjoint set in $\mathcal{C}$ then
+\[\bigcup E_j = \mathcal{C}\]
+
+\[\mu\left(\bigcup_{i=1}^\infty E_j\right) = \sum_{j=1}^\infty \mu(E_j)\]
+
+$\mu([a, b]) = b-a$, $\mu([0, 1]) = 1$
+
+Can we do this for the collection of all subset of $\RR$?
+
+Answer: No, Vitali set.
+
+\begin{lemma}
+  We cannot define a measure on the collection of all subset of $\RR$.
+\end{lemma}
+\begin{proof}
+  Assume $\mu$ exists then for $E \subseteq F$ then $\mu(E) \le \mu(F)$.
+  From the disjoint, we get $\mu(F) = \mu(E) + \mu(F\setminus E)$. 
+  Now, we define a special set $E$. We consider an equivalence relation 
+  on $\RR$, saying $x\sim y$, if $x-y \in \QQ$. Then $\RR$ is a disjoint union
+  of equivalence classes. We can form a set $E$ with the property that eachequivalence class has exactly one member in $E$
+  (and that member belongs to $[0, 1)$).
+  Let $r_1, r_2, \dotsc$ be an enumeration of the rational numbers in $[-1, 1]$.
+  let $A = \cup_{k=1}^\infty(r_k + E)$, then $A \subseteq [-1, 2] = [-1, 0] \cup [0, 1] \cup [1, 2] \implies \mu(A) \le 3$.
+  Claim: $A \supset [0, 1] \implies \mu(A) \ge 1$. Pick $x \in [0, 1)$, $x \sim w$, 
+  $w \in E \cap [0, 1)$ so $x - w \in [-1, 1]$ is rational.
+  $A = \cup_+ (R_k + E)$ If $y = r_k + w_k = r_k + w_l\in E \implies w_k \sim w_l \implies k=l$
+  (because $E$ has exactly one member in eqch equivalence class). then 
+  \[\mu\left(\bigcup_+ (r_k + E)\right) = \sum_{k = 1}^\infty \mu(r_k + E) = \sum_{k = 1}^\infty \mu(E)\]
+  If $\mu(E) = 0$ then $\mu(A) = 0$.
+  If $\mu(E) > 0$ then $\mu(A) = \infty$.
+
+\end{proof}
+
+
