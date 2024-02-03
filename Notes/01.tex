@@ -127,3 +127,88 @@
   $$K_i = \left[a_{n_i} - \frac\eps{2^{n_i+2}}, b_{n_i} + \frac\eps{2^{n_i+2}}\right]$$ then
   $E \subseteq \bigcup K_i$ and $\sum \ell(K_i) < \eps$
 \end{proof}
+
+\begin{corollary}
+  if $a < b$ then $[a, b]$ is not a Lebesgue null set.
+\end{corollary}
+
+\begin{proof}
+  By contradiction, since $[a, b]$ is compact, then $[a, b]$ has content zero, 
+  but $[a, b]$ don't have content zero.
+\end{proof}
+
+\section{Oscillation and Discontinuity}
+
+\begin{definition}
+  Suppose that $X \subseteq \RR$, $f: X \to \RR$ for any $x \in X$ and $\delta > 0$, define
+  \[M_{f, \delta}(x) := \sup\{f(y) : d(x, y) < \delta\}\]
+  \[m_{f, \delta}(x) := \inf\{f(y) : d(x, y) < \delta\}\]
+then we define 
+\[\mathrm{osc}_f(x) := \lim_{\delta\to0+} M_{f, \delta}(x) - m_{f, \delta}(x)\]
+\end{definition}
+
+\begin{lemma}
+  $f$ is continuous at $x$ if and only if $\mathrm{osc}_f(x) = 0$.
+\end{lemma}
+
+\begin{proof}
+  $(\Rightarrow)$ Suppose that $f$ is continuous at $x$, then for any $\eps > 0$ there exists $\delta > 0$ such that
+  if $d(x, y) < \delta$ then $|f(x) - f(y)| < \frac\eps2$. Then
+  \[M_{f, \delta}(x) - m_{f, \delta}(x) \le \sup\{f(y) : d(x, y) < \delta\} - \inf\{f(y) : d(x, y) < \delta\} < \eps\]
+
+  $(\Leftarrow)$ Suppose that $\mathrm{osc}_f(x) = 0$, then for any $\eps > 0$ there exists $\delta > 0$ such that
+  $M_{f, \delta}(x) - m_{f, \delta}(x) < \eps$. Then for any $y \in X$ such that $d(x, y) < \delta$, we have
+  $|f(x) - f(y)| < \eps$ then $f$ is continuous at $x$.
+\end{proof}
+
+\begin{theorem}
+  Suppose that $f: [a, b] \to \RR$ then
+  $f \in \mathcal{R}([a, b])$ if and only if $f$ is bounded and the set of discontinuity of $f$ is a Lebesgue null set.
+\end{theorem}
+
+Before we prove this theorem, we need to prove the following lemma.
+
+\begin{lemma}
+  $\{x \in [a, b]: \mathrm{osc}_f(x) \ge \gamma\}$ is closed.
+\end{lemma}
+
+\begin{proof}
+  We need to show that $\{x : \mathrm{osc}_f(x) < \gamma\}$ is open. Fix $x$ in that set.
+  Let $\eps = {\gamma - \mathrm{osc}_f(x)}$ then 
+  \[\sup_{|w-x|< \delta} f(w) - \inf_{|w-x| < \delta} f(w) < \mathrm{osc}_f(x) <\gamma \]
+  then for any $w \in (x - \delta, x + \delta)$ if $|w - x| < \frac\delta2$ then
+  \[\mathrm{osc}(w) \leq \sup_{|y - w|<\frac\delta2} f(y) - \inf_{|y-w| < \frac\delta2} f(y) < \gamma\]
+  So, $B\left(x, \frac\delta2\right) \subseteq \{x : \mathrm{osc}_f(x) < \gamma\}$
+\end{proof}
+we observe that 
+  \begin{enumerate}[(i)]
+    \item If the set of discontinuities is a Lebesque null set, then 
+    $\{x : \mathrm{osc}_f(x) \ge \gamma\}$ is a set of content zero. 
+    \item If $\{x : \mathrm{osc}_f(x) \ge \gamma\}$ is a Lebesgue null set, then
+    the set of discontinuities is also a Lebesque null set.
+  \end{enumerate}
+
+\begin{proof}[Proof of Theorem]
+  $(\Rightarrow)$ We want to show that for every $n \in \NN$, 
+  \[\mathcal{D}_n = \left\{x : \mathrm{osc}_f(x) \ge \frac1n\right\}\]
+  is a Lebesque null set. For any $\eps > 0$, since $f$ is Riemann integrable, 
+  there exists a partition $P$ of $[a, b]$ such that 
+  \[U(f, P) - L(f, P) = \sum_{i = 1}^n (x_i - x_{i-1})(M_i - m_i) \le \frac\eps n\]
+  where $M_i = \sup_{x\in[x_{i-1}, x_i]}f(x)$ and $m_i = \inf_{x\in[x_{i-1}, x_i]}f(x)$.
+  in particular
+  \begin{align*}
+    \sum_{[x_{i-1}, x_i]\cap \mathcal{D}_n \neq \emptyset}(x_i - x_{i-1})(M_i - m_i) &\le \frac\eps n\\
+    \frac1n\sum_{[x_{i-1}, x_i]\cap \mathcal{D}_n \neq \emptyset} \ell([x_{i-1}, x_i]) &\le \frac\eps n
+  \end{align*}
+  So, this interval cover the set $\mathcal{D}_n$
+\end{proof}
+For the other direction, we need some lemma in order to prove the theorem
+\begin{lemma}
+  Suppose that $f$ is defined on $[c, d]$, assume that $\mathrm{osc}_f(x) < \gamma$
+  then we can find a partition 
+  \[U(f, P) - L(f, P) < \gamma(b-a)\]
+\end{lemma}
+\begin{proof}
+  For every $x \in [c, d]$, there exists $\delta_x > 0$ such that
+  \[\sup_{|w-x| < \delta_x} f(w) - \inf_{|w-x| < \delta_x} f(x) < \gamma\]
+\end{proof}

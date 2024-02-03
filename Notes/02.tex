@@ -78,26 +78,72 @@ Can we do this for the collection of all subset of $\RR$?
 
 Answer: No, Vitali set.
 
-\begin{lemma}
+\begin{theorem}
   We cannot define a measure on the collection of all subset of $\RR$.
-\end{lemma}
-\begin{proof}
-  Assume $\mu$ exists then for $E \subseteq F$ then $\mu(E) \le \mu(F)$.
-  From the disjoint, we get $\mu(F) = \mu(E) + \mu(F\setminus E)$. 
-  Now, we define a special set $E$. We consider an equivalence relation 
-  on $\RR$, saying $x\sim y$, if $x-y \in \QQ$. Then $\RR$ is a disjoint union
-  of equivalence classes. We can form a set $E$ with the property that eachequivalence class has exactly one member in $E$
-  (and that member belongs to $[0, 1)$).
-  Let $r_1, r_2, \dotsc$ be an enumeration of the rational numbers in $[-1, 1]$.
-  let $A = \cup_{k=1}^\infty(r_k + E)$, then $A \subseteq [-1, 2] = [-1, 0] \cup [0, 1] \cup [1, 2] \implies \mu(A) \le 3$.
-  Claim: $A \supset [0, 1] \implies \mu(A) \ge 1$. Pick $x \in [0, 1)$, $x \sim w$, 
-  $w \in E \cap [0, 1)$ so $x - w \in [-1, 1]$ is rational.
-  $A = \cup_+ (R_k + E)$ If $y = r_k + w_k = r_k + w_l\in E \implies w_k \sim w_l \implies k=l$
-  (because $E$ has exactly one member in eqch equivalence class). then 
-  \[\mu\left(\bigcup_+ (r_k + E)\right) = \sum_{k = 1}^\infty \mu(r_k + E) = \sum_{k = 1}^\infty \mu(E)\]
-  If $\mu(E) = 0$ then $\mu(A) = 0$.
-  If $\mu(E) > 0$ then $\mu(A) = \infty$.
+\end{theorem}
 
+Before we prove that theorem, we need to define something and prove the following lemma.
+
+\begin{definition}
+  We define a Vitali set $V$ from picking an element $x \in [0, 1)$ from each equivalence class of the relation $x \sim y$ if $x - y \in \QQ$.
+  (e.g, pick $x \in O_x$ for $O_x \in \RR/\QQ$)
+\end{definition}
+
+\begin{lemma}\label{lem:vitali}
+  Suppose that $V$ is a Vitali set then 
+  \[V \cap V+q = \emptyset\] 
+  For all $q \in \QQ \setminus \{0\}$
+\end{lemma}
+
+\begin{proof}
+  Suppose not, there exists $a \in V$ such that $a \in V + q\implies a-q \in V$ 
+  but we only pick 1 element in each equivalence class. contradiction.  
 \end{proof}
+
+\begin{lemma}\label{lem:VW}
+  Let $V$ be a Vitali set and let $W = \{q \in [-1, 1] : q \in \QQ\}$ and 
+  \[ E = \bigcup_{w \in W}V + w\]
+   then 
+  \[[0, 1] \subseteq E \subseteq [-1, 2]\]
+\end{lemma}
+
+\begin{proof}
+  Consider $E \subseteq [-1, 2]$. Since $V \subseteq [0, 1)$, then
+  for any $v \in V$, $v \in [0, 1) \implies v + w \in [-1, 2]$.
+
+  For the $[0, 1] \subseteq E$,
+  for any $x \in [0, 1]$ there exists $O_x \in \RR/\QQ$ such that $x \in O_x$.
+  then there exists $v \in C_x$ such that $v \in [0, 1)$ and $v \in V$, since both
+  are from the same equivalence class, then $x - v \in \QQ$ and $|x - v| < 1 \implies x - v \in (-1, 1)$.
+  Hence, there exists $w \in W$ such that $w = x-v$ so $v+w = x$.
+\end{proof}
+
+
+\begin{proof}[Proof of the theorem]
+  Suppose that $\mu$ exists then using the result from Lemma~\ref{lem:VW} we get that  
+  \[ \mu([0, 1]) \leq \mu\left(E\right) \leq \mu([-1, 2])\]
+  from Lemma~\ref{lem:vitali} we know that each $V+w$ is disjoint, so
+  \begin{align*}
+    \mu([0, 1]) &\leq \sum_{w \in W}\mu(V) \leq \mu([-1, 2])\\
+    1 &\leq \sum_{w \in W}\mu(V) \leq 3
+  \end{align*}
+  if $\mu(V) = 0$ then $\mu(E) = 0$ and if $\mu(V) > 0$ then $\mu(E) = \infty$. Both are contradiction. 
+  % Assume $\mu$ exists then for $E \subseteq F$ then $\mu(E) \le \mu(F)$.
+  % From the disjoint, we get $\mu(F) = \mu(E) + \mu(F\setminus E)$. 
+  % Now, we define a special set $E$. We consider an equivalence relation 
+  % on $\RR$, saying $x\sim y$, if $x-y \in \QQ$. Then $\RR$ is a disjoint union
+  % of equivalence classes. We can form a set $E$ with the property that eachequivalence class has exactly one member in $E$
+  % (and that member belongs to $[0, 1)$).
+  % Let $r_1, r_2, \dotsc$ be an enumeration of the rational numbers in $[-1, 1]$.
+  % let $A = \cup_{k=1}^\infty(r_k + E)$, then $A \subseteq [-1, 2] = [-1, 0] \cup [0, 1] \cup [1, 2] \implies \mu(A) \le 3$.
+  % Claim: $A \supset [0, 1] \implies \mu(A) \ge 1$. Pick $x \in [0, 1)$, $x \sim w$, 
+  % $w \in E \cap [0, 1)$ so $x - w \in [-1, 1]$ is rational.
+  % $A = \cup_+ (R_k + E)$ If $y = r_k + w_k = r_k + w_l\in E \implies w_k \sim w_l \implies k=l$
+  % (because $E$ has exactly one member in eqch equivalence class). then 
+  % \[\mu\left(\bigcup_+ (r_k + E)\right) = \sum_{k = 1}^\infty \mu(r_k + E) = \sum_{k = 1}^\infty \mu(E)\]
+  % If $\mu(E) = 0$ then $\mu(A) = 0$.
+  % If $\mu(E) > 0$ then $\mu(A) = \infty$.
+\end{proof}
+
 
 
