@@ -211,4 +211,14 @@ For the other direction, we need some lemma in order to prove the theorem
 \begin{proof}
   For every $x \in [c, d]$, there exists $\delta_x > 0$ such that
   \[\sup_{|w-x| < \delta_x} f(w) - \inf_{|w-x| < \delta_x} f(x) < \gamma\]
+  construct a cover by \[B(x, \delta_x) = \{w\in[c,d] : |w-x| < \delta_x\}\]
+  since $[c, d]$ is compact, there exists a finite subcover $B(p_1, \delta_{p_1}), \dotsc, B(p_n, \delta_{p_n})$
+  then let $\delta_0 = \frac{\min\{\delta_{p_i}\}}{100}$ 
+  then we can construct a partition $P = \{c = x_0 < x_1 < \cdots < x_n = d\}$ such that $|x_i - x_{i-1}| < \delta_0$
+  then $M_i - m_i < \gamma$ and 
+  \begin{align*}
+    U(f, P) - L(f, P) &= \sum_{i=1}^{n}(M_i - m_i)(x_i - x_{i-1})\\
+    &< \gamma\sum_{i=1}^{n}(x_i - x_{i-1})\\
+    &= \gamma(d-c)
+  \end{align*}
 \end{proof}
