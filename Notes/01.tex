@@ -114,7 +114,7 @@
   \[\sum_{i=1}^{n}\ell(I_i) < \eps\] 
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}\label{lem:compact-null-lebesgue-is-content-zero}
   Suppose that $E \subseteq [a, b]$ is a compact Lebesgue null set then $E$ has content zero.
 \end{lemma}
 
@@ -161,10 +161,7 @@ then we define
   $|f(x) - f(y)| < \eps$ then $f$ is continuous at $x$.
 \end{proof}
 
-\begin{theorem}
-  Suppose that $f: [a, b] \to \RR$ then
-  $f \in \mathcal{R}([a, b])$ if and only if $f$ is bounded and the set of discontinuity of $f$ is a Lebesgue null set.
-\end{theorem}
+
 
 Before we prove this theorem, we need to prove the following lemma.
 
@@ -188,22 +185,7 @@ we observe that
     the set of discontinuities is also a Lebesque null set.
   \end{enumerate}
 
-\begin{proof}[Proof of Theorem]
-  $(\Rightarrow)$ We want to show that for every $n \in \NN$, 
-  \[\mathcal{D}_n = \left\{x : \mathrm{osc}_f(x) \ge \frac1n\right\}\]
-  is a Lebesque null set. For any $\eps > 0$, since $f$ is Riemann integrable, 
-  there exists a partition $P$ of $[a, b]$ such that 
-  \[U(f, P) - L(f, P) = \sum_{i = 1}^n (x_i - x_{i-1})(M_i - m_i) \le \frac\eps n\]
-  where $M_i = \sup_{x\in[x_{i-1}, x_i]}f(x)$ and $m_i = \inf_{x\in[x_{i-1}, x_i]}f(x)$.
-  in particular
-  \begin{align*}
-    \sum_{[x_{i-1}, x_i]\cap \mathcal{D}_n \neq \emptyset}(x_i - x_{i-1})(M_i - m_i) &\le \frac\eps n\\
-    \frac1n\sum_{[x_{i-1}, x_i]\cap \mathcal{D}_n \neq \emptyset} \ell([x_{i-1}, x_i]) &\le \frac\eps n
-  \end{align*}
-  So, this interval cover the set $\mathcal{D}_n$
-\end{proof}
-For the other direction, we need some lemma in order to prove the theorem
-\begin{lemma}
+\begin{lemma}\label{lem:bounded-int-by-osc}
   Suppose that $f$ is defined on $[c, d]$, assume that $\mathrm{osc}_f(x) < \gamma$
   then we can find a partition 
   \[U(f, P) - L(f, P) < \gamma(b-a)\]
@@ -220,5 +202,49 @@ For the other direction, we need some lemma in order to prove the theorem
     U(f, P) - L(f, P) &= \sum_{i=1}^{n}(M_i - m_i)(x_i - x_{i-1})\\
     &< \gamma\sum_{i=1}^{n}(x_i - x_{i-1})\\
     &= \gamma(d-c)
+  \end{align*}
+\end{proof}
+
+\begin{theorem}
+  Suppose that $f: [a, b] \to \RR$ then
+  $f \in \mathcal{R}([a, b])$ if and only if $f$ is bounded and the set of discontinuity of $f$ is a Lebesgue null set.
+\end{theorem}
+
+\begin{proof}
+  $(\Rightarrow)$ We want to show that for every $n \in \NN$, 
+  \[\mathcal{D}_n = \left\{x : \mathrm{osc}_f(x) \ge \frac1n\right\}\]
+  is a Lebesque null set. For any $\eps > 0$, since $f$ is Riemann integrable, 
+  there exists a partition $P$ of $[a, b]$ such that 
+  \[U(f, P) - L(f, P) = \sum_{i = 1}^n (x_i - x_{i-1})(M_i - m_i) \le \frac\eps n\]
+  where $M_i = \sup_{x\in[x_{i-1}, x_i]}f(x)$ and $m_i = \inf_{x\in[x_{i-1}, x_i]}f(x)$.
+  in particular
+  \begin{align*}
+    \sum_{[x_{i-1}, x_i]\cap \mathcal{D}_n \neq \emptyset}(x_i - x_{i-1})(M_i - m_i) &\le \frac\eps n\\
+    \frac1n\sum_{[x_{i-1}, x_i]\cap \mathcal{D}_n \neq \emptyset} \ell([x_{i-1}, x_i]) &\le \frac\eps n
+  \end{align*}
+  So, this interval cover the set $\mathcal{D}_n$
+
+  $(\Leftarrow)$ pick $\eps_1 \ll \eps$, consider the set $D(\eps_1) = \{x \in [a, b] : \mathrm{osc}_f(x) \ge \eps_1\}$ closed set.
+  Since $D(\eps_1)$ is a Lebesgue null set from the Lemma~\ref{lem:compact-null-lebesgue-is-content-zero}
+  it has content zero so we can find $I_1, \dotsc, I_n$ 
+  such that 
+  \[\sum_{j=1}^n \ell(I_j) < \eps_1 \text{ and } D(\eps_1) \subseteq \bigcup_{j=1}^n I_j\]
+  We get a partition of $[a, b]$, $a = x_0 < x_1 < \cdots < x_N = b$ 
+  there are two cases that we need to consider
+  \begin{enumerate}[1)]
+    \item if $[x_{i-1}, x_i] \subseteq I_j$ for some $j$ then set $P_i = [x_{i-1}, x_i]$ 
+    \item if $[x_{i-1}, x_i] \cap I_j = \emptyset$ for all $j$ then 
+    $\mathrm{osc(x)} < \eps_1$ for all $x \in [x_{i-1}, x_i]$.
+    We want to partition further the interval $[x_{i-1}, x_i]$ by partition $P_i$.
+    Using Lemma~\ref{lem:bounded-int-by-osc} we can find a partition $P_i$ of $[x_{i-1}, x_i]$ such that
+    \[U(f, P_i) - L(f, P_i) < \eps_1(x_i - x_{i-1})\]
+  \end{enumerate}
+  We form a partition $P = P_1 \cup \cdots \cup P_N$ then
+  \begin{align*}
+    U(f, P) - L(f, P) &= \sum_{i=1}^{N} (U(f, P_i) - L(f, P_i))\\
+    &= \sum_{i: \text{case }1} (U(f, P_i) - L(f, P_i)) + \sum_{i: \text{case }2} (U(f, P_i) - L(f, P_i))\\
+    &\le 2M \sum_{i: \text{case }1} (x_i - x_{i-1}) + \eps_1\sum_{i: \text{case }2} (x_i - x_{i-1})\\
+    &\le 2M\eps_1 + \eps_1(b-a) \\
+    &= \eps_1(2M + b-a)
   \end{align*}
 \end{proof}
