@@ -229,12 +229,12 @@ we observe that
   it has content zero so we can find $I_1, \dotsc, I_n$ 
   such that 
   \[\sum_{j=1}^n \ell(I_j) < \eps_1 \text{ and } D(\eps_1) \subseteq \bigcup_{j=1}^n I_j\]
-  We get a partition of $[a, b]$, $a = x_0 < x_1 < \cdots < x_N = b$ 
-  there are two cases that we need to consider
+  We form a partition of $[a, b]$, $a = x_0 < x_1 < \cdots < x_N = b$ from $I_j$.
+  There are two cases that we need to consider
   \begin{enumerate}[1)]
     \item if $[x_{i-1}, x_i] \subseteq I_j$ for some $j$ then set $P_i = [x_{i-1}, x_i]$ 
     \item if $[x_{i-1}, x_i] \cap I_j = \emptyset$ for all $j$ then 
-    $\mathrm{osc(x)} < \eps_1$ for all $x \in [x_{i-1}, x_i]$.
+    $\mathrm{osc}(x) < \eps_1$ for all $x \in [x_{i-1}, x_i]$.
     We want to partition further the interval $[x_{i-1}, x_i]$ by partition $P_i$.
     Using Lemma~\ref{lem:bounded-int-by-osc} we can find a partition $P_i$ of $[x_{i-1}, x_i]$ such that
     \[U(f, P_i) - L(f, P_i) < \eps_1(x_i - x_{i-1})\]
