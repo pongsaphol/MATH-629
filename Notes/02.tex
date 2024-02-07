@@ -16,9 +16,9 @@ if $E \subseteq[a, b]$ reference interval is
 \end{remark}
 
 \begin{remark}
-  we defnote $\mathbbm{1}_E$ to be such that
+  we defnote $\mathbbm{1}_E$ to be 
   \[
-    \mathbbm{1}_E = 
+    \mathbbm{1}_E(x) = 
   \begin{cases}
     1 & \text{if } x \in E\\
     0 & \text{if } x \notin E 
@@ -66,20 +66,25 @@ Suppose that $\mathcal{C}$ be a collection of sets.
 
 Can we define on suitable large collection of subset of $\RR$?
 
-a set function $\mu: \mathcal{C} \to [0, \infty) \cup \{\infty\}$ such that
+a set function $\mu: \mathcal{C} \to [0, \infty]$ such that
 if $\{E_j\}_{j=1}^\infty$ is a sequence of disjoint set in $\mathcal{C}$ then
-\[\bigcup E_j = \mathcal{C}\]
-
+% \[\bigcup E_j = \mathcal{C}\]
 \[\mu\left(\bigcup_{i=1}^\infty E_j\right) = \sum_{j=1}^\infty \mu(E_j)\]
 
-$\mu([a, b]) = b-a$, $\mu([0, 1]) = 1$
+$\mu([a, b]) = b-a$, $\mu([0, 1)) = 1$
 
 Can we do this for the collection of all subset of $\RR$?
 
 Answer: No, Vitali set.
 
 \begin{theorem}
-  We cannot define a measure on the collection of all subset of $\RR$.
+  We cannot define a measure on the collection of all subset of $\RR$. i.e.,
+  there does not exist a set function $\mu: \kP(\RR) \to [0, \infty]$ such that
+  \begin{enumerate}[(i)]
+    \item $\mu(v + E) = \mu(E)$ for all $E \subseteq \RR$ and $v \in \RR$
+    \item $\mu([0, 1]) = 1$
+    \item $\mu\left(\bigcup_{j=1}^\infty A_j\right) = \sum_{j=1}^\infty \mu(A_j)$ for all disjoint $A_j \subseteq \RR$
+  \end{enumerate}
 \end{theorem}
 
 Before we prove that theorem, we need to define something and prove the following lemma.
@@ -151,112 +156,214 @@ Before we prove that theorem, we need to define something and prove the followin
   Given a reference $X$. An \textbf{algebra} is a collection of subsets of $X$, $\mathcal{A}$, such that
   \begin{enumerate}[(i)]
     \item $X \in \mathcal{A}$
-    \item If $A \in \mathcal{A}$ then the complement $A^c = X \setminus A \in \mathcal{A}$
+    \item If $A \in \mathcal{A}$ then the complement $A^\complement = X \setminus A \in \mathcal{A}$
     \item If $A, B \in \mathcal{A}$ then $A \cup B \in \mathcal{A}$
   \end{enumerate}
 \end{definition}
 
 \begin{remark}
   \begin{itemize}
-    \item $\emptyset \in \mathcal{A}$ because $\emptyset = X^c$
-    \item $A_1, A_2 \in \mathcal{A}$, $A_1 \setminus A_2 = A_1 \cap A_2^c \in \mathcal{A}$
-    \item Observe that if $A_1, A_2 \in \mathcal{A}$ then $A_1 \cap A_2 \in \mathcal{A}$ because $(A_1 \cap A_2)^c = A_1^c \cup A_2^c$
+    \item $\emptyset \in \mathcal{A}$ because $\emptyset = X^\complement$
+    \item $A_1, A_2 \in \mathcal{A}$, $A_1 \setminus A_2 = A_1 \cap A_2^\complement \in \mathcal{A}$
+    \item Observe that if $A_1, A_2 \in \mathcal{A}$ then $A_1 \cap A_2 \in \mathcal{A}$ because $(A_1 \cap A_2)^\complement = A_1^\complement \cup A_2^\complement$
   \end{itemize}
 \end{remark}
 
 \begin{example}
   $X = [a, b]$ and $\mathcal{A}$ is the collection of all sets $E \subseteq [a, b]$  
   such that the Riemann integral 
-  $\int x_E(t) \ \mathrm{d}t$
+  $\int \mathbbm{1}_E(t) \ \mathrm{d}t$
  exists
 \end{example}
 
 
 \begin{definition}
-  A $\sigma$-algebra $\mathcal{M}$ on $X$ is 
+  A $\sigma$-algebra $\SM$ on $X$ is 
   \begin{enumerate}[(i)]
     \item an algebra of subsets of $X$
-    \item If $A_1, A_2, A_3, \dotsc$ is a sequence of set in $\mathcal{M}$ then
-    \[\bigcup_{j = 1}^\infty A_j \in \mathcal{M}\]
+    \item If $A_1, A_2, A_3, \dotsc$ is a sequence of set in $\SM$ then
+    \[\bigcup_{j = 1}^\infty A_j \in \SM\]
   \end{enumerate}
-  $(X, \mathcal{M})$ is called a ``\textbf{measurable space}''.
+  $(X, \SM)$ is called a ``\textbf{measurable space}''.
 \end{definition}
 
 \begin{remark}
-  $\mathcal{M}$ is a $\sigma$-algebra then it satisfies
+  $\SM$ is a $\sigma$-algebra on $X$ then it satisfies
   \begin{enumerate}[(i)] 
-    \item $X \in \mathcal{M}$
-    \item If $A \in \mathcal{M}$ then $A^c \in \mathcal{M}$
-    \item countable union of sets in $\mathcal{M}$ is in $\mathcal{M}$ 
+    \item $X \in \SM$
+    \item If $A \in \SM$ then $A^\complement \in \SM$
+    \item countable union of sets in $\SM$ is in $\SM$ 
   \end{enumerate}
 \end{remark}
 
 \begin{definition}
-Let $(X, \mathcal{M})$ be a measurable set. Then a measure $\mu$ is a set function 
-$\mu: \mathcal{M} \to [0, \infty], E \mapsto \mu(E)$ such that
+Let $(X, \SM)$ be a measurable set. Then a measure $\mu$ is a set function 
+$\mu: \SM \to [0, \infty], E \mapsto \mu(E)$ such that
 \begin{enumerate}[(i)]
   \item $\mu(\emptyset) = 0$
-  \item If $E_1, E_2, E_3, \dotsc$ is a sequence of disjoint set in $\mathcal{M}$ then
+  \item If $E_1, E_2, E_3, \dotsc$ is a sequence of disjoint set in $\SM$ then
   \[\mu\left(\bigcup_{j=1}^\infty E_j\right) = \sum_{j = 1}^\infty \mu(E_j)\]
   called $\sigma$-additivity.
 \end{enumerate}
-$(X, \mathcal{M}, \mu)$ is called a ``\textbf{measure space}''.
+$(X, \SM, \mu)$ is called a ``\textbf{measure space}''.
 \end{definition}
 
 \begin{remark}
   \begin{align*}
-    \left(\bigcap_{j=1}^\infty A_j\right) &= \left(\bigcup_{j=1}^\infty A_j^C\right)^C \in \mathcal{M}
+    \left(\bigcap_{j=1}^\infty A_j\right) &= \left(\bigcup_{j=1}^\infty A_j^\complement\right)^\complement \in \SM
   \end{align*} 
 \end{remark}
 \begin{example}
   examples of $\sigma$-algebra
   \begin{enumerate}[(i)]
-    \item $\mathcal{M} = \{\emptyset, X\}$ 
-    \item $\mathcal{M} = \mathcal{P}(X) = $ collection of all subsets of $X$
+    \item $\SM = \{\emptyset, X\}$ 
+    \item $\SM = \kP(X) = $ collection of all subsets of $X$
     \item[] $\NN = \{1, 2, 3, \dotsc\}$ and $\mu(E) = |E|$ (the cardinality of $E$) if $E$ is finite and 
     $\mu(E) = \infty$ if $E$ is infinite.
     \item $X$ write $X$ as a disjoint (countable) union of sets $A_j$. Then
-    $\mathcal{M} = $ all countable unions of $A_j$. 
-    \item Let $X$ be a set. Let $\mathcal{M}$ be the collection of all sets $A$, $A \subseteq X$ such that
-    $A$ is countable or $A^C$ is countable.
-    \item $X = \RR$ (or $\RR^n$), $\mathcal{B}_\RR$ is the smallest $\sigma$-algebra containing all open sets.
+    $\SM = $ all countable unions of $A_j$. 
+    \item Let $X$ be a set. Let $\SM$ be the collection of all sets $A$, $A \subseteq X$ such that
+    $A$ is countable or $A^\complement$ is countable.
+    \item $X = \RR$ (or $\RR^n$), $\SB_\RR$ is the smallest $\sigma$-algebra containing all open sets.
   \end{enumerate}
 \end{example}
 
-More generally if $\mathcal{E}$ is a collection of subsets of $X$ then $\mathfrak{M}(\mathcal{E})$ is the smallest
-$\sigma$-algebra that contains all sets in $\mathcal{E}$.
+More generally if $\SE$ is a collection of subsets of $X$ then $\kM(\SE)$ is the smallest
+$\sigma$-algebra that contains all sets in $\SE$.
 
-If $\mathcal{M}_1, \mathcal{M}_2$ are two $\sigma$-algebras, then $\mathcal{M}_1 \cap \mathcal{M}_2$ is also a 
+If $\SM_1, \SM_2$ are two $\sigma$-algebras, then $\SM_1 \cap \SM_2$ is also a 
 $\sigma$-algebra.
 
-If $\{\mathcal{M}_\alpha\}_{\alpha}$ is a collection of $\sigma$-algebras, their intersection is also a $\sigma$-algebra.
+If $\{\SM_\alpha\}_{\alpha \in \mathcal{I}}$ is a collection of $\sigma$-algebras, their intersection is also a $\sigma$-algebra.
+
+\subsection{Generating $\sigma$-algebra}
 
 \begin{definition}
-$\mathfrak{M}(\mathcal{E})$ = intersection of all $\sigma$-algebra that contain the collection $\mathcal{E}$
-We call it the $\sigma$-algebra generated by $\mathcal{E}$.
+$\kM(\SE)$ = intersection of all $\sigma$-algebra that contain the collection $\SE$
+We call it the $\sigma$-algebra generated by $\SE$.
 \end{definition}
 
 \begin{remark}
-If $\mathcal{E}\subset \mathcal{F} \implies \mathfrak{M}(\mathcal{E}) \subset \mathfrak{M}(\mathcal{F})$
+If $\SE\subset \SF \implies \kM(\SE) \subset \kM(\SF)$
 \end{remark}
 \begin{lemma}
-  If $\mathcal{E} \subseteq \mathfrak{M}(\mathcal{F})$ then $\mathfrak{M}(\mathcal{E}) \subseteq \mathfrak{M}(\mathcal{F})$
+  If $\SE \subseteq \kM(\SF)$ then $\kM(\SE) \subseteq \kM(\SF)$
 \end{lemma}
 \begin{proof}
-  $\mathfrak{M}(\mathcal{F})$ is a $\sigma$-algebra that contains $\mathcal{E}$
-  It contains the intersection of all $\sigma$-algebras which contain $\mathcal{E}$
+  $\kM(\SF)$ is a $\sigma$-algebra that contains $\SE$
+  It contains the intersection of all $\sigma$-algebras which contain $\SE$
 \end{proof}
 
 \begin{example}
-  $\mathcal{B}_\RR$ = $\sigma$-algebra on $\RR$ containing all open sets 
-  $\mathcal{E}$ a collection of all open intervals, 
-  $\mathcal{E}\subseteq\mathcal{O}$ = collection of all open sets in $\RR$,
-  $\mathcal{B}_\RR = \mathfrak{M}(\mathcal{O})$. $\mathfrak{M}(\mathcal{E}) \subseteq \mathcal{B}_\RR$.
-  Each open set is a countable union of open intervals. Each open set is contained in $\mathfrak{M}(\mathcal{E})$.
+  $\SB_\RR$ = $\sigma$-algebra on $\RR$ containing all open sets 
+  $\SE$ a collection of all open intervals, 
+  $\SE\subseteq\SO$ = collection of all open sets in $\RR$,
+  $\SB_\RR = \kM(\SO)$. $\kM(\SE) \subseteq \SB_\RR$.
+  Each open set is a countable union of open intervals. Each open set is contained in $\kM(\SE)$.
   
-  Since $\mathcal{O} \subseteq \mathfrak{M}(\mathcal{E}) \implies \mathfrak{M}(\mathcal{O}) \subseteq \mathfrak{M}(\mathcal{E})$.
-  get $\mathfrak{M}(\mathcal{O}) = \mathfrak{M}(\mathcal{E})$.
+  Since $\SO \subseteq \kM(\SE) \implies \kM(\SO) \subseteq \kM(\SE)$.
+  get $\kM(\SO) = \kM(\SE)$.
 \end{example}
 
-Lebesgue-Borel measure,
-$\mu((a, b)) = b-a$, $\mu$ is defined on $\mathcal{B}_\RR$.
+% TODO: maybe a definition of Lebesgue-Borel measure
+% Lebesgue-Borel measure,
+% $\mu((a, b)) = b-a$, $\mu$ is defined on $\SB_\RR$.
+
+\begin{definition}
+  Given $(X_1, \SM_1), (X_2, \SM_2), \dotsc, (X_n, \SM_n)$ measurable spaces.
+  Define a ``product $\sigma$-algebra'' on $X_1 \times X_2 \times \dotsm \times X_n$ denoted by
+  \[\SM_1 \oplus \SM_2\oplus \dotsm \oplus \SM_n = \bigoplus_{j=1}^n \SM_j\]
+  defined as the $\sigma$-algebra generated by the sets $E_1 \times E_2 \times \dotsm \times E_n$ where $E_j \in \SM_j$.
+  
+  i.e., define $\SE := \{(E_1 \times E_2 \times \dotsm \times E_n) : E_j \in \SM_j\}$ then 
+  \[ \bigoplus_{j=1}^n \SM_j := \kM(\SE)\]
+\end{definition}
+
+\begin{remark}
+  Folland defines it the $\sigma$-algebra generated by 
+  \[(X_1 \times X_2 \times \dotsm \times X_{n-1} \times E_n)\]
+  where $E_n \in \SM_n$, 
+  \[(X_1 \times X_2 \times \dotsm E_{n-1} \times X_n)\]
+  where $E_{n-1} \in \SM_{n-1}$.
+  and so on. To be clear, let 
+  \[\SE' := \bigcup_{j=1}^n \{ (X_1 \times \dotsm\times  X_{j-1} \times E_j \times X_{j+1} \times \dotsm \times X_n) : E_j \in \SM_j\}\]
+  then 
+  \[\bigoplus_{j=1}^n \SM_j := \kM(\SE') \]
+\end{remark}
+
+\begin{claim}
+  Both defintions on product of $\sigma$-algebra are equivalent. 
+\end{claim}
+
+\begin{proof}
+  The goal is to show that $\kM(\SE) = \kM(\SE')$.
+  \begin{itemize}
+    \item[($\supseteq$)] Obviously, $\SE' \subseteq \SE$ so $\kM(\SE') \subseteq \kM(\SE)$.
+    \item[($\subseteq$)] We want to show that $\SE \subseteq \kM(\SE')$.  
+
+  \end{itemize}
+\end{proof}
+
+\begin{theorem}
+  Given $(X_1, \SM_1), (X_2, \SM_2)$ measurable spaces. Assume that  
+  $\SM_1$ is generated by a collection $\SE_1$ and $\SM_2$ is generated by a collection $\SE_2$.
+  Then $\SM_1 \oplus \SM_2$ is generated by the sets $E_1 \times X_2$, $X_1 \times E_2$, where $E_1 \in \SE_1$ and $E_2 \in \SE_2$.
+\end{theorem}
+\begin{proof}
+  Let $\SP = \{E_1 \times E_2 : E_i \in \SE_i\}$, $\kM(\SP) \subseteq \SM_1 \oplus \SM_2$.
+  We need to show that $\SM_1 \oplus \SM_2 \subseteq \kM(\SP)$. Define 
+  $$\SG_1 = \{E_1 \subseteq X_1 : E_1 \times X_2 \in \kM(\SP)\}$$
+  $$\SG_2 = \{E_2 \subseteq X_2 : X_1 \times E_2 \in \kM(\SP)\}$$
+  then $\SG_1$ is a $\sigma$-algebra consistion of subset of $X_1$ which contains $\SE_1$, $\SE_1\subseteq \SG_1$.
+  $\SE_1$ generates $\SM_1$ so $\kM(\SE_1) = \SM_1 \subseteq \SG_1$.
+  So, we have $E_1 \times X_2 \in \kM(\SP)$ for all $E_1 \in \SM_1$ and $X_1 \times E_2 \in \kM(\SP)$ for all $E_2 \in \SM_2$.
+  The $\sigma$-algebra generated by the sets $E_1 \times X_2$, $X_1 \times E_2$ is contained $\SM_1 \oplus \SM_2 \in \kM(\SP)$.
+\end{proof}
+
+\begin{claim}
+  $\SB_\RR \oplus \SB_\RR = \SB_{\RR^2}$
+
+  Consider the collection of all open rectangle of the form $(a_1, b_1) \times (a_2, b_2)$ such $a_i, b_i \in \QQ$.
+  which are contained in $O \subseteq \RR^2$
+\end{claim}
+
+\begin{definition}[The Borel $\sigma$ algebra on the extended real line]
+We use the notion $\ol{\RR} = \RR \cup \{-\infty, \infty\} = [-\infty, \infty]$.
+One possibility to define ``$\SB_{\ol{\RR}}$'' is the $\sigma$-algebra generated by open sets in $\RR, \{\infty\}, \{-\infty\}$
+open intervals should be $(a, b), (a, \infty], [-\infty, b)$ for $-\infty \leq a < b \leq \infty$. Then define $d(x, y) = |\arctan(x) - \arctan(y)|$ and 
+$\arctan(\infty) = \pi/2$, $\arctan(-\infty) = -\pi/2$.
+\end{definition}
+
+\section{Measures}
+
+\begin{definition}
+Measures are $\sigma$-additive set functions, $\mu(\emptyset) = 0$ and
+\[\mu\left(\biguplus_{j=1}^\infty E_j\right) = \sum_{j=1}^\infty \mu(E_j)\]
+where $E_1, E_2, \dotsc$ is a sequence of disjoint sets.
+\end{definition}
+
+\begin{remark}
+There is some property   
+
+$E \subseteq F \implies \mu(E) \leq \mu(F)$ 
+
+$F = E \uplus (F \setminus E) \implies \mu(F) = \mu(E) + \mu(F \setminus E)$
+
+$\mu(\bigcup A_j) \leq \sum \mu(A_j)$
+we can write $\bigcup A_j$ as a disjoint union, i.e.,
+$E_1 = A_1$, $E_2 = A_2 \setminus A_1$, $E_3 = A_3 \setminus (A_1 \cup A_2)$, and so on then
+$\mu(\bigcup A_j) = \mu(\bigcup E_j) = \sum \mu(E_j) \leq \mu(A_j)$
+\end{remark}
+
+The monotone convergence theorem for sets (continuity from below)
+
+\begin{theorem}
+  
+If $E_1 \subseteq E_2 \subseteq E_3 \subseteq \dotsm$ then
+\[\mu\left(\bigcup_{j=1}^\infty E_j\right) = \lim_{j\to\infty} \mu(E_j)\]
+\end{theorem}
+
+\begin{proof}
+  
+$\bigcup E_j = E_1 \cup (E_2 \setminus E_1) \cup (E_3 \setminus (E_1 \cup E_2)) \cup \dotsm$
+\end{proof}
