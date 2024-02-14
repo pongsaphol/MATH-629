@@ -456,5 +456,159 @@ Define $\bar{\mu}$ by $\bar{\mu}(E \cup F) = \mu(E)$.
 \begin{proof}
   Define $\SC = \{E : f^{-1}(E) \in \SM\}$, observe that $\SC$ is a $\sigma$-algebra. then
   \[f(x) = \bigcup E_j \iff x \in f^{-1}\left(\bigcup E_j\right) \iff x \in \bigcup f^{-1}(E_j) \iff \bigcup\{x  : f(x) \in E_j\}\]
-
 \end{proof}
+
+\begin{claim}
+$f: X \to Y$ is $(\SM, \SN)$-measurable, $g: Y \to Z$ is $(\SN, \SR)$-measurable then $g \circ f: X \to Z$ is $(\SM, \SR)$-measurable.
+\end{claim}
+\begin{proof}
+  $(g \circ f)^{-1}(E) = \{x \in X : g(f(x)) \in E\} = f^{-1}(g^{-1}(E)) = \{x \in X: f(x) \in g^{-1}(E)\}$
+\end{proof}
+
+vector-valued-function
+$f: X \to (Y_1 \times Y_2 \times \dotsm \times Y_n)$ and defined by 
+$x \mapsto (f_1(x), f_2(x), \dotsc, f_n(x))$ where $f_j: X \to Y_j$ is $(\SM, \SN_j)$-measurable.
+
+Then $f$ is $(\SM, \SN_1, \SN_2, \dotsc,\SN_n)$ if and only if $f_i(\SM_i, \SN_i)$-measurable.
+\begin{align*}
+  f^{-1}(E_1 \times E_2 \times \dotsm \times E_n) &= f_1^{-1}(E_1) \cap f_2^{-1}(E_2) \cap \dotsm \cap f_n^{-1}(E_n) \\
+  &= \bigcap_{j=1}^n f_j^{-1}(E_j)
+\end{align*}
+
+Let $f: X \to \RR$, $g: X \to \RR$ $\SM$ $\sigma$-algebra on $X$, $f, g$ are $\SM$-measurable
+What about $f(x) + g(x)$
+
+$M(x) = \max\{f(x), g(x)\}$, $f,g: X \to \RR$, $\SM$-measurable.
+The collection $(a, \infty)$ generates the Borel $\sigma$-algebra on $\RR$.
+$(a, \infty) \setminus (b, \infty) = (a, b]$ for $a < b$ and $(a, c) = \bigcup_n (a, c - \frac1n]$
+$M^{-1}(a, \infty) = \{x : f(x) > a, g(x) > a\} = f^{-1}(a, \infty) \cap g^{-1}(a, \infty)$
+
+$f_n: X \to \RR$, $\SM$-measurable, tehn $S = \sup_n f_n$ is $\SM$-measurable.
+$S^{-1}(a, \infty) = \{x : \sup f_n(x) > a\} = \bigcup_n \{x : f_n(x) > a\} = \bigcup f_n^{-1}(a, \infty)$
+
+Similar for $\min$ and $\inf$.
+
+\begin{definition}
+If $f_n: X \to \RR$, $\SM$-measurable then \[\limsup f_n = \inf_k \sup_{n \ge k} f_n\]
+\[\liminf f_n = \sup_k \inf_{n \ge k} f_n\]
+\end{definition}
+
+\begin{claim}
+  $\limsup f_n$ and $\liminf f_n$ are $\SM$-measurable.
+\end{claim}
+
+\begin{proof}
+  $f_n$ has a pointwise limit if $\lim\limits_{n\to\infty}f_n(x)$ exists for all $x \in X$.
+  $\{x \subseteq X : \lim f_n(x) \text{ exists }\} = \{x \subseteq X : \underbrace{\limsup f_n(x) - \liminf f_n(x)}_{D(x)} = 0\} = D^{-1}(\{0\})$
+\end{proof}
+
+\section{Integration}
+
+nonnegative simple function are measurable function with finitely many values in $\RR$ (NOT on $\bar{\RR}$).
+$s: X \to \RR$, $s(x) = \sum z_j \mathbbm{1}_{x, s(z) = z_j}(x) = \sum z_j \mathbbm{1}_{f^{-1}({z_j})}$
+If values of $s$ are $\{z_1, \dotsc, z_n\}$
+
+% \pagebreak
+% \begin{proof}
+%   for any $v \in (\mathrm{span}(S_1) + \mathrm{span}(S_2))$, there exists $w_1 \in \mathrm{span}(S_1)$, $w_2 \in \mathrm{span}(S_2)$ such that
+%   $v = w_1 + w_2$. Then, from the definiton of the span, there exists $\alpha_1, \alpha_2, \dotsc, \alpha_n \in \mathbb{F}$ and $a_1, a_2, \dotsc, a_n \in S_1$ such that 
+%   \[w_1 = \sum_{i = 1}^n \alpha_ia_i\]
+%   Similarly, there exists $\beta_1, \beta_2, \dotsc, \beta_m \in \mathbb{F}$ and $b_1, b_2, \dotsc, b_m \in S_2$ such that
+%   \[ w_2 = \sum_{j = 1}^m \beta_jb_j\]
+%   Then, since for all $a_i$, $a_i \in S_1 \cup S_2$ and for all $b_j$, $b_j \in S_1 \cup S_2$, then
+%   \[v = w_1 + w_2 = \sum_{i = 1}^n \alpha_ia_i + \sum_{j = 1}^m \beta_jb_j \in \mathrm{span}(S_1 \cup S_2)\]
+% \end{proof}
+
+\begin{theorem}
+  Consider nonnegative measurable function $f$.
+  There exist a sequence of simple function $s_n$ such that 
+  \begin{itemize}
+    \item $0 \le s_n \le s_{n+1} \le f$ (i.e, $s_n(x) \le s_{n+1}(x)$)
+    \item $\lim\limits_{n\to\infty}s_n(x) = f(x)$ for all $x$
+    \item The convergence is uniform on all sets where $f$ is bounded.
+  \end{itemize}
+    If $E$ is such that $|f(x)| \le M$ for all $x \in E$ then
+    \[\sup_{x \in E} f(x) - s_n(x) \to 0\]
+\end{theorem}
+
+\begin{proof}
+  $s_n$ is defined so that if takes value in $[0, 2^n)$. Consider the segment $\frac{k}{2^n}$ on y-axis,
+  then $$s_n(x) = \begin{cases}
+    k\cdot2^{-n} & \text{if } k2^{-n} \le f(x) < (k+1)2^{-n}, 0 \le k \le 4^n - 1 \\
+    2^n & \text{if } f(x) \ge 2^n
+  \end{cases}$$
+
+If $f(x) < 2^n$ then $0 \le f(x) - s_n(x) \le 2^{-n}$. We can see that $s_n(x) \le s_{n+1}(x)$ because
+each step of $s_{n+1}$ is a refinement of $s_n$.
+\end{proof}
+
+We first define the integral for simple function (in analogy to the definition of Riemann-integral for stop functions)
+\begin{definition}
+  Define 
+  $s(x) = \sum_j c_j \mathbbm{1}_{E_j}$
+  where the $E_j$ are pairwise disjoint, $\biguplus E_j = X$, then
+  \[\int s \ \mathrm{d}\mu = \sum_j c_j \mu(E_j)\]
+\end{definition}
+
+\begin{claim}
+  $$s(x) = \sum{j=1}^n c_j\mathbbm{1}_{E_j}(x) = \sum_{k = 1}^m d_k \mathbbm{1}_{E_k}(x)$$
+  where $X = \biguplus E_j = \biguplus E_k$. If $x \in E_j \cap E_k$ then $c_j = d_k$.
+\end{claim}
+
+\begin{proof}
+  We know that $\biguplus_{j, k} E_j \cap E_k = X$ and $E_j = \biguplus_{k} E_j \cap E_k$
+  GOAL: $\sum_{j=1}^n c_j\mu(E_j) = \sum_{k=1}^m d_k \mu(F_k)$
+  LHS = \begin{align*}
+    \sum_{j=1}^n c_j \sum_{k=1}^\infty \mu(E_j \cap F_k) &= \sum_{k=1}^m \sum_{j=1}^n d_k \mu(E_j \cap E_k) \\
+    &= \sum_{k=1}^m d_k \mu(F_k)
+  \end{align*}
+\end{proof}
+
+
+\begin{lemma}
+  \[\int (s + t)\ \mathrm{d}\mu = \int s \ \mathrm{d}\mu+ \int t\ \mathrm{d}\mu\] 
+  where 
+\end{lemma}
+
+\begin{remark}
+  Can shortly write 
+  \[\int s + t = \int s + \int t\]
+\end{remark}
+
+\begin{proof}
+  \begin{align*}
+  s = \sum_{j=1}^n c_j \mathbbm{1}_{E_j} &= \sum_{j}\sum_k c_j \mathbbm{1}_{E_{j} \cap F_k} \\
+  t = \sum_{k=1}^m d_k \mathbbm{1}_{F_k} &= \sum_{j}\sum_k d_k \mathbbm{1}_{E_{j} \cap F_k} \\
+  s + t&= \sum_{j, k} (c_j + d_k) \mu(E_j \cap F_k) \\
+  \end{align*} 
+  \begin{align*}
+    \int s \mathrm{d}\mu &= \sum_{j, k}c_j \mu(E_j \cap F_k) \\
+    \int t \mathrm{d}\mu &= \sum_{j, k}d_k \mu(E_j \cap F_k) \\
+    \int (s + t) \mathrm{d}\mu &= \sum_{j, k}(c_j + d_k) \mu(E_j \cap F_k) \\
+  \end{align*}
+\end{proof}
+
+\begin{lemma}
+  $\nu(E) = \int_E s \ \mathrm{d}\mu = \int s \mathbbm{1}_E\ \mathrm{d}\mu = \sum c_j \mu(E_j \cap E)$
+  this defines a measure on $\SM$ (given $\sigma$-algebra)
+\end{lemma}
+
+\begin{proof}
+  If $E^l$ is a sequence of pairwise disjoint measureable set, check
+  \[\nu\left(\biguplus E^l\right) = \sum \nu(E^l)\] 
+  \begin{align*}
+    \nu\left(\biguplus E^l\right) &= \sum c_j \mu(E-j \cap \biguplus E^l) \\
+    &= \sum_{j=1}^n c_j \sum_l \mu(E_j \cap E^l) \\
+    &= \sum_l \sum_j c_j \mu(E_j \cap E^l) \\
+    &= \sum_l \nu(E^l)
+  \end{align*}
+\end{proof}
+
+\begin{definition}
+  For any non-negative $f$, a measurable function, define
+  \[\int f \ \mathrm{d}\mu = \sup_{s \le f, s \text{ simple}} \int s \ \mathrm{d}\mu\]
+\end{definition}
+
+
+
+
