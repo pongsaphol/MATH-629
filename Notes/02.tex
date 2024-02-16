@@ -611,6 +611,83 @@ We first define the integral for simple function (in analogy to the definition o
   \[\int f \ \mathrm{d}\mu = \sup_{s \le f, s \text{ simple}} \int s \ \mathrm{d}\mu\]
 \end{definition}
 
+\begin{remark}
+  If $0 \le f \leq g$ then $\int f \ \mathrm{d}\mu \leq \int g \ \mathrm{d}\mu$
+\end{remark}
 
+\begin{theorem}[Monotone Convergence Theorem]
+  If $\{f_n\}$ is a sequence of measurable function, and $0 \le f_n \le f_{n+1}$ for all $n$. 
+  (that means $f(x) = \lim\limits_{n\to\infty}f_n(x)$)Then
+  \[\int f\ \mathrm{d}\mu = \lim_{n\to\infty}\int f_n\ \mathrm{d}\mu\]
+\end{theorem}
 
+\begin{proof}
+  $f_n \le f_{n+1} \le f$ then $\int f_n \le \int f \implies \lim_{n\to\infty} \int f_n \le \int f$.
 
+  We need to show $\int f \le \lim\limits_{n\to\infty} \int f_n$.
+  So, it suffices to show that for any $0 \le s_\text{simple} \le f$, that 
+  $\int s \le \lim\limits_{n\to\infty} \int f_n$.
+
+  It suffices to show that for any $\eps > 0$, $(1-\eps)\int s\ \mathrm{d}\mu \le \lim \int f_n\ \mathrm{d}\mu$ (if we show this, we are done).
+  Define $E_n = \{x : (1 - \eps)s(x) \le f_n(x)\}$, any $x$ will be in one of the $E_n$.
+  $(1-\eps) s(x)\ \mathrm{d}\mu< \lim f_n(x) = x\ \mathrm{d}\mu$. This mean $(1-\eps)s(x) < f_n(x)$ for sufficiently large $n$ ($n \ge N(x)$).
+  We will show that $\bigcup E_n = X$, consider the easure defined by $\nu(E) = \int_E s\ \mathrm{d}\mu$ (we checked that it is a measure).
+  We have $E_n \subseteq E_{n+1} \to X$. Continuity, $\lim\limits_{n\to\infty}\nu(E_n) = \nu(\bigcup E_n)= \nu(X) = \int s\ \mathrm{d}\mu$.
+  $$\nu(E_n) = \int s\ \mathrm{d}\mu \le \int \frac{f_n(x)}{1-\eps}\ \mathrm{d}\mu = \frac1{1-\eps}\int f_n(x)\ \mathrm{d}\mu$$
+  We have 
+  $$\int s\ \mathrm{d}\mu = \nu(x) = \lim_{n\to\infty}\nu(E_n) = \lim_{n\to\infty} \frac1{1-\eps} \int f_n\ \mathrm{d}\mu$$
+\end{proof}
+
+\begin{lemma}
+  If $f, g$ are non negative measurable function then 
+  \[\int (f+g)\ \mathrm{d}\mu = \int f\ \mathrm{d}\mu + \int g\ \mathrm{d}\mu\]
+\end{lemma}
+
+\begin{proof}
+  Now we have a tool \begin{itemize}
+    \item Monotone Convergence Theorem
+    \item Existence of $s_n\gg f, t_n \gg g$
+  \end{itemize}
+  \begin{align*}
+    \int (s_n + t_n)\ \mathrm{d}\mu &= \int s_n\ \mathrm{d}\mu + \int t_n\ \mathrm{d}\mu \\
+    \int (f + g)\ \mathrm{d}\mu &= \int f\ \mathrm{d}\mu + \int g\ \mathrm{d}\mu
+  \end{align*}
+\end{proof}
+
+\begin{lemma}
+$f_k \ge 0$, $f_k$ is measurable
+$$\int \sum_{k=1}^\infty f_k(x)\ \mathrm{d}\mu = \sum_{k=1}^\infty\int f_k \ \mathrm{d}\mu$$
+\end{lemma}
+
+\begin{proof}
+  Just apply the Monotone Convergence Theorem.
+  \[s_n(x) = \sum_{k=1}^n f_k(x) \to \sum_{k=1}^\infty f_k(x)\]
+\end{proof}
+
+\begin{remark}
+We cannot always interchange integrals and limits (monotonicity is key)
+$f_n(x) = \frac1n\mathbbm{1}_{[0, n]}, \int f_n\ \mathrm{d}\mu = 1$ 
+but $\lim\limits_{n\to\infty}f_n(x) = 0$.
+\[0 = \int \lim_{n\to \infty} f_n(x)\ \mathrm{d}\mu < \lim_{n\to\infty}\int f_n\ \mathrm{d}\mu\]
+
+Or on $[0, 1]$, $f_n(x) = n\mathbbm{1}_{[0, 1/n]}$, $\int f_n\ \mathrm{d}\mu = 1$ but $\lim\limits_{n\to\infty}f_n(x) = 0$. 
+$$\lim\limits_{n\to\infty}f_n(x) = \begin{cases}
+  \infty & \text{if } x = 0 \\ 
+  0 & \text{if } x > 0
+\end{cases}$$
+\end{remark}
+  
+\begin{lemma}[Faton's Lemma]
+  If $\{f_j\}$ is a sequnce of measurable functions
+  \[\int\liminf_{j\to\infty}f_j(x)\ \mathrm{d}\mu \le \liminf_{j\to\infty}\int f_j \ \mathrm{d}\mu\] 
+  meaning 
+  \[\int\lim_{k\to\infty} \underbrace{\inf_{j\ge k}f_j(x)\ \mathrm{d}\mu}_{\text{increasing on }k} \le \lim_{k\to\infty}\inf_{j\ge k}\int f_j \ \mathrm{d}\mu\] 
+\end{lemma}
+\begin{proof}
+  \[\int\lim_{k\to\infty} \inf_{j\ge k}f_j(x)\ \mathrm{d}\mu \underset{\text{MCT}}= \lim_{k \to \infty} \int \inf_{j \ge k}f_j(x) \ \mathrm{d}\mu \]
+  Take any $l \ge k$, then $\inf_{j \ge k}f_j(x) \le f_l(x)$, then for $l \ge k$
+  \begin{align*}
+    \int\inf_{j\ge k}f_j(x)\ \mathrm{d}\mu &\le \int f_l(x)\ \mathrm{d}\mu \\
+    \int \inf_{j\ge k}f_j(x)\ \mathrm{d}\mu &\le \inf_{j\ge k}\int f_j(x)\ \mathrm{d}\mu
+  \end{align*}
+\end{proof}
