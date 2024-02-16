@@ -526,9 +526,9 @@ If values of $s$ are $\{z_1, \dotsc, z_n\}$
     \item $0 \le s_n \le s_{n+1} \le f$ (i.e, $s_n(x) \le s_{n+1}(x)$)
     \item $\lim\limits_{n\to\infty}s_n(x) = f(x)$ for all $x$
     \item The convergence is uniform on all sets where $f$ is bounded.
-  \end{itemize}
     If $E$ is such that $|f(x)| \le M$ for all $x \in E$ then
     \[\sup_{x \in E} f(x) - s_n(x) \to 0\]
+  \end{itemize}
 \end{theorem}
 
 \begin{proof}
@@ -551,23 +551,25 @@ We first define the integral for simple function (in analogy to the definition o
 \end{definition}
 
 \begin{claim}
-  $$s(x) = \sum{j=1}^n c_j\mathbbm{1}_{E_j}(x) = \sum_{k = 1}^m d_k \mathbbm{1}_{E_k}(x)$$
+  $$s(x) = \sum_{j=1}^n c_j\mathbbm{1}_{E_j}(x) = \sum_{k = 1}^m d_k \mathbbm{1}_{E_k}(x)$$
   where $X = \biguplus E_j = \biguplus E_k$. If $x \in E_j \cap E_k$ then $c_j = d_k$.
 \end{claim}
 
 \begin{proof}
   We know that $\biguplus_{j, k} E_j \cap E_k = X$ and $E_j = \biguplus_{k} E_j \cap E_k$
+
   GOAL: $\sum_{j=1}^n c_j\mu(E_j) = \sum_{k=1}^m d_k \mu(F_k)$
-  LHS = \begin{align*}
-    \sum_{j=1}^n c_j \sum_{k=1}^\infty \mu(E_j \cap F_k) &= \sum_{k=1}^m \sum_{j=1}^n d_k \mu(E_j \cap E_k) \\
+
+  \begin{align*}
+    \text{LHS}=\sum_{j=1}^n c_j \sum_{k=1}^\infty \mu(E_j \cap F_k) &= \sum_{k=1}^m \sum_{j=1}^n d_k \mu(E_j \cap E_k) \\
     &= \sum_{k=1}^m d_k \mu(F_k)
   \end{align*}
 \end{proof}
 
 
 \begin{lemma}
+  Suppose $s, t$ are simple functions then
   \[\int (s + t)\ \mathrm{d}\mu = \int s \ \mathrm{d}\mu+ \int t\ \mathrm{d}\mu\] 
-  where 
 \end{lemma}
 
 \begin{remark}
@@ -579,12 +581,12 @@ We first define the integral for simple function (in analogy to the definition o
   \begin{align*}
   s = \sum_{j=1}^n c_j \mathbbm{1}_{E_j} &= \sum_{j}\sum_k c_j \mathbbm{1}_{E_{j} \cap F_k} \\
   t = \sum_{k=1}^m d_k \mathbbm{1}_{F_k} &= \sum_{j}\sum_k d_k \mathbbm{1}_{E_{j} \cap F_k} \\
-  s + t&= \sum_{j, k} (c_j + d_k) \mu(E_j \cap F_k) \\
+  s + t&= \sum_{j, k} (c_j + d_k) \mathbbm{1}_{E_j \cap F_k} \\
   \end{align*} 
   \begin{align*}
-    \int s \mathrm{d}\mu &= \sum_{j, k}c_j \mu(E_j \cap F_k) \\
-    \int t \mathrm{d}\mu &= \sum_{j, k}d_k \mu(E_j \cap F_k) \\
-    \int (s + t) \mathrm{d}\mu &= \sum_{j, k}(c_j + d_k) \mu(E_j \cap F_k) \\
+    \int s\ \mathrm{d}\mu &= \sum_{j, k}c_j \mu(E_j \cap F_k) \\
+    \int t\ \mathrm{d}\mu &= \sum_{j, k}d_k \mu(E_j \cap F_k) \\
+    \int (s + t)\ \mathrm{d}\mu &= \sum_{j, k}(c_j + d_k) \mu(E_j \cap F_k) \\
   \end{align*}
 \end{proof}
 
@@ -597,7 +599,7 @@ We first define the integral for simple function (in analogy to the definition o
   If $E^l$ is a sequence of pairwise disjoint measureable set, check
   \[\nu\left(\biguplus E^l\right) = \sum \nu(E^l)\] 
   \begin{align*}
-    \nu\left(\biguplus E^l\right) &= \sum c_j \mu(E-j \cap \biguplus E^l) \\
+    \nu\left(\biguplus E^l\right) &= \sum c_j \mu(E_j \cap \biguplus E^l) \\
     &= \sum_{j=1}^n c_j \sum_l \mu(E_j \cap E^l) \\
     &= \sum_l \sum_j c_j \mu(E_j \cap E^l) \\
     &= \sum_l \nu(E^l)
