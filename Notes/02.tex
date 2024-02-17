@@ -365,7 +365,7 @@ $\mu(\bigcup A_j) = \mu(\bigcup E_j) = \sum \mu(E_j) \leq \mu(A_j)$
 
 The monotone convergence theorem for sets (continuity from below)
 
-\begin{theorem}
+\begin{theorem}\label{lem:continuity-from-below}
   
 If $E_1 \subseteq E_2 \subseteq E_3 \subseteq \dotsm$ then
 \[\mu\left(\bigcup_{j=1}^\infty E_j\right) = \lim_{j\to\infty} \mu(E_j)\]
@@ -590,7 +590,7 @@ We first define the integral for simple function (in analogy to the definition o
   \end{align*}
 \end{proof}
 
-\begin{lemma}
+\begin{lemma}\label{lem:measure-from-set}
   $\nu(E) = \int_E s \ \mathrm{d}\mu = \int s \mathbbm{1}_E\ \mathrm{d}\mu = \sum c_j \mu(E_j \cap E)$
   this defines a measure on $\SM$ (given $\sigma$-algebra)
 \end{lemma}
@@ -622,20 +622,33 @@ We first define the integral for simple function (in analogy to the definition o
 \end{theorem}
 
 \begin{proof}
-  $f_n \le f_{n+1} \le f$ then $\int f_n \le \int f \implies \lim_{n\to\infty} \int f_n \le \int f$.
 
-  We need to show $\int f \le \lim\limits_{n\to\infty} \int f_n$.
-  So, it suffices to show that for any $0 \le s_\text{simple} \le f$, that 
-  $\int s \le \lim\limits_{n\to\infty} \int f_n$.
+  Since $f_n \le f_{n+1} \le f$ then 
+  \begin{align*}
+    \lim_{n\to\infty}\int f_n\ \mathrm{d}\mu \le \int f\ \mathrm{d}\mu
+  \end{align*}
+  % $\int f_n \le \int f \implies \lim_{n\to\infty} \int f_n \le \int f$.
 
-  It suffices to show that for any $\eps > 0$, $(1-\eps)\int s\ \mathrm{d}\mu \le \lim \int f_n\ \mathrm{d}\mu$ (if we show this, we are done).
+  We need to show that $$\int f \ \mathrm{d}\mu\le \lim\limits_{n\to\infty} \int f_n\ \mathrm{d}\mu$$
+  So, it suffices to show that for any $0 \le \underset{\text{simple}}s \le f$, that 
+
+  $$\int s\ \mathrm{d}\mu \le \lim\limits_{n\to\infty} \int f_n\ \mathrm{d}\mu$$
+
+  It suffices to show that for any $\eps > 0$, 
+  $$(1-\eps)\int s\ \mathrm{d}\mu \le \lim_{n\to\infty} \int f_n\ \mathrm{d}\mu$$
   Define $E_n = \{x : (1 - \eps)s(x) \le f_n(x)\}$, any $x$ will be in one of the $E_n$.
-  $(1-\eps) s(x)\ \mathrm{d}\mu< \lim f_n(x) = x\ \mathrm{d}\mu$. This mean $(1-\eps)s(x) < f_n(x)$ for sufficiently large $n$ ($n \ge N(x)$).
-  We will show that $\bigcup E_n = X$, consider the easure defined by $\nu(E) = \int_E s\ \mathrm{d}\mu$ (we checked that it is a measure).
-  We have $E_n \subseteq E_{n+1} \to X$. Continuity, $\lim\limits_{n\to\infty}\nu(E_n) = \nu(\bigcup E_n)= \nu(X) = \int s\ \mathrm{d}\mu$.
-  $$\nu(E_n) = \int s\ \mathrm{d}\mu \le \int \frac{f_n(x)}{1-\eps}\ \mathrm{d}\mu = \frac1{1-\eps}\int f_n(x)\ \mathrm{d}\mu$$
-  We have 
-  $$\int s\ \mathrm{d}\mu = \nu(x) = \lim_{n\to\infty}\nu(E_n) = \lim_{n\to\infty} \frac1{1-\eps} \int f_n\ \mathrm{d}\mu$$
+  Then for any $x \in E_n$, 
+  $$s(x) \le \frac{f_n(x)}{1-\eps}$$
+  % $$(1-\eps) s(x)< \lim_{n \to \infty} f_n(x) = f(x)$$
+  % This mean $(1-\eps)s(x) < f_n(x)$ for sufficiently large $n$ ($n \ge N(x)$).
+  % We will show that $$\bigcup_{n=1}^\infty E_n = X$$
+  Consider the measure defined by $$\nu(E) = \int_E s\ \mathrm{d}\mu$$ (we already show this is a measure in \ref{lem:measure-from-set}).
+  We have $E_n \subseteq E_{n+1}$ and $E_n \to X$. By continuity from below~\ref{lem:continuity-from-below}, 
+  $$\lim\limits_{n\to\infty}\nu(E_n) = \nu(X) = \int s\ \mathrm{d}\mu$$
+  We get that
+  $$\nu(E_n) = \int_{E_n} s\ \mathrm{d}\mu \le \int_{E_n} \frac{f_n(x)}{1-\eps}\ \mathrm{d}\mu \leq \int\frac{f_n(x)}{1-\eps}\ \mathrm{d}\mu = \frac1{1-\eps}\int f_n(x)\ \mathrm{d}\mu$$
+  Finally, we take limit on both sides and we have 
+  $$\lim_{n\to\infty}\nu(E_n) = \nu(\RR) = \int s\ \mathrm{d}\mu = \lim_{n\to\infty} \frac1{1-\eps} \int f_n\ \mathrm{d}\mu$$
 \end{proof}
 
 \begin{lemma}
