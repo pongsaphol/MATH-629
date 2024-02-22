@@ -1,0 +1,417 @@
+
+\chapter{Integration}
+\section{Simple Functions}
+
+\begin{definition}
+  nonnegative simple function are measurable function with finitely many values in $\RR$ (NOT on $\bar{\RR}$).
+  $s: X \to \RR$, $s(x) = \sum z_j \mathbbm{1}_{x, s(z) = z_j}(x) = \sum z_j \mathbbm{1}_{f^{-1}({z_j})}$
+  If values of $s$ are $\{z_1, \dotsc, z_n\}$
+\end{definition}
+
+% \pagebreak
+% \begin{proof}
+%   for any $v \in (\mathrm{span}(S_1) + \mathrm{span}(S_2))$, there exists $w_1 \in \mathrm{span}(S_1)$, $w_2 \in \mathrm{span}(S_2)$ such that
+%   $v = w_1 + w_2$. Then, from the definiton of the span, there exists $\alpha_1, \alpha_2, \dotsc, \alpha_n \in \mathbb{F}$ and $a_1, a_2, \dotsc, a_n \in S_1$ such that 
+%   \[w_1 = \sum_{i = 1}^n \alpha_ia_i\]
+%   Similarly, there exists $\beta_1, \beta_2, \dotsc, \beta_m \in \mathbb{F}$ and $b_1, b_2, \dotsc, b_m \in S_2$ such that
+%   \[ w_2 = \sum_{j = 1}^m \beta_jb_j\]
+%   Then, since for all $a_i$, $a_i \in S_1 \cup S_2$ and for all $b_j$, $b_j \in S_1 \cup S_2$, then
+%   \[v = w_1 + w_2 = \sum_{i = 1}^n \alpha_ia_i + \sum_{j = 1}^m \beta_jb_j \in \mathrm{span}(S_1 \cup S_2)\]
+% \end{proof}
+
+\begin{theorem}
+  Consider nonnegative measurable function $f$.
+  There exist a sequence of simple function $s_n$ such that 
+  \begin{itemize}
+    \item $0 \le s_n \le s_{n+1} \le f$ (i.e, $s_n(x) \le s_{n+1}(x)$)
+    \item $\lim\limits_{n\to\infty}s_n(x) = f(x)$ for all $x$
+    \item The convergence is uniform on all sets where $f$ is bounded.
+    If $E$ is such that $|f(x)| \le M$ for all $x \in E$ then
+    \[\sup_{x \in E} f(x) - s_n(x) \to 0\]
+  \end{itemize}
+\end{theorem}
+
+\begin{proof}
+  $s_n$ is defined so that if takes value in $[0, 2^n)$. Consider the segment $\frac{k}{2^n}$ on y-axis,
+  then $$s_n(x) = \begin{cases}
+    k\cdot2^{-n} & \text{if } k2^{-n} \le f(x) < (k+1)2^{-n}, 0 \le k \le 4^n - 1 \\
+    2^n & \text{if } f(x) \ge 2^n
+  \end{cases}$$
+
+If $f(x) < 2^n$ then $0 \le f(x) - s_n(x) \le 2^{-n}$. We can see that $s_n(x) \le s_{n+1}(x)$ because
+each step of $s_{n+1}$ is a refinement of $s_n$.
+\end{proof}
+
+We first define the integral for simple function (in analogy to the definition of Riemann-integral for stop functions)
+\begin{definition}
+  Define 
+  $s(x) = \sum_j c_j \mathbbm{1}_{E_j}$
+  where the $E_j$ are pairwise disjoint, $\biguplus E_j = X$, then
+  \[\int s \ \mathrm{d}\mu = \sum_j c_j \mu(E_j)\]
+\end{definition}
+
+\begin{claim}
+  $$s(x) = \sum_{j=1}^n c_j\mathbbm{1}_{E_j}(x) = \sum_{k = 1}^m d_k \mathbbm{1}_{E_k}(x)$$
+  where $X = \biguplus E_j = \biguplus E_k$. If $x \in E_j \cap E_k$ then $c_j = d_k$.
+\end{claim}
+
+\begin{proof}
+  We know that $\biguplus_{j, k} E_j \cap E_k = X$ and $E_j = \biguplus_{k} E_j \cap E_k$
+
+  GOAL: $\sum_{j=1}^n c_j\mu(E_j) = \sum_{k=1}^m d_k \mu(F_k)$
+
+  \begin{align*}
+    \text{LHS}=\sum_{j=1}^n c_j \sum_{k=1}^\infty \mu(E_j \cap F_k) &= \sum_{k=1}^m \sum_{j=1}^n d_k \mu(E_j \cap E_k) \\
+    &= \sum_{k=1}^m d_k \mu(F_k)
+  \end{align*}
+\end{proof}
+
+
+\begin{lemma}
+  Suppose $s, t$ are simple functions then
+  \[\int (s + t)\ \mathrm{d}\mu = \int s \ \mathrm{d}\mu+ \int t\ \mathrm{d}\mu\] 
+\end{lemma}
+
+\begin{remark}
+  Can shortly write 
+  \[\int s + t = \int s + \int t\]
+\end{remark}
+
+\begin{proof}
+  \begin{align*}
+  s = \sum_{j=1}^n c_j \mathbbm{1}_{E_j} &= \sum_{j}\sum_k c_j \mathbbm{1}_{E_{j} \cap F_k} \\
+  t = \sum_{k=1}^m d_k \mathbbm{1}_{F_k} &= \sum_{j}\sum_k d_k \mathbbm{1}_{E_{j} \cap F_k} \\
+  s + t&= \sum_{j, k} (c_j + d_k) \mathbbm{1}_{E_j \cap F_k} \\
+  \end{align*} 
+  \begin{align*}
+    \int s\ \mathrm{d}\mu &= \sum_{j, k}c_j \mu(E_j \cap F_k) \\
+    \int t\ \mathrm{d}\mu &= \sum_{j, k}d_k \mu(E_j \cap F_k) \\
+    \int (s + t)\ \mathrm{d}\mu &= \sum_{j, k}(c_j + d_k) \mu(E_j \cap F_k) \\
+  \end{align*}
+\end{proof}
+
+\begin{lemma}\label{lem:measure-from-set}
+  $\nu(E) = \int_E s \ \mathrm{d}\mu = \int s \mathbbm{1}_E\ \mathrm{d}\mu = \sum c_j \mu(E_j \cap E)$
+  this defines a measure on $\SM$ (given $\sigma$-algebra)
+\end{lemma}
+
+\begin{proof}
+  If $E^l$ is a sequence of pairwise disjoint measureable set, check
+  \[\nu\left(\biguplus E^l\right) = \sum \nu(E^l)\] 
+  \begin{align*}
+    \nu\left(\biguplus E^l\right) &= \sum c_j \mu(E_j \cap \biguplus E^l) \\
+    &= \sum_{j=1}^n c_j \sum_l \mu(E_j \cap E^l) \\
+    &= \sum_l \sum_j c_j \mu(E_j \cap E^l) \\
+    &= \sum_l \nu(E^l)
+  \end{align*}
+\end{proof}
+
+\section{Non-negative Measurable Functions}
+
+\begin{definition}
+  For any non-negative $f$, a measurable function, define
+  \[\int f \ \mathrm{d}\mu = \sup_{s \le f, s \text{ simple}} \int s \ \mathrm{d}\mu\]
+\end{definition}
+
+\begin{remark}
+  If $0 \le f \leq g$ then $\int f \ \mathrm{d}\mu \leq \int g \ \mathrm{d}\mu$
+\end{remark}
+
+\begin{theorem}[Monotone Convergence Theorem]
+  If $\{f_n\}$ is a sequence of measurable function, and $0 \le f_n \le f_{n+1}$ for all $n$. 
+  (that means $f(x) = \lim\limits_{n\to\infty}f_n(x)$)Then
+  \[\int f\ \mathrm{d}\mu = \lim_{n\to\infty}\int f_n\ \mathrm{d}\mu\]
+\end{theorem}
+
+\begin{proof}
+
+  Since $f_n \le f_{n+1} \le f$ then 
+  \begin{align*}
+    \lim_{n\to\infty}\int f_n\ \mathrm{d}\mu \le \int f\ \mathrm{d}\mu
+  \end{align*}
+  % $\int f_n \le \int f \implies \lim_{n\to\infty} \int f_n \le \int f$.
+
+  We need to show that $$\int f \ \mathrm{d}\mu\le \lim\limits_{n\to\infty} \int f_n\ \mathrm{d}\mu$$
+  So, it suffices to show that for any $0 \le \underset{\text{simple}}s \le f$, that 
+
+  $$\int s\ \mathrm{d}\mu \le \lim\limits_{n\to\infty} \int f_n\ \mathrm{d}\mu$$
+
+  It suffices to show that for any $\eps > 0$, 
+  $$(1-\eps)\int s\ \mathrm{d}\mu \le \lim_{n\to\infty} \int f_n\ \mathrm{d}\mu$$
+  Define $E_n = \{x : (1 - \eps)s(x) \le f_n(x)\}$, any $x$ will be in one of the $E_n$.
+  Then for any $x \in E_n$, 
+  $$s(x) \le \frac{f_n(x)}{1-\eps}$$
+  % $$(1-\eps) s(x)< \lim_{n \to \infty} f_n(x) = f(x)$$
+  % This mean $(1-\eps)s(x) < f_n(x)$ for sufficiently large $n$ ($n \ge N(x)$).
+  % We will show that $$\bigcup_{n=1}^\infty E_n = X$$
+  Consider the measure defined by $$\nu(E) = \int_E s\ \mathrm{d}\mu$$ (we already show this is a measure in \ref{lem:measure-from-set}).
+  We have $E_n \subseteq E_{n+1}$ and $E_n \to X$. By continuity from below~\ref{lem:continuity-from-below}, 
+  $$\lim\limits_{n\to\infty}\nu(E_n) = \nu(X) = \int s\ \mathrm{d}\mu$$
+  We get that
+  $$\nu(E_n) = \int_{E_n} s\ \mathrm{d}\mu \le \int_{E_n} \frac{f_n(x)}{1-\eps}\ \mathrm{d}\mu \leq \int\frac{f_n(x)}{1-\eps}\ \mathrm{d}\mu = \frac1{1-\eps}\int f_n(x)\ \mathrm{d}\mu$$
+  Finally, we take limit on both sides and we have 
+  $$\lim_{n\to\infty}\nu(E_n) = \nu(\RR) = \int s\ \mathrm{d}\mu \le \lim_{n\to\infty} \frac1{1-\eps} \int f_n\ \mathrm{d}\mu$$
+\end{proof}
+
+\begin{lemma}
+  If $f, g$ are non negative measurable function then 
+  \[\int (f+g)\ \mathrm{d}\mu = \int f\ \mathrm{d}\mu + \int g\ \mathrm{d}\mu\]
+\end{lemma}
+
+\begin{proof}
+  Now we have a tool \begin{itemize}
+    \item Monotone Convergence Theorem
+    \item Existence of $s_n\gg f, t_n \gg g$
+  \end{itemize}
+  \begin{align*}
+    \int (s_n + t_n)\ \mathrm{d}\mu &= \int s_n\ \mathrm{d}\mu + \int t_n\ \mathrm{d}\mu \\
+    \int (f + g)\ \mathrm{d}\mu &= \int f\ \mathrm{d}\mu + \int g\ \mathrm{d}\mu
+  \end{align*}
+\end{proof}
+
+\begin{lemma}
+$f_k \ge 0$, $f_k$ is measurable
+$$\int \sum_{k=1}^\infty f_k(x)\ \mathrm{d}\mu = \sum_{k=1}^\infty\int f_k \ \mathrm{d}\mu$$
+\end{lemma}
+
+\begin{proof}
+  Just apply the Monotone Convergence Theorem.
+  \[s_n(x) = \sum_{k=1}^n f_k(x) \to \sum_{k=1}^\infty f_k(x)\]
+\end{proof}
+
+\begin{remark}
+We cannot always interchange integrals and limits (monotonicity is key)
+$f_n(x) = \frac1n\mathbbm{1}_{[0, n]}, \int f_n\ \mathrm{d}\mu = 1$ 
+but $\lim\limits_{n\to\infty}f_n(x) = 0$.
+\[0 = \int \lim_{n\to \infty} f_n(x)\ \mathrm{d}\mu < \lim_{n\to\infty}\int f_n\ \mathrm{d}\mu\]
+
+Or on $[0, 1]$, $f_n(x) = n\mathbbm{1}_{[0, 1/n]}$, $\int f_n\ \mathrm{d}\mu = 1$ but $\lim\limits_{n\to\infty}f_n(x) = 0$. 
+$$\lim\limits_{n\to\infty}f_n(x) = \begin{cases}
+  \infty & \text{if } x = 0 \\ 
+  0 & \text{if } x > 0
+\end{cases}$$
+\end{remark}
+  
+\begin{lemma}[Faton's Lemma]
+  If $\{f_j\}$ is a sequnce of measurable functions
+  \[\int\liminf_{j\to\infty}f_j(x)\ \mathrm{d}\mu \le \liminf_{j\to\infty}\int f_j \ \mathrm{d}\mu\] 
+  meaning 
+  \[\int\lim_{k\to\infty} \underbrace{\inf_{j\ge k}f_j(x)\ \mathrm{d}\mu}_{\text{increasing on }k} \le \lim_{k\to\infty}\inf_{j\ge k}\int f_j \ \mathrm{d}\mu\] 
+\end{lemma}
+\begin{proof}
+  \[\int\lim_{k\to\infty} \inf_{j\ge k}f_j(x)\ \mathrm{d}\mu \underset{\text{MCT}}= \lim_{k \to \infty} \int \inf_{j \ge k}f_j(x) \ \mathrm{d}\mu \]
+  Take any $l \ge k$, then $\inf_{j \ge k}f_j(x) \le f_l(x)$, then for $l \ge k$
+  \begin{align*}
+    \int\inf_{j\ge k}f_j(x)\ \mathrm{d}\mu &\le \int f_l(x)\ \mathrm{d}\mu \\
+    \int \inf_{j\ge k}f_j(x)\ \mathrm{d}\mu &\le \inf_{j\ge k}\int f_j(x)\ \mathrm{d}\mu
+  \end{align*}
+\end{proof}
+
+\section{General Measurable Functions}
+
+Integral for ``general'' measurable functions.
+
+\begin{definition}
+  Given a measurable function $f$, we define the \textbf{positive part} of $f$ as 
+  \[f^+(x) = \max\{f(x), 0\}\]
+  and the \textbf{negative part} of $f$ as
+  \[f^-(x) = \max\{-f(x), 0\}\]
+  Then we get that 
+  \[f = f^+ - f^-\]
+\end{definition}
+
+\begin{definition}
+  $f: X \to \RR$ (or $\bar{\RR}$)
+  Suppose that $f$ is a measurable function, then we define
+  \[\int f \ \mathrm{d}\mu = \int f^+\ \mathrm{d}\mu - \int f^-\ \mathrm{d}\mu\]
+  provided that at least one of $\int f^\pm \ \mathrm{d}\mu$ is finite
+\end{definition}
+\begin{definition}
+  $f: X \to \RR$ (or $\bar{\RR}$)
+  $f$ is \textbf{integrable} if $\int f^+ \ \mathrm{d}\mu$, $\int f^- \ \mathrm{d}\mu$ is finite
+  $\iff$ $\int |f| \ \mathrm{d}\mu$ is finite
+
+  $\mathcal{L}^1$ is the class of integrable function
+\end{definition}
+
+\begin{definition}
+$f: X \to \CC$ is measureable ($\iff$ $\Re(f)$ and $\Im(f)$ are measurable)
+Assumeing that $\Re f \in \mathcal{L}^1$ and $\Im f \in \mathcal{L}^1$ then
+\[\int f\ \mathrm{d}\mu = \int \Re f \ \mathrm{d}\mu + i \int \Im f \ \mathrm{d}\mu\]
+\end{definition}
+
+\begin{claim}
+  Suppose that $f, g$ are measurable then
+  \[\int f + g\ \mathrm{d}\mu  = \int f\ \mathrm{d}\mu + \int g\ \mathrm{d}\mu\]
+  \[\int \alpha f \ \mathrm{d}\mu + \alpha \int f \ \mathrm{d}\mu\]
+\end{claim}
+
+\begin{lemma}
+  $f: X \to \bar{\RR}$ is measurable, and $\int |f| \ \mathrm{d}\mu = 0$ then $f = 0$ almost everywhere.
+\end{lemma}
+
+\begin{proof}
+  Assume that $\int |f| \ \mathrm{d}\mu = 0$ Find simple function $s_n$ of $f$ then 
+  $\int s_n \ \mathrm{d}\mu = 0 \implies$ $s_n(x) = 0$ almost everywhere.
+  we claim that $s_n\to f$ everywhere then $s_n = 0$ almost everywhere then $f = 0$ alomost everywhere.
+  There is a set $N_n, \mu(N_n) = 0$ so that $s_n = 0$ in $N_n^\complement$. 
+  $N = \bigcup_{n=1}^\infty N_n \implies \mu(N) = 0$ and $N^\complement$ we have $s_n \to f$, $s_n = 0$
+\end{proof}
+
+We could redefine the notion of $f=0$ (being $f(x) = 0$ for all $x \in X$) to $f = 0$ almost everywhere (meaning $f(x) = 0$ except for all null set).
+
+
+\begin{remark}
+  $\|f\| = \int |f|\ \mathrm{d}\mu$ satisfies
+  \begin{itemize}
+    \item $\|f + g\| \le \|f\| + \|g\|$
+    \item $\|c f\| = |c|\|f\|$
+    \item $\|f\| = 0 \iff f = 0$ almost everywhere
+  \end{itemize}
+\end{remark}
+
+\begin{remark}
+  Almost everywhere equal is an equivalence relation.
+  \[f \sim g \underset{\text{def}}\iff f(x) = g(x)\ \mu\text{-almost everywhere}\]
+  $N = \{f \in\mathcal{L}^1 : f(x) = 0 \text{ almost everywhere}\}$ is a linear subspace of $\mathcal{L}^1$ vector.
+  $\mathcal{L}^1/N$ is the set of equivalence classes of $\mathcal{L}^1$.
+\end{remark}
+
+$f_n \to f$ almose everywhere, $f_n \ge 0$, $f_n$ measurable, Can we define $\int f\ \mathrm{d}\mu$?
+$f$ may not be measurable. This problem is fixed if $f$ we work in a complete measurable space
+$(X, \SM, \mu) \to (X, \bar{\SM}, \bar{\mu})$
+where 
+\[\bar{\SM} = \{A \cup B : A \in \SM, B \text{ a subset of a set of measure }0\}\]
+
+\begin{lemma}
+$f \in \mathcal{L}^1$, $\int |f|\ \mathrm{d}\mu < \infty$. If $f$ is real valued $f = f^+ - f^-$,
+\[\left|\int f\ \mathrm{d}\mu \right| \le \int |f| \ \mathrm{d}\mu\]
+\end{lemma}
+\begin{proof}
+  \begin{align*}
+    \left|\int f\ \mathrm{d}\mu \right| &= \left|\int f^+ - f^- \ \mathrm{d}\mu \right| \\
+    &\le \left|\int f^+ \ \mathrm{d}\mu \right| + \left|\int f^- \ \mathrm{d}\mu \right| \\
+    &= \int f^+ \ \mathrm{d}\mu + \int f^- \ \mathrm{d}\mu \\
+    &= \int |f| \ \mathrm{d}\mu
+  \end{align*}
+\end{proof}
+
+\begin{remark}
+  If $f$ is complex valued, then $|f| = \sqrt{(\Re f)^2 + (\Im f)^2}$.
+  Then
+  \[\left|\int \Re f \right|\le \int |\Re f| \le \int |f|\]
+  \[\left|\int \Im f \right|\le \int |\Im f| \le \int |f|\]
+  So, 
+  \[\left|\int f\ \mathrm{d}\mu \right| \le 2\int |f|\]
+\end{remark}
+
+\begin{remark}
+  Estimate $\int f \ \mathrm{d}\mu = \alpha + i\beta = re^{i \phi}$, then
+  $e^{-i\phi} \int f \ \mathrm{d}\mu$ is real and nonnegative.
+  \begin{align*}
+    \left|\int f \ \mathrm{d}\mu\right| &= \left|e^{-i\phi} \int f \ \mathrm{d}\mu\right| \\
+    % &= \int e^{-i\phi}f \ \mathrm{d}\mu \\
+    &= \Re \int e^{-i\phi}f \ \mathrm{d}\mu \\
+    &\le \int |e^{-i\phi}f| \ \mathrm{d}\mu \\
+    &= \int |f| \ \mathrm{d}\mu
+  \end{align*}
+\end{remark}
+
+$f \in \mathcal{L}^+$ means non-negative, $\nu(E) = \int_E f \ \mathrm{d}\mu$ this is measure
+Check the $\sigma$-additivity
+$E = \biguplus_{n=1}^\infty E_n$, 
+\begin{align*}
+  \nu\left(\biguplus_{n=1}^\infty E_n\right) &= \int_{\biguplus E_n} f \ \mathrm{d}\mu \\
+  &= \int f \mathbbm{1}_{\biguplus E_n} \ \mathrm{d}\mu \\
+  &= \int f \left(\sum_{n=1}^\infty \mathbbm{1}_{E_n}\right) \ \mathrm{d}\mu \\
+  &= \sum_{n=1}^\infty \int f \mathbbm{1}_{E_n} \ \mathrm{d}\mu \\
+  &= \sum_{n=1}^\infty \nu(E_n)
+\end{align*}
+
+\begin{claim}
+  If $f \in \mathcal{L}^1 \cap \mathcal{L}^+$ then $\nu$ is a finite measure.
+\end{claim}
+
+If $\nu(E) = int f  \ \mathrm{d}\mu$
+How does $\int g \ \mathrm{d}\nu$ look like?
+$\nu(E) = \int f \ \mathrm{d}\mu = \int E \ \mathrm{d}\nu$
+We want ``$f\ \mathrm{d}\mu = \mathrm{d}\nu$''
+\begin{lemma}
+  If $f \in \mathcal{L}^+$ and $\nu(E) = \int_E f \ \mathrm{d}\mu$ then for any $g \in \mathcal{L}^+$ or $g \in \mathcal{L}^1$ then,   
+  \[\int g\ \mathrm{d}\nu = \int g f \ \mathrm{d}\mu\]
+\end{lemma}
+
+\begin{proof}
+  \begin{itemize}
+    \item True for characteristic functions of measure set by the definition of $\nu$  
+    \item By linearity of the integral, it is true for simple function
+    \item  $s_n\nearrow g$ if $g \in \mathcal{L}^+$, by Monotone convergence theorem, 
+    \[\int s_n \underset{\text{MCT}}\nearrow \int g\]
+    \begin{align*}
+      \int s_n \ \mathrm{d}\nu &= \int s_n f \ \mathrm{d}\mu \\
+      \int g \ \mathrm{d}\nu &= \int g f \ \mathrm{d}\mu
+    \end{align*}
+    Then extend to general g by linearity
+  \end{itemize}
+\end{proof}
+
+%TODO: break the integration chapter
+
+\begin{theorem}
+  If $X$ is a finite measure space, if $f_n$ measurable, $f_n \in \mathcal{L}^1$ (integrable) and $f_n \to f$ uniformly on $X$. 
+  then $$\int |f_n - f| \ \mathrm{d}\mu \to 0$$
+  and 
+  $$\int f_n\ \mathrm{d}\mu \to \int f\ \mathrm{d}\mu$$
+\end{theorem}
+  
+\begin{remark}
+  Uniform convergence means
+  \[\sup_{x \in X} |f_n(x) - f(x)| \to 0\]
+  as $n \to \infty$
+\end{remark}
+
+\begin{proof}
+  We can rewrite that term as 
+  \begin{align*}
+    \int |f_n - f| \ \mathrm{d}\mu &\le \int \sup_{x\in X} |f_n - f|\ \mathrm{d}\mu \\ 
+    &= \mu(X) \sup_{x\in X} |f_n - f| \to 0\\
+  \end{align*}
+  We can rewrite $f$ as $f = (f - f_n) + (f_n)$ since $f-f_n$ converge and $f_n$ integrable so $f$ must be integrable.
+  \begin{align*}
+    \left|\int f_n - \int f\right| &= \left|\int (f_n - f)\ \mathrm{d}\mu\right| \\
+    &\le \int |f_n - f|\ \mathrm{d}\mu 
+  \end{align*}
+\end{proof}
+
+\begin{definition}
+  Suppose that $f_n, f$ are measurable
+  $f_n \to f$ almost uniformly if for every $\eps > 0$
+  there is a measurable set $E$ such taht $\mu(E) < \eps$ and $f_n \to f$ uniformly on $E^\complement$
+  ($\sup_{x\in E^\complement} |f_n(x) - f(x)| \to 0$)
+\end{definition}
+
+\begin{theorem}[Egorov's Theorem]
+  If $\mu(X) < \infty$ and if $f_n \to f$ almost everywhere then 
+  $f_n \to f$ almost uniformly
+\end{theorem}
+
+\begin{remark}
+  $f_n(x) \to f(x)$ if for every $k$ there exists $n = n(k)$ such that
+  $|f_m(x) - f(x)| < \frac1k$ for all $m \ge n(k)$
+\end{remark}
+
+\begin{proof}
+  Fix $\eps > 0$, define 
+  \begin{align*}
+    E_n(k) &:= \left\{x : |f_m(x) - f(x)| \ge \frac1k \text{ for some }m \ge n\right\} \\
+    &= \bigcup_{m \ge n} \left\{x : |f_m(x) - f(x)| \ge \frac1k\right\}
+  \end{align*}
+  (Given $x$ For sufficiently large $n$, $x \notin E_n(k)$), $E_n(k) \supseteq E_{n+1}(k)$
+  $\bigcap_n E_n(k) = \emptyset$ because of $f_n \to f$ everywhere.
+  Form the continuity from above~\ref{lem:continuity-from-above}, we get that $\lim_{n\to\infty}\mu(E_n(k)) = 0$.
+  Find $n(k)$ such that $\mu(E_{n(k)}(k)) < \frac{\eps}{2^k}$, then $E = \bigcup_k E_{n(k)}(k)$ has measure $< \eps$.
+  
+  For $x\in \left(\bigcup_k E_{n(k)}(k)\right)^\complement = \bigcap_k E_{n(k)}(k)^\complement$
+  I have for all $k$ $|f_m(x) - f(x)| < \frac1k$ for all $m \ge n(k)$.
+  So, we get $f_n \to f$ uniformly on $E^\complement$.
+\end{proof}
