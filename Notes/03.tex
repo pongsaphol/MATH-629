@@ -3,7 +3,7 @@
 \section{Simple Functions}
 
 \begin{definition}
-  nonnegative simple function are measurable function with finitely many values in $\RR$ (NOT on $\bar{\RR}$).
+  nonnegative simple function are measurable function with finitely many values in $\RR$ (NOT on $\overline{\RR}$).
   $s: X \to \RR$, $s(x) = \sum z_j \mathbbm{1}_{x, s(z) = z_j}(x) = \sum z_j \mathbbm{1}_{f^{-1}({z_j})}$
   If values of $s$ are $\{z_1, \dotsc, z_n\}$
 \end{definition}
@@ -221,13 +221,13 @@ Integral for ``general'' measurable functions.
 \end{definition}
 
 \begin{definition}
-  $f: X \to \RR$ (or $\bar{\RR}$)
+  $f: X \to \RR$ (or $\overline{\RR}$)
   Suppose that $f$ is a measurable function, then we define
   \[\int f \ \mathrm{d}\mu = \int f^+\ \mathrm{d}\mu - \int f^-\ \mathrm{d}\mu\]
   provided that at least one of $\int f^\pm \ \mathrm{d}\mu$ is finite
 \end{definition}
 \begin{definition}
-  $f: X \to \RR$ (or $\bar{\RR}$)
+  $f: X \to \RR$ (or $\overline{\RR}$)
   $f$ is \textbf{integrable} if $\int f^+ \ \mathrm{d}\mu$, $\int f^- \ \mathrm{d}\mu$ is finite
   $\iff$ $\int |f| \ \mathrm{d}\mu$ is finite
 
@@ -247,7 +247,7 @@ Assumeing that $\Re f \in \mathcal{L}^1$ and $\Im f \in \mathcal{L}^1$ then
 \end{claim}
 
 \begin{lemma}
-  $f: X \to \bar{\RR}$ is measurable, and $\int |f| \ \mathrm{d}\mu = 0$ then $f = 0$ almost everywhere.
+  $f: X \to \overline{\RR}$ is measurable, and $\int |f| \ \mathrm{d}\mu = 0$ then $f = 0$ almost everywhere.
 \end{lemma}
 
 \begin{proof}
@@ -279,9 +279,9 @@ We could redefine the notion of $f=0$ (being $f(x) = 0$ for all $x \in X$) to $f
 
 $f_n \to f$ almost everywhere, $f_n \ge 0$, $f_n$ measurable, Can we define $\int f\ \mathrm{d}\mu$?
 $f$ may not be measurable. This problem is fixed if $f$ we work in a complete measurable space
-$(X, \SM, \mu) \to (X, \bar{\SM}, \bar{\mu})$
+$(X, \SM, \mu) \to (X, \overline{\SM}, \overline{\mu})$
 where 
-\[\bar{\SM} = \{A \cup B : A \in \SM, B \text{ a subset of a set of measure }0\}\]
+\[\overline{\SM} = \{A \cup B : A \in \SM, B \text{ a subset of a set of measure }0\}\]
 
 \begin{lemma}
 $f \in \mathcal{L}^1$, $\int |f|\ \mathrm{d}\mu < \infty$. If $f$ is real valued $f = f^+ - f^-$,
