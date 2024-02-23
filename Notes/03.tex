@@ -277,7 +277,7 @@ We could redefine the notion of $f=0$ (being $f(x) = 0$ for all $x \in X$) to $f
   $\mathcal{L}^1/N$ is the set of equivalence classes of $\mathcal{L}^1$.
 \end{remark}
 
-$f_n \to f$ almose everywhere, $f_n \ge 0$, $f_n$ measurable, Can we define $\int f\ \mathrm{d}\mu$?
+$f_n \to f$ almost everywhere, $f_n \ge 0$, $f_n$ measurable, Can we define $\int f\ \mathrm{d}\mu$?
 $f$ may not be measurable. This problem is fixed if $f$ we work in a complete measurable space
 $(X, \SM, \mu) \to (X, \bar{\SM}, \bar{\mu})$
 where 
@@ -317,7 +317,11 @@ $f \in \mathcal{L}^1$, $\int |f|\ \mathrm{d}\mu < \infty$. If $f$ is real valued
   \end{align*}
 \end{remark}
 
-$f \in \mathcal{L}^+$ means non-negative, $\nu(E) = \int_E f \ \mathrm{d}\mu$ this is measure
+\begin{lemma}
+$f \in \mathcal{L}^+$ means non-negative, then $\nu(E) = \int_E f \ \mathrm{d}\mu$ define measure
+\end{lemma}
+
+\begin{proof}
 Check the $\sigma$-additivity
 $E = \biguplus_{n=1}^\infty E_n$, 
 \begin{align*}
@@ -327,6 +331,7 @@ $E = \biguplus_{n=1}^\infty E_n$,
   &= \sum_{n=1}^\infty \int f \mathbbm{1}_{E_n} \ \mathrm{d}\mu \\
   &= \sum_{n=1}^\infty \nu(E_n)
 \end{align*}
+\end{proof}
 
 \begin{claim}
   If $f \in \mathcal{L}^1 \cap \mathcal{L}^+$ then $\nu$ is a finite measure.
@@ -366,8 +371,7 @@ We want ``$f\ \mathrm{d}\mu = \mathrm{d}\nu$''
   
 \begin{remark}
   Uniform convergence means
-  \[\sup_{x \in X} |f_n(x) - f(x)| \to 0\]
-  as $n \to \infty$
+  \[\lim_{n \to \infty}\sup_{x \in X} |f_n(x) - f(x)| = 0\]
 \end{remark}
 
 \begin{proof}
@@ -414,4 +418,103 @@ We want ``$f\ \mathrm{d}\mu = \mathrm{d}\nu$''
   For $x\in \left(\bigcup_k E_{n(k)}(k)\right)^\complement = \bigcap_k E_{n(k)}(k)^\complement$
   I have for all $k$ $|f_m(x) - f(x)| < \frac1k$ for all $m \ge n(k)$.
   So, we get $f_n \to f$ uniformly on $E^\complement$.
+\end{proof}
+
+\begin{theorem}[Baby Dominated Convergence Theorem]
+  Given $(X, \SM, \mu)$ where $\mu$ is a finite measure ($\mu(X) < \infty$).
+  Let $\{f_n\}$ be measurable functions, $f_n \to f$ everywhere.
+  \[|f_n| \le C \implies \int |f_n - f| \ \mathrm{d}\mu \to 0\]
+  i.e. $f_n$ converges with respect to $L^1$-(semi-)norm.
+\end{theorem}
+
+\begin{corollary}
+  \[\int_X f_n\ \mathrm{d}\mu \to \int_X f \ \mathrm{d}\mu\]
+\end{corollary}
+
+\begin{proof}
+  Tools:
+  \begin{enumerate}[(i)]
+    \item If $f_n \to f$ uniformly then $\int |f_n-f| \ \mathrm{d}\mu \to 0$
+    \item Egorov's Theorem
+  \end{enumerate}
+  $|f(x)| \le C$, $f$ is measurable.
+  Given any $\eps > 0$, By Egorov's Theorem, find a set of measure $E$ that $\mu(E) < \frac{\eps}{4C}$ 
+  such that $f_n \to f$ uniformly on $E^\complement$.
+  Then
+  \begin{align*}
+    \int |f_n - f| \ \mathrm{d}\mu &\le \int_E |f_n - f| \ \mathrm{d}\mu + \int_{E^\complement} |f_n - f| \ \mathrm{d}\mu  \\
+  \end{align*}
+  we know that $|f_n - f| \le |f_n| + |f| \le 2C$ then
+  \begin{align*}
+    \int |f_n - f| \ \mathrm{d}\mu &\le 2C\mu(E) + \int_{E^\complement} |f_n - f| \ \mathrm{d}\mu  \\
+    &\le \frac{\eps}{2} + \int_{E^\complement} |f_n - f| \ \mathrm{d}\mu  \\ 
+  \end{align*}
+  so for large $n$, the second term will be $< \frac{\eps}{2}$.
+\end{proof}
+
+\begin{theorem}[Dominated Convergence Theorem]
+  Given $(X, \SM, \mu)$ where $\mu$ is a finite measure ($\mu(X) < \infty$).
+  Let $\{f_n\}$ be measurable functions, $f_n \to f$ almost everywhere.
+  \[\sup_n|f_n| \in \mathcal{L}^1 \implies \int |f_n - f| \ \mathrm{d}\mu \to 0\]
+\end{theorem}
+
+\begin{proof}
+  Define $g(x) = \sup_n |f_n(x)|$ 
+  The trick is $$|f_n - f| =\begin{cases}
+     \frac{|f_n-f|}{g}g & \text{if } g > 0 \\
+     0 & \text{if } g = 0
+  \end{cases}$$
+  define a new measure $\nu(E) = \int_E g \ \mathrm{d}\mu$.
+  Then $\nu$ is a finite measure, and 
+  \begin{align*}
+    g \mathrm{d}\mu &= \mathrm{d}\nu \\
+    \int h \ \mathrm{d}\nu &= \int hg \ \mathrm{d}\mu
+  \end{align*}
+  then define
+  $$h_n = \begin{cases}
+    \frac{|f_n - f|}{g} & \text{if } g > 0 \implies |h_n(x)| \le 2\\
+    0 & \text{if } g = 0 \implies h_n(x) \to 0
+  \end{cases}$$
+  Then\begin{align*}
+    \int |f_n - f| \ \mathrm{d}\mu &= \int h_n g \ \mathrm{d}\mu \\
+    &= \int h_n \ \mathrm{d}\nu \to 0
+  \end{align*}
+  By Baby Dominated Convergence Theorem
+\end{proof}
+
+\begin{theorem}
+  If $f$ is Riemann integrable on $[a, b]$ then $f$ is Lebesgue integrable.
+  \[\int_a^b f(x)\ \mathrm{d}x \int_{[a, b]}f \ \mathrm{d}\mu\]
+  where $\mu$ is Lebesgue measure.
+\end{theorem}
+
+\begin{proof}
+  Define
+  \[U_Pf(x) = \begin{cases}
+    M_j & \text{if } x \in [x_{j-1}, x_j) \\
+    M_n & \text{if } x \int [x_{n-1}, x_n]
+  \end{cases}\]
+  Similarly for the lower sum $L_Pf(x)$. 
+  If $P'$ is a refinement of $P$ then $U_{P'}f(x) \le U_Pf(x)$ and $L_{P'}f(x) \ge L_Pf(x)$.
+  Since $f$ is Riemann integrable, then
+  \[\inf_P U(f, P) =: \overline{\mathcal{I}}_a^b(f) = \underline{\mathcal{I}}_a^b(f) := \sup_P L(f, P)\]
+  Choose a sequence of partitions $P_n$ such that
+  \begin{align*}
+    \int U_{P_n}f \to \overline{\mathcal{I}}_a^b(f) \\
+    \int L_{P_n}f \to \underline{\mathcal{I}}_a^b(f)
+  \end{align*}
+  Since that $P_{n+1}$ is a refinement of the $P_n$ then $U_{P_n}f \searrow U(x)$ and 
+  $L_{P_n}f \nearrow L(x)$ and $L(x) = U(x)$.
+  Notice that from Riemann integrable, $|f| < C$, then
+  \begin{align*}
+    \int_{[a, b]} U_{P_n}f &\to \overline{\mathcal{I}}_a^b(f) = \int_{[a, b]} U(x)\ \mathrm{d}m\\
+    \int_{[a, b]} L_{P_n}f &\to \underline{\mathcal{I}}_a^b(f) =\int_{[a, b]} L(x)\ \mathrm{d}m
+  \end{align*}
+  If $f$ is Riemann integrable, 
+  \[\int U \ \mathrm{d}m = \int L \ \mathrm{d}m = \int_a^b f(x) \ \mathrm{d}x\]
+  and $U \ge L$ then
+  \[\int (U-L)\ \mathrm{d}m = 0 \implies U(x) = L(x)\]
+  almose everywhere, $L(x) \le f(x) \le U(x) \implies f = L$ almost everywhere and $f = U$ almost everywhere.
+  Then $f$ is Lebesgue integrable and
+  \[\int f \ \mathrm{d}m = \int L \ \mathrm{d}m = \int U \ \mathrm{d}m\]
 \end{proof}
