@@ -110,7 +110,7 @@ We first define the integral for simple function (in analogy to the definition o
 
 \begin{definition}
   For any non-negative $f$, a measurable function, define
-  \[\int f \ \mathrm{d}\mu = \sup_{s \le f, s \text{ simple}} \int s \ \mathrm{d}\mu\]
+  \[\int f \ \mathrm{d}\mu = \sup_{\underset{s \text{ simple}}{s \le f}} \int s \ \mathrm{d}\mu\]
 \end{definition}
 
 \begin{remark}
@@ -348,8 +348,17 @@ We want ``$f\ \mathrm{d}\mu = \mathrm{d}\nu$''
 
 \begin{proof}
   \begin{itemize}
-    \item True for characteristic functions of measure set by the definition of $\nu$  
-    \item By linearity of the integral, it is true for simple function
+    \item True for characteristic functions of measure set by the definition of $\nu$.
+    Fix $g = \mathbbm{1}_E$ for some $E \in \SM$
+    $$
+      \int g\ \mathrm{d}\nu =\int \mathbbm{1}_E \ \mathrm{d}\mu= \nu(E) = \int_E f \ \mathrm{d}\mu = \int \mathbbm{1}_E f \ \mathrm{d}\mu = \int g f \ \mathrm{d}\mu
+    $$
+    \item By linearity of the integral, it is true for simple function.
+    Fix $g = \sum_{j=1}^n c_j \mathbbm{1}_{E_j}$, then
+    $$
+      \int g\ \mathrm{d}\nu = \sum_{j=1}^n c_j \nu(E_j) = \sum_{j=1}^n c_j \int_{E_j} f \ \mathrm{d}\mu = \int g f \ \mathrm{d}\mu
+    $$
+
     \item  $s_n\nearrow g$ if $g \in \mathcal{L}^+$, by Monotone convergence theorem, 
     \[\int s_n \underset{\text{MCT}}\nearrow \int g\]
     \begin{align*}
