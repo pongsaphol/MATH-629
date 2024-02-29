@@ -192,7 +192,7 @@ $$\lim\limits_{n\to\infty}f_n(x) = \begin{cases}
 \end{cases}$$
 \end{remark}
   
-\begin{lemma}[Faton's Lemma]
+\begin{lemma}[Fatou's Lemma]
   If $\{f_j\}$ is a sequnce of measurable functions
   \[\int\liminf_{j\to\infty}f_j(x)\ \mathrm{d}\mu \le \liminf_{j\to\infty}\int f_j \ \mathrm{d}\mu\] 
   meaning 
@@ -476,7 +476,7 @@ We want ``$f\ \mathrm{d}\mu = \mathrm{d}\nu$''
   define a new measure $\nu(E) = \int_E g \ \mathrm{d}\mu$.
   Then $\nu$ is a finite measure, and 
   \begin{align*}
-    g \mathrm{d}\mu &= \mathrm{d}\nu \\
+    g\ \mathrm{d}\mu &= \mathrm{d}\nu \\
     \int h \ \mathrm{d}\nu &= \int hg \ \mathrm{d}\mu
   \end{align*}
   then define
@@ -491,9 +491,11 @@ We want ``$f\ \mathrm{d}\mu = \mathrm{d}\nu$''
   By Baby Dominated Convergence Theorem
 \end{proof}
 
+\section{Integration from Riemann to Lebesgue}
+
 \begin{theorem}
   If $f$ is Riemann integrable on $[a, b]$ then $f$ is Lebesgue integrable.
-  \[\int_a^b f(x)\ \mathrm{d}x \int_{[a, b]}f \ \mathrm{d}\mu\]
+  \[\int_a^b f(x)\ \mathrm{d}x = \int_{[a, b]}f \ \mathrm{d}\mu\]
   where $\mu$ is Lebesgue measure.
 \end{theorem}
 
@@ -527,3 +529,107 @@ We want ``$f\ \mathrm{d}\mu = \mathrm{d}\nu$''
   Then $f$ is Lebesgue integrable and
   \[\int f \ \mathrm{d}m = \int L \ \mathrm{d}m = \int U \ \mathrm{d}m\]
 \end{proof}
+
+\begin{definition}[Improper Riemann integrals]
+  \[\int_0^\infty f(x)\ \mathrm{d}x, \int_1^\infty f(x)\ \mathrm{d}x, \int_0^1 f(x)\ \mathrm{d}x\]
+  if $f$ is not Riemann-integrable on the domain but on every compact subinterval.
+  We can define as
+  \[\int_1^\infty f(x)\ \mathrm{d}x = \lim_{R\to\infty}\int_1^Rf(x) \ \mathrm{d}x\]
+
+\end{definition}
+\begin{example}
+  \[\int_1^\infty \frac{\sin x}{x}\ \mathrm{d}x = \lim_{R\to\infty}\int_1^R\frac{\sin x}x \ \mathrm{d}x\]
+  $I_k = [2k\pi + \frac\pi4, 2k\pi + \frac{3\pi}4]$, $\sin x \ge \frac1{\sqrt2}$, so, $\frac{\sin x}{x} \ge \frac1{x\sqrt2}\cdot \frac{1}{2k\pi + \frac{3\pi}4}$.
+  We can do integration by parts
+  $$
+    \int_1^R \frac{\sin x}x \ \mathrm{d}x = \left.-\frac{\cos x}x\right|_1^R - \int_1^R -\frac{\cos x}{x^2} \ \mathrm{d}x \\
+  $$
+\end{example}
+
+\begin{example}
+  \[\int_0^\infty \sin(x^2)\ \mathrm{d}x\]
+  consider $\sin(x^2)$
+  \[
+    \sqrt{2k\pi + \frac\pi2} \le \sqrt{x^2} \le \sqrt{2k\pi + \frac{3\pi}4} 
+  \]
+  \[\sqrt{2k\pi + \frac{3\pi}4} - \sqrt{2k\pi + \frac{\pi}4} \approx \frac1{\sqrt{k}}\]
+\end{example}
+
+\begin{lemma}
+  Suppose that if $\int_1^\infty |f(x)|\ \mathrm{d}x < \infty$ then $f\in \mathcal{L}^1$.
+\end{lemma}
+\begin{proof}
+  \begin{align*}
+    \int_1^\infty |f(x)|\ \mathrm{d}x &= \int_1^\infty \lim_{n\to\infty}|f(x)|\mathbbm{1}_{[1, n]}(x)\ \mathrm{d}x \\
+    &= \lim_{n\to\infty}\int_1^n |f(x)|\ \mathrm{d}x
+  \end{align*}
+\end{proof}
+
+\begin{theorem}
+  If $f$ is integrable on $\RR$, $$\int_\RR |f(x)|\ \mathrm{d}x < \infty$$ $f \in \mathcal{L}^1$ 
+  then for every $\eps > 0$, there is a continuous function ($C^\infty$) $g$, vanishes off a compact set, 
+  \[\int |f - g| \ \mathrm{d}m < \eps\]
+\end{theorem}
+
+\begin{definition}
+  In our axiometic theorem on the Lebesgue measure, $m(I) = \ell(I)$, $m((a, b]) = b-a$
+  and for a general Borel set on $\RR$, $m$ is given by the \textbf{outer measure} induced by the collection of intervals
+  \[\varrho(E) = \inf \sum_{k=1}^\infty \ell(I_k)\]
+  where the $\inf$ is taken over collections $\{I_k\}$, such that $E \subseteq \bigcup_{k=1}^\infty I_k$
+\end{definition}
+
+\begin{remark}
+  $\widetilde{\varrho}$ defined similarly but we only admit open intervals in the infimum.
+  Obviously, $\widetilde{\varrho}(E) \ge \varrho(E)$
+  Need to show that $\widetilde{\varrho}(E)\le \varrho(E)$
+  we may assume that $\varrho(E) < \infty$, show $\widetilde{\varrho}(E) \le \varrho(E) + \eps$.
+  There is a collection of intervals $I_k$ such that
+  \[\sum_k \ell(I_n) < \varrho(E) + \frac\eps2\]
+  If $I_k = [a_k, b_k]$, then define $J_k = (a_k - \frac{\eps}{2^{k+2}}, b_k + \frac{\eps}{2^{k+2}})$
+  Then $\ell(J_k) = \ell(I_k) + \frac{\eps}{2^{k+1}}$ then
+  \begin{align*}
+    \widetilde{\varrho}(E) \le \sum_{k=1}^\infty \ell(J_k) &\le \sum_{k=1}^\infty \ell(J_k) + \eps2^{-k-1} \\
+    &\le \varrho(E) + \frac\eps2 + \frac\eps2
+  \end{align*}
+
+\end{remark}
+
+
+
+\begin{lemma}
+  $m(E) = \sup\{m(K) : K \subseteq E, K \text{ compact}\}$
+\end{lemma}
+
+\begin{proof}
+  Case where $E = \overline{E}$ and $E$ is bounded, there is nothing to show
+
+  Assume that $E$ is bounded, GOAL: find $K \subseteq E$ such that $m(E\setminus K) < \eps$.
+  Consider $\overline{E} \setminus E$, find $O \supseteq \overline{E} \setminus E$, $m(O\setminus (\overline{E} \setminus E)) < \eps$.
+  then $O^\complement \cap \overline{E} \subseteq E$ because if $x \in O^\complement$, either $x \in \overline{E}$ or $x \in E$.
+  $E \setminus K = E \cap K^\complement \subseteq O \cup \overline{E}^\complement$.
+  Since $E \subseteq \overline{E}$ then $E\setminus K \subseteq O$ and $E\setminus K \subseteq O \setminus (\overline{E} \setminus{E})$ 
+  has measure $< \eps$.
+\end{proof}
+\begin{theorem}
+  For every Borel set $E$, $m(E) < \infty$, there is an open set $O\supseteq E$ such that $m(O\setminus E) < \eps$.
+  where $m(E) = \inf \sum \ell(I_n)$ where $\inf$ take over $I_k$, $I_k$ are open, $E \subseteq \bigcup I_k$
+\end{theorem}
+
+\begin{proof}
+  Define $E_n = E \cap \overline{B}(0, n)$. Find compact set $K_n \subseteq E_n \setminus E_{n-1}$ then
+  $m((E_n \setminus E_{n-1})\setminus K_n) < \eps 2^{-n-1}$.
+  The set $H_l = K_1 \cup \cdots \cup K_l$ is compact and increasing, $H_l \subseteq E_l$ and 
+  \[m(E_l) - \eps \le m(H_l) \le m(E_l) \to m(E)\]
+  % $m(E_l \setminus H_l) < \eps$.
+  % Then $H = \bigcup H_l$ is compact and $H \subseteq E$ and $m(E\setminus H) < \eps$.
+\end{proof}
+
+\begin{theorem}
+  Given an open set $O$, we can decompose $O$ as a disjoint union of ``dyadic cubes''
+\end{theorem}
+
+\begin{theorem}
+  We can choose the cubes a dyadic cubes such that if $O \neq \RR^n$ such that 
+  \[\mathrm{diam}(Q)<\mathrm{dist}(Q, O^C) \le 4 \mathrm{diam}(Q)\]
+\end{theorem}
+
