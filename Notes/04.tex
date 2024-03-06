@@ -1,0 +1,86 @@
+\chapter{$L^p$ Spaces}
+
+\section{normed spaces}
+\begin{remark}
+  If $f_n \to f$ almost everywhere, do we have $\int |f_n -f| \ \mathrm{d}\mu \to 0$?
+  \begin{itemize}
+    \item No, if $f_n = \mathbbm{1}_{[n, n+1]}$ then $f_n \to 0$ almost everywhere but $\int |f_n - 0| \ \mathrm{d}\mu = 1$ and $\int |f_n - f_m|\ \mathrm{d}\mu = 2$.
+    \item No, if $f_n = \mathbbm{1}_{[0, \frac1n]}$
+  \end{itemize}
+\end{remark}
+
+\begin{remark}
+  Convergence in $L^1$ implies convergence almost everywhere?
+  No, If $2^k \le n \le 2^{k+1}$ where $n = 2^k +j$, $j = 0, \dotsc, 2^k-1$
+  $f_{2^k+1} = \mathbbm{1}_{[i 2^{-k}, (i+1)2^{-k}]}$ for $i = 0, \dotsc, 2^k-1$.
+  For $2^k \le n \le 2^{k+1}$, $\|f_n\|_{L^1} = 2^{-k}$
+\end{remark}
+
+\begin{claim}
+  If $f_n \to f$ in $L^1$ ($\int |f_n - f| \ \mathrm{d}\mu \to 0$) 
+  then there is a subsequence $f_{n_k} \to f$ almost everywhere.
+\end{claim}
+
+\begin{proof}
+  Consider the normed space $L^1$ space of semi-nromed space $\mathcal{L}^1$. (define as a equivalence class of almost everywhere where $f \underset{\text{a.e.}}\sim g$ if $f = g$ almost everywhere)
+  Construct a convergence subsequence (a.e. and also in Norm)
+  Choose $\eps = \frac1{2^k}$ there exists number $N(k)$ such that $\|f_l - f_m\| < \frac1{2^k}$ for $l, m \ge N(k)$ for $l, m \ge N(k)$
+  then $\|f_{N(k)} - f_{N(k+1)}\| \le \frac1{2^k}\|$
+  Define
+  \[G(x) = |f_{N(1)}(x)| + \sum_{k=1}^\infty |f_{N(k+1)}(x) - f_{N(k)}(x)|\]
+  then 
+  \begin{align*}
+    \int G(x)\ \mathrm{d}\mu &= \int|f_{N(1)}(x)|\ \mathrm{d}\mu + \sum_{k=1}^\infty \int |f_{N(k+1)}(x) - f_{N(k)}(x)|\ \mathrm{d}\mu
+    &\le \|f_{N(1)}\|_1 + \sum_{k=1}^\infty \frac1{2^k} 
+  \end{align*}
+  So, $G$ is integrable, $\int |G(x)|\ \mathrm{d}\mu < \infty$ then $G(x) < \infty$ almost everywhere.
+  We se that for almost everywhere, 
+  \[f_{N_1}(x) + \sum_{k=1}^\infty f_{N(k+1)} - f_{N(k)}(x)\]
+  converges for almost everywhere $x$, define
+  \[s_M(x) = f_{N(1)}(x) + f_{N(2)}(x) - f_{N(1)}(x) + \dotsc + f_{N(M+1)}(x) - f_{N(M)}(x) = f_{N(M+1)}(x)\]
+  then $s_{M-1}(x) = f_{N(M)}(x)$ and as $M \to \infty$, this is converges for almost everywhere $x$.
+
+  $f(x) = \lim_{M\to\infty} f_{N(M)}$ 
+  \begin{align*}
+    f(x) &= f_{N_1}(x) + \sum_{M=1}^\infty f_{N(M+1)}(x) - f_{N(M)}(x) \\
+    \int |f(x) - f_{N_1}(x)| \ \mathrm{d}\mu &= \int \sum_{M=1}^\infty f_{N(M+1)}(x) - f_{N(M)}(x) \ \mathrm{d}\mu \\
+    &\le \int |f_{N(M+1)}(x) - f_{N(M)}(x)| + \int |f_{N(M+2)} - f_{N(M+1)}| + \dotsc \\
+    &= \sum_{k=M}^\infty \int |f_{N(k+1)}(x) - f_{N(k)}(x)| \ \mathrm{d}\mu \\
+    &\le 2^{1-M}
+  \end{align*}
+  This shows convergence of $f_{N(M)} \to f$ in $L^1$.
+  What happens with $l \ge N(k)$, 
+  \[\|f_l - f\| \le \|f_l - f_{N(k)}\| + \|f_{N(k)} - f\| \le \frac1{2^k}, \to 0\]
+\end{proof}
+
+
+$L^1$ or ($\mathcal{L}^1$) are complete, in the sense that every Cauchy sequence converges.
+$\{f_n\}$ cxauchy, For every $\eps > 0$, there exists $N(\eps)$ such that for $l, m \ge N(\eps)$ then $\|f_l - f_m\| < \eps$
+
+% \begin{proof}
+% \end{proof}
+
+% \begin{theorem}
+  
+% \end{theorem}
+
+\begin{definition}
+  \[\|f\|_p = \left(\int |f|^p \ \mathrm{d}\mu\right)^{\frac1p}\]
+  where $L^P$ is space of equivalence class and $\mathcal{L}^p$ is space of functions
+\end{definition}
+
+\begin{claim}
+  $\|f\|_p$ define norm
+\end{claim}
+\begin{proof}
+  for any $f, g \in L^p$, 
+  \begin{align*}
+    \int |f+g|^p \ \mathrm{d}\mu &\le \int (2 \max{|f|,|g|})^p \ \mathrm{d}\mu \\
+    &= 2\left(\int \max |f|^p, |g|^p\right) \ \mathrm{d}\mu \\
+    &\le 2\int |f|^p + |g|^p\ \mathrm{d}\mu 
+  \end{align*}
+\end{proof}
+
+\begin{remark}
+  $\|f+g\|_p \le 2^{\frac1p}(\|f\|_p + \|g\|_p)$
+\end{remark}

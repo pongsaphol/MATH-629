@@ -399,7 +399,7 @@ We want ``$f\ \mathrm{d}\mu = \mathrm{d}\nu$''
 \begin{definition}
   Suppose that $f_n, f$ are measurable
   $f_n \to f$ almost uniformly if for every $\eps > 0$
-  there is a measurable set $E$ such taht $\mu(E) < \eps$ and $f_n \to f$ uniformly on $E^\complement$
+  there is a measurable set $E$ such that $\mu(E) < \eps$ and $f_n \to f$ uniformly on $E^\complement$
   ($\sup_{x\in E^\complement} |f_n(x) - f(x)| \to 0$)
 \end{definition}
 
@@ -571,6 +571,8 @@ We want ``$f\ \mathrm{d}\mu = \mathrm{d}\nu$''
   \[\int |f - g| \ \mathrm{d}m < \eps\]
 \end{theorem}
 
+\section{Outer Measures}
+
 \begin{definition}
   In our axiometic theorem on the Lebesgue measure, $m(I) = \ell(I)$, $m((a, b]) = b-a$
   and for a general Borel set on $\RR$, $m$ is given by the \textbf{outer measure} induced by the collection of intervals
@@ -633,3 +635,74 @@ We want ``$f\ \mathrm{d}\mu = \mathrm{d}\nu$''
   \[\mathrm{diam}(Q)<\mathrm{dist}(Q, O^C) \le 4 \mathrm{diam}(Q)\]
 \end{theorem}
 
+\begin{remark}
+  If side length of $Q$ is $2^{-k}$ then the diameter is $\sqrt{n}2^{-k}$.
+\end{remark}
+
+\begin{theorem}[Whitney decomposition theorem]
+  Given $\Omega$ open set in $\RR^n$, $\Omega \neq \RR^n$,
+  there is a family $\SF$ of dyadic cubes such that
+  \begin{itemize}
+    \item they are disjoint
+    \item $\biguplus_{Q \in \SF}Q = \Omega$
+    \item For every $Q \in \SF$, $C\mathrm{diam}(Q) < \mathrm{dist}(Q, \Omega^C) \le (2C+2)\mathrm{diam}(Q)$
+  \end{itemize}  
+\end{theorem}
+
+\begin{proof}
+  Define for each $k$ a family of dyadic cubes $\SF_k$ of side length $2^{-k}$ 
+  (i.e., the diameter is $\sqrt{n}2^{-k}$)
+  intersecting the region 
+  $$\Omega_k = \{x : A2^{-k}\sqrt{n} \le \mathrm{dist}(x, \Omega^\complement) \le 2A \cdot 2^{-k}\sqrt{n}\}$$
+  Pick a cube in $\SF_k$, $Q_1$ it contains an $x_Q \in \Omega_k$
+  $$\mathrm{dist}(Q, \Omega^\complement) \le \mathrm{dist}(x_Q, \Omega^\complement)\le 2A \cdot 2^{-k} \sqrt{n} - 2A \mathrm{diam}(Q)$$
+  \begin{align*}
+    \mathrm{dist}(Q, \Omega^\complement) &\ge \mathrm{dist}(x_Q, \Omega^\complement) - \mathrm{diam}(Q) \\
+    &\ge A2^{-k}\sqrt{n} - 2A \mathrm{diam}(Q) \\
+    &= (A-1)\cdot \mathrm{diam}(Q)
+  \end{align*}
+  Then $\SF_T = \bigcup \SF_k$ and finally $\SF = $ collection of all maximal (with respect to inclusion) cubes in $\SF_T$.
+  Fix $Q, Q'$ and assume that $Q \subseteq Q'$ then
+  $$(A-1)\mathrm{diam}Q' \le \mathrm{dist}(Q', \Omega^\complement) \le \mathrm{dist}(Q, \Omega^\complement)\le 2A\cdot \mathrm{diam}(Q)$$
+  then $\mathrm{diam}(Q') \le \frac{2A}{A-1}\mathrm{diam}(Q)$
+\end{proof}
+
+we know that for every $\eps_1 > 0$ we can find a simple function $s$ such that $\int |f - s| \ \mathrm{d}m < \eps_1$.
+(For non-negative $f$ use MCT $s_n \nearrow f$ and $s_n \le f$ so $\int s_n \nearrow \int f\implies \int f - s_n \to 0$ and then we use $f = f_+ - f_-$)
+
+$s = \sum c_j \mathbbm{1}_{E_j}$, $E_j \subseteq O_j$, $m(O_j \setminus E_j)<\eps$ 
+$\widetilde{s} = \sum c_j  \mathbbm{1}_{O_j}$
+\begin{align*}
+  \int \widetilde{s} - s \ \mathrm{d}m &= \left|\int \sum c_j \mathbbm{1}_{O_j}-\mathbbm{1}_{E_j} \ \mathrm{d}m\right| \\
+  &\leq \sum_{j=1}^N |c_j||m(O_j \setminus E_j)| \\
+  &\leq \eps_2
+\end{align*}
+
+Then $\mathbbm{1}_{O_j} = \sum_\nu \mathbbm{1}_{Q_{\nu}}$ where $\{Q_{\nu}\}$ are the Whitney cubes in Whitney Theorem.
+$|O_j| = \sum_{\nu \in I} m(Q_{\nu})$
+There is a finite $\widetilde{I}_j$ such that 
+\[\int \left|\mathbbm{1}_{O_j} - \sum_{\nu \in \widetilde{I}_j} \mathbbm{1}_{Q_\nu}\right| < \eps_3\]
+
+replace $\sum_{j=1}^N c_j \mathbbm{1}_{O_j}$ by $\sum_{j=1}^N c_j \mathbbm{1}_{\bigcup_{\nu \in \widetilde{I}_j}Q_\nu }$
+
+then \[\mathbbm{1}_{Q_\nu}(x_1, \dotsc, x_n) = \prod_{i=1}^n \mathbbm{I_{\nu, i}}(x_i)\]
+
+\begin{lemma}
+  For any $f \in L^1$ there exists $s$ a step function such that $\int |f-s| \ \mathrm{d}m < \eps$
+\end{lemma}
+
+\begin{proof}
+  Suppose that $f \in L^1$ I want to show that there exists $s$ a step function such that $\int |f-s| \ \mathrm{d}m < \eps$ 
+  for any $\eps >0$. Since $f = f^+ - f^-$, WLOG, 
+  $f \ge 0$ (otherwise we can do each positive and negative part and do the sum of both step functions with $\frac\eps2$ bound). 
+  Given any $\eps > 0$, there exists $s'$ a simple function such that $\int |f-s'|\ \mathrm{d}m < \frac\eps2$. Then we can write $s' = \sum_{j=1}^N c_j \mathbbm{1}_{E_j}$, then there exists $O_j$ open set such that $E_j \subseteq O_j$ and $m(O_j\setminus E_j) < \frac\eps{4|c_j|N}$. Since $O_j$ is an open set, then $O_j = \bigcup (a_i, b_i)$ then define $K_n = \bigcup_{i=1}^n (a_i, b_i)$ from continuity from below, there exists $n'$ such that $m(K_{n'}) > m(O_j) - \frac\eps{4|c_j|N}$ and $K_{n'}$ contain finite interval, then we define $O_j' := K_{n'}$. Define $s = \sum_{j=1}^N c_j\mathbbm{1}_{O_j'}$ then
+    \begin{align*}
+        \int |f-s|\ \mathrm{d}m &\le \int |f-s'| \ \mathrm{d}m + \int |s'-s| \ \mathrm{d}m \\
+        &\le \frac\eps2 + \int \left|\sum_{j=1}^N c_j(\mathbbm{1}_{E_j} - \mathbbm{1}_{O_j'})\right|\ \mathrm{d}m \\
+        &\le \frac\eps2 + \sum_{j=1}^N |c_j| \int \left|\mathbbm{1}_{E_j} - \mathbbm{1}_{O_j'}\right|\ \mathrm{d}m \\
+        &= \frac\eps2 + \sum_{j=1}^N |c_j| (m(E_j \setminus O_j') + m(O_j' \setminus E_j))\\
+        &\le \frac\eps2 + \sum_{j=1}^N |c_j| (m(O_j \setminus O_j') + m(O_j \setminus E_j))\\
+        &\le \frac\eps2 + \sum_{j=1}^N |c_j| \left(\frac\eps{4|c_j|N} +\frac\eps{4|c_j|N}\right)\\
+        &< \eps
+    \end{align*}
+\end{proof}
