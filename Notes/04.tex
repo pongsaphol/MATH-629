@@ -66,12 +66,13 @@ $\{f_n\}$ cxauchy, For every $\eps > 0$, there exists $N(\eps)$ such that for $l
 
 \begin{definition}
   \[\|f\|_p = \left(\int |f|^p \ \mathrm{d}\mu\right)^{\frac1p}\]
-  where $L^P$ is space of equivalence class and $\mathcal{L}^p$ is space of functions
+  where $L^P$ is space of equivalence class and $\mathcal{L}^p$ is space of functions,
+  $f \in \mathcal{L}^p$ if $\|f\|_p < \infty$
 \end{definition}
 
-\begin{claim}
-  $\|f\|_p$ define norm
-\end{claim}
+\begin{theorem}
+  $\|f\|_p$ is a norm on $L^p$, if $p \ge 1$ (not a nrom if $p < 1$ because triangle inquality fails)
+\end{theorem}
 \begin{proof}
   for any $f, g \in L^p$, 
   \begin{align*}
@@ -84,3 +85,74 @@ $\{f_n\}$ cxauchy, For every $\eps > 0$, there exists $N(\eps)$ such that for $l
 \begin{remark}
   $\|f+g\|_p \le 2^{\frac1p}(\|f\|_p + \|g\|_p)$
 \end{remark}
+
+\begin{theorem}
+  For $p < 1$ we have inequality
+  \[\|f+g\|_p^p \le \|f\|_p^p + \|g\|_p^p\]
+\end{theorem}
+
+\begin{proof}
+  we claim that
+  \[\int |f+g|^p \ \mathrm{d}\mu \le \int |f|^p \ \mathrm{d}\mu + \int |g|^p\ \mathrm{d}\mu\]
+  for $a, b \in [0, \infty)$, $(a+b)^p \le a^p + b^p$
+  WLOG $b \le a$
+  $f(x) = 1+x^p - (1-x)^p$, $f'(x) \ge 0 \implies (1+x)^p \le 1 + x^p$ for $0 \le x \le 1$ 
+\end{proof}
+
+\begin{remark}
+  For $p < 1$ we do not get$\|f+g\|_p \le \|f\|_p + \|g\|_p$
+  for $x, y \in \RR^2$ want to disprove $\|x+y\|_p \le \|x\|_p + \|y\|_p, p < 1$
+  $$2^{\frac1p} = (1^p + 1^p)^{\frac1p}$$ (it is because failure of convexity of the norm $p < 1$)
+\end{remark}
+
+
+
+
+\begin{claim}
+  For $0 < \theta < 1$, $a, b \ge 0$, then $a^{1-\theta}b^\theta \le (1-\theta)a + \theta b$
+\end{claim}
+
+\begin{proof}
+  Generalized AM-GM inequality ($\sqrt{ab}\le \frac{a+b}{2}$)
+  then put for $0 < \theta < 1$ then $a^{1 -\theta}b^\theta \le (1-\theta)a + \theta b$ 
+  WLOG $b \le a$ then \[\left(\frac ba\right)^\theta \le 1 - \theta + \theta\frac ba\]
+  let $x = \frac ba$ for $0 \le x \le 1$ we need to show that $g(x) = 1- \theta + \theta x - x^\theta \ge 0$
+  then $g'(x) = -1 + \theta -\theta x^{\theta - 1} \le 0$ (because $0 \le \theta \le 1$)
+\end{proof}
+
+\begin{claim}[Holder's inequality]
+  Given $p > 1$, $p'$ to be such that 
+  \[\frac1{p'}+\frac1p = 1\ \ \left(p' = \frac p{p-1}\right)\]
+  for $f \in L^p, g \in L^{p'}$, then $fg \in L^1$ and
+  \[\int |fg| \ \mathrm{d}\mu \le \|f\|_p\|g\|_{p'}\]
+\end{claim}
+
+\begin{proof}
+  Rewrite AM-GM (generalized) as ``Young's inquality'' substitute $a = u^p, 1-\theta = \frac1p, b = v^{p'}, \theta = \frac1{p'}$
+  then we get 
+  \[uv \le \frac1pu^p + \frac1{p'}v^{p'}\]
+  apply $f(x)g(x)$
+  \[\int |f(x)||g(x)|\ \mathrm{d}\mu \le \int \frac{|f(x)|^p}{p} \ \mathrm{d}\mu + \int \frac{|g(x)|^{p'}}{p'}\ \mathrm{d}\mu = \frac{\|f\|_p^p}{p} + \frac{\|g\|_{p'}^{p'}}{p'}\]
+  (This is Holder when two norms are normalized $\|f\|_p = 1 = \|g\|_{p'}$)
+
+  Then $\frac{f(x)}{\|f\|_p}$ has ``p-norm'' equal to 1 because
+  \[\left(\int \left|\frac{f(x)}{\|f\|_p}\right|^p \ \mathrm{d}\mu\right)^{\frac1p} = \frac{1}{\|f\|_p}\left(\int |f(x)|^p \ \mathrm{d}\mu\right)^{\frac1p}\]
+  So
+  \[\int \frac{|f|}{\|f\|_p}\frac{|g|}{\|g\|_{p'}}  \le 1\]
+\end{proof}
+  
+\begin{theorem}[Minkowski's inquality]
+  $p \ge 1$
+  We do have a triangle inquality $\|f + g\|_p \le \|f\|_p + \|g\|_p$
+  \[\left(\int |f+g|^p\ \mathrm{d}\mu \right)^{\frac1p} \le \left(\int |f|^p\ \mathrm{d}\mu\right)^{\frac1p} + \left(\int |g|^p \ \mathrm{d}\mu\right)^{\frac1p}\]
+\end{theorem}
+
+\begin{proof}
+  It is enough to show that
+  \[\|f+g\|_p^p \le (\|f\|_p + \|g\|_p)\|f+g\|_p^{p-1}\]
+  \begin{align*}
+    \int |f+&g|^{p-1+1} \ \mathrm{d}\mu = \int |f + g|^{p-1}|f|\ \mathrm{d}\mu + \int |f+g|^{p-1}|g|\ \mathrm{d}\mu \\
+    &\le \left(\int |f|^{p}\ \mathrm{d}\mu\right)^{\frac{1}{p}}\left(\int |f+g|^p\ \mathrm{d}\mu\right)^{\frac{p-1}p} + \left(\int |g|^{p}\ \mathrm{d}\mu\right)^{\frac{1}{p}}\left(\int |f+g|^p\ \mathrm{d}\mu\right)^{\frac{p-1}p} \\
+    &= (\|f\|_p + \|g\|_p)\|f+g\|_p^{p-1}
+  \end{align*}
+\end{proof}
