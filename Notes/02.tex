@@ -466,28 +466,71 @@ $f: X \to Y$ is $(\SM, \SN)$-measurable, $g: Y \to Z$ is $(\SN, \SR)$-measurable
   $(g \circ f)^{-1}(E) = \{x \in X : g(f(x)) \in E\} = f^{-1}(g^{-1}(E)) = \{x \in X: f(x) \in g^{-1}(E)\}$
 \end{proof}
 
+\begin{claim}
+  $f: X \to \RR$ is $\SM$-measurable then $f^2$ is $\SM$-measurable.
+\end{claim}
+
+\begin{proof}
+  $(f^2)^{-1}(-\infty, a) = \{x : f^2(x) < a\} = \{x : f(x) < \sqrt{a}\} \cup \{x : f(x) > -\sqrt{a}\}$
+\end{proof}
+
+\begin{claim}
+  $f: X \to \RR, g: X \to \RR$ are $\SM$-measurable then $f + g$ and $f \cdot g$ are $\SM$-measurable.
+\end{claim}
+
+\begin{proof}
+  \[(f+g)^{-1}(-\infty, a) = \bigcup_{r \in \QQ} \left(f^{-1}(-\infty, a + r) \cap g^{-1}(-\infty, r)\right)\]
+  \begin{align*}
+    (f+g)^2 &= f^2 + 2fg + g^2 \\
+    fg &= \frac12\left((f+g)^2 - f^2 - g^2\right)
+  \end{align*}
+\end{proof}
+
+
+\begin{claim}
+  
 vector-valued-function
 $f: X \to (Y_1 \times Y_2 \times \dotsm \times Y_n)$ and defined by 
 $x \mapsto (f_1(x), f_2(x), \dotsc, f_n(x))$ where $f_j: X \to Y_j$ is $(\SM, \SN_j)$-measurable.
 
 Then $f$ is $(\SM, \SN_1, \SN_2, \dotsc,\SN_n)$ if and only if $f_i(\SM_i, \SN_i)$-measurable.
+\end{claim}
+\begin{proof}
+  
 \begin{align*}
   f^{-1}(E_1 \times E_2 \times \dotsm \times E_n) &= f_1^{-1}(E_1) \cap f_2^{-1}(E_2) \cap \dotsm \cap f_n^{-1}(E_n) \\
   &= \bigcap_{j=1}^n f_j^{-1}(E_j)
 \end{align*}
+\end{proof}
 
-Let $f: X \to \RR$, $g: X \to \RR$ $\SM$ $\sigma$-algebra on $X$, $f, g$ are $\SM$-measurable
-What about $f(x) + g(x)$
+% Let $f: X \to \RR$, $g: X \to \RR$ $\SM$ $\sigma$-algebra on $X$, $f, g$ are $\SM$-measurable
+% What about $f(x) + g(x)$
 
-$M(x) = \max\{f(x), g(x)\}$, $f,g: X \to \RR$, $\SM$-measurable.
-The collection $(a, \infty)$ generates the Borel $\sigma$-algebra on $\RR$.
-$(a, \infty) \setminus (b, \infty) = (a, b]$ for $a < b$ and $(a, c) = \bigcup_n (a, c - \frac1n]$
-$M^{-1}(a, \infty) = \{x : f(x) > a, g(x) > a\} = f^{-1}(a, \infty) \cap g^{-1}(a, \infty)$
+\begin{claim}
+  $M(x) = \max\{f(x), g(x)\}$, $f,g: X \to \RR$, $\SM$-measurable.
+\end{claim}
 
-$f_n: X \to \RR$, $\SM$-measurable, tehn $S = \sup_n f_n$ is $\SM$-measurable.
-$S^{-1}(a, \infty) = \{x : \sup f_n(x) > a\} = \bigcup_n \{x : f_n(x) > a\} = \bigcup f_n^{-1}(a, \infty)$
+\begin{proof}
+  $M^{-1}(-\infty, a) = \{x : M(x) < a\} = \{x : f(x) < a, g(x) < a\} = f^{-1}(-\infty, a) \cap g^{-1}(-\infty, a)$
+\end{proof}
 
-Similar for $\min$ and $\inf$.
+% The collection $(a, \infty)$ generates the Borel $\sigma$-algebra on $\RR$.
+% $(a, \infty) \setminus (b, \infty) = (a, b]$ for $a < b$ and $(a, c) = \bigcup_n (a, c - \frac1n]$
+% $M^{-1}(a, \infty) = \{x : f(x) > a, g(x) > a\} = f^{-1}(a, \infty) \cap g^{-1}(a, \infty)$
+
+\begin{claim}
+  $f_n: X \to \RR$, $\SM$-measurable, then $S(x) = \sup_{n\in \NN} f_n$ is $\SM$-measurable.
+\end{claim}
+
+\begin{proof}
+  $S^{-1}(-\infty, a) = \{x : S(x) < a\} = \{x : \sup f_n(x) < a\} = \bigcap_n \{x : f_n(x) < a\}$
+\end{proof}
+
+% $S^{-1}(a, \infty) = \{x : \sup f_n(x) > a\} = \bigcup_n \{x : f_n(x) > a\} = \bigcup f_n^{-1}(a, \infty)$
+
+\begin{remark}
+  We use the similar proof for $\min$ and $\inf$.
+\end{remark}
 
 \begin{definition}
 If $f_n: X \to \RR$, $\SM$-measurable then \[\limsup f_n = \inf_k \sup_{n \ge k} f_n\]
@@ -499,6 +542,23 @@ If $f_n: X \to \RR$, $\SM$-measurable then \[\limsup f_n = \inf_k \sup_{n \ge k}
 \end{claim}
 
 \begin{proof}
-  $f_n$ has a pointwise limit if $\lim\limits_{n\to\infty}f_n(x)$ exists for all $x \in X$.
-  $\{x \subseteq X : \lim f_n(x) \text{ exists }\} = \{x \subseteq X : \underbrace{\limsup f_n(x) - \liminf f_n(x)}_{D(x)} = 0\} = D^{-1}(\{0\})$
+  For $\limsup f_n$, fix $k$ then $\displaystyle\sup_{n \ge k} f_n$ is $\SM$-measurable, $\displaystyle\inf_k \displaystyle\sup_{n \ge k} f_n$ is $\SM$-measurable.
+  Similarly for $\liminf f_n$.
+  % $f_n$ has a pointwise limit if $\lim\limits_{n\to\infty}f_n(x)$ exists for all $x \in X$.
+  % $\{x \subseteq X : \lim f_n(x) \text{ exists }\} = \{x \subseteq X : \underbrace{\limsup f_n(x) - \liminf f_n(x)}_{D(x)} = 0\} = D^{-1}(\{0\})$
+\end{proof}
+
+\begin{theorem}
+  Let $(X, \SM)$ be a measurable space, $f_n: X \to \CC$ be $\SM$-measurable functions. 
+  Define
+  \[E_{lim} = \{x \in X: \lim_{n\to\infty} f_n(x) \text{ exists}\}\]
+  then $E_{lim} \in \SM$.
+\end{theorem}
+
+\begin{proof}
+  We can rewrite $E_{lim}$ as 
+  \[E_{lim} = \{x \in X : \{f_n(x)\}_{n \in \NN} \text{ is a Cauchy sequence}\}\]
+  Define $$A_{n, m}(k) = \left\{ x \in X : |f_n(x) - f_m(x)| < \frac1k\right\}$$
+  then $A_{n, m}(k) \in \SM$ for all $n, m, k$. then 
+  \[E_{lim} = \bigcup_{k \ge 1}\bigcap_{N \ge 1} \bigcup_{m \ge N, n \ge N} A_{m,n}(k)\]
 \end{proof}

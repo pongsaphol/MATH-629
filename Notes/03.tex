@@ -251,14 +251,27 @@ Assumeing that $\Re f \in \mathcal{L}^1$ and $\Im f \in \mathcal{L}^1$ then
 \end{lemma}
 
 \begin{proof}
-  Assume that $\int |f| \ \mathrm{d}\mu = 0$ Find simple function $s_n$ of $f$ then 
-  $\int s_n \ \mathrm{d}\mu = 0 \implies$ $s_n(x) = 0$ almost everywhere.
-  we claim that $s_n\to f$ everywhere then $s_n = 0$ almost everywhere then $f = 0$ alomost everywhere.
-  There is a set $N_n, \mu(N_n) = 0$ so that $s_n = 0$ in $N_n^\complement$. 
-  $N = \bigcup_{n=1}^\infty N_n \implies \mu(N) = 0$ and $N^\complement$ we have $s_n \to f$, $s_n = 0$
+  Define $E_n = \left\{x : |f(x)| > \frac1n\right\}$ then from continuity from below, we get that
+  \[\lim_{n\to\infty}\mu(E_n) = \mu\left(\bigcup_{n=1}^\infty E_n\right)\]
+  define $E = \bigcup E_n$ and we can write $E = \{x : |f(x)| > 0 \}$then we know that
+  \[|f| \ge |f|\mathbbm{1}_{E_n} \ge \frac1n\mathbbm{1}_{E_n}\]
+  then 
+  \begin{align*}
+    \int |f|\ \mathrm{d}\mu &\ge \int \frac1n\mathbbm{1}_{E_n}\ \mathrm{d}\mu \\
+    &= \frac1n \mu(E_n) \\
+  \end{align*}
+  we get that $\mu(E_n) = 0$ for all $n$ then $\mu(E) = 0$. Therefore $f = 0$ almost everywhere.
 \end{proof}
 
-We could redefine the notion of $f=0$ (being $f(x) = 0$ for all $x \in X$) to $f = 0$ almost everywhere (meaning $f(x) = 0$ except for all null set).
+% \begin{proof}
+%   Assume that $\int |f| \ \mathrm{d}\mu = 0$ Find simple function $s_n$ of $f$ then 
+%   $\int s_n \ \mathrm{d}\mu = 0 \implies$ $s_n(x) = 0$ almost everywhere.
+%   we claim that $s_n\to f$ everywhere then $s_n = 0$ almost everywhere then $f = 0$ alomost everywhere.
+%   There is a set $N_n, \mu(N_n) = 0$ so that $s_n = 0$ in $N_n^\complement$. 
+%   $N = \bigcup_{n=1}^\infty N_n \implies \mu(N) = 0$ and $N^\complement$ we have $s_n \to f$, $s_n = 0$
+% \end{proof}
+
+% We could redefine the notion of $f=0$ (being $f(x) = 0$ for all $x \in X$) to $f = 0$ almost everywhere (meaning $f(x) = 0$ except for all null set).
 
 
 \begin{remark}
