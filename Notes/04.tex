@@ -229,3 +229,76 @@ In this $L^p(\NN, \mu)$ is denoted by $\ell^p(\NN)$
   For $f \in \ell^p$, $\frac{f}{\|f\|_p}$ has $\ell^p$ norm equal to 1
   therefore $\left\|\frac f{\|f\|_p}\right\|_q \le 1$ then $\|f\|_q \le \|f\|_p$
 \end{proof}
+
+\begin{theorem}[Littlewood Theorem]
+  Every measurable function is nearly continuous. i.e.,
+  $f \in L^1(A)$ there exists $g$ continuous such that
+  \[\int |f(x) - g(x)| \ \mathrm{d}m < \eps\]
+\end{theorem}
+
+\begin{theorem}[Lusin's Theorem]
+  $f:[a, b] \to \CC$ (or $\RR$) almost everywhere, 
+  then there is a compact set $K \subseteq [a, b]$ such that $f|_K$ is continuous and $\mu([a, b] \setminus K) = 0$
+\end{theorem}
+
+\begin{example}
+  $f(x) = \mathbbm{1}_{\QQ'}(x)$
+  let $\{r_k\}$ be enumeration of rational number in $[a, b]$. Define
+  \[O = \bigcup_{k=1}^\infty \left(r_k - \frac\eps{2^{k+2}}, r_k + \frac\eps{2^{k+2}}\right)\]
+  then $m(O) < \eps$, $K = [a, b] \setminus O$, $f|_K = 1$ is continuous.
+  % $f$ is not continuous at any point, but $f$ is nearly continuous.
+\end{example}
+
+\begin{example}
+  \[\sum_{k=1}^\infty \frac1{|x - r_k|^10}2^{-k} \mathbbm{1}_{[a, b]}\]
+  (this function is in $L^p$, if $p < \frac1{10}$).
+  The Challenging part is to find a $K$ as in Lusin's theorem such that
+  $f = f|_K$ is continuous.
+\end{example}
+
+\begin{proof}
+$f: A \to \RR$ (or $\CC$), $m(A) < \infty$
+The for every $\eps > 0$, there is a compact set $K \subseteq A$, such that 
+$m(A \setminus K) < \eps$ and $f|_K$ is continuous.
+
+\begin{enumerate}
+  \item We can find a set $E_1$ such that $m(A\setminus E_1) < \frac\eps3$ and $f|_{E_1}$ is bounded.
+  \[S_\alpha = \{x \in A : |f(x)| > \alpha\}\]
+  Then $\bigcup S_\alpha = \bigcup S_{2^M}$ has measure zero by the assumption. From continuity from above, we get
+  \[m(S_\alpha) = m\left(\bigcup S_{2^M}\right) = \lim_{M\to\infty}m(S_{2^M})\]
+  because $m(A) < \infty$. For large $M$, $m(S_M) < \frac\eps3$, let $A \setminus E_1 = S_{2^M}$ ($M$ large)
+  \item We know that $f$ is bounded on $E_1$
+  Can find a sequence $g_n$ of continuous functions $g_n \to f$ almost everywhere on $E_1$, $m(E_1) < \infty$.
+  \item Using Egorov's theorem: $g_n \to f$ almost uniformly on $E_1$.
+  Find $E_2 \subseteq E_1$ such that $m(E_1 \setminus E_2) < \frac\eps3$ and $g_n \to f$ uniformly on $E_2$.
+  $f|_{E_2}$ is continuous on $E_2$, we can find $E_3 = K$ compact, $E_3 \subseteq E_2$, 
+  $m(E_2 \setminus E_3) < \frac\eps3$ and $f|_K$ is continuous.
+  \[m(A\setminus K) < \frac\eps3 + \frac\eps3 + \frac\eps3 = \eps\]
+\end{enumerate}
+\end{proof}
+
+\section{Outer Measure}
+\begin{definition}
+  Given $X$, $\SE \subseteq \mathfrak{P}(X)$ where $\emptyset \in \SE$ and $X \in \SE$, $u: \SE \to [0, \infty]$.
+  For any set 
+  \[u^*(E) = \inf_{\bigcup E_j \supseteq E}\sum_{j=1}^\infty u(E_j)\]
+  where $E_j \in \SE$, called the outer measure induced by $\SE$.
+\end{definition}
+
+\begin{remark}
+  It is not necessary to assume that $X \in \SE$.
+  In this case, $u*(E) = \infty$ if we cannot cover $E$ with a countable collection of sets in $\SE$.
+\end{remark}
+
+\begin{lemma}
+  An outer measure $u^*$ incuced by the collection $\SE$ satisfies
+  \begin{enumerate}[(i)]
+    \item $u^*(\emptyset) = 0$
+    \item For $A \subseteq B$, $u^*(A) \le u^*(B)$ Monotonicity
+    \item $u^*(\bigcup E_j) \le \sum u^*(E_j)$ Subaddictivity
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+  
+\end{proof}
