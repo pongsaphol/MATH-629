@@ -1,0 +1,18 @@
+\chapter{Practice Exam}
+\section{Practice Exam 1}
+\begin{problem}
+  Let $E_n$ be Lebesgue measurable subsets of $[0, 1]$ such that $E_{n+1} \subseteq E_n$.
+  What can you say about the Lebesgue measure of $\bigcap_n E_n$? Does your answer
+  necessarily hold when $[0, 1]$ is replaced by $[0, \infty)$?
+\end{problem}
+\begin{proof}[solution]
+  We can use continuity from above because $\mu([0, 1]) < \infty$.
+  We can say that $$\mu\left(\bigcap_n E_n\right) = \lim_{n \to \infty} \mu(E_n)$$
+  In case of $[0, \infty)$, we can't use continuity from below becuase if $E_n = [n, n+1)$
+  then $\mu(E_n) = 1$ but $\bigcap_n E_n = \emptyset$, so, $\lim_{n\to \infty}\mu(E_n) = 1$ but 
+  $\mu\left(\bigcap_n E_n\right) = 0$.
+\end{proof}
+
+\begin{problem}
+  
+\end{problem}
