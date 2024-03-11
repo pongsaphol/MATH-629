@@ -156,3 +156,76 @@ $\{f_n\}$ cxauchy, For every $\eps > 0$, there exists $N(\eps)$ such that for $l
     &= (\|f\|_p + \|g\|_p)\|f+g\|_p^{p-1}
   \end{align*}
 \end{proof}
+
+\begin{remark}
+  Holder's inequality holds
+  \[\int fg\ \mathrm{d}\mu \le \|f\|_{p}\|g\|_{p'}\]
+  where $\frac1p + \frac1{p'} = 1$ can be generalized to several factors
+  \[\int f_1f_2\dotsm f_n\ \mathrm{d}\mu = \prod_{j=1}^n \|f\|_{p_j}\]
+  where $\sum_{j=1}^n \frac1{p_j} = 1$
+\end{remark}
+
+\begin{lemma}[Shebyshev's inequality]
+  This is an inequality for the distribution function (given a measure space $(X, \SM, \mu)$) 
+  $\mu_f(\alpha) = \mu(\{x : |f(x)| \ge \alpha\})$
+  The Shebyshev's inequality is 
+  \[\mu_f(\alpha) \le \frac{\|f\|_p^p}{\alpha^p}\]
+\end{lemma}
+\begin{proof}
+  \begin{align*}
+    \mu_f(\alpha) &= \int_{E_\alpha} \mathbbm{1} \ \mathrm{d}\mu \\
+    &\le \int_{E_\alpha} \frac{|f(x)|^p}{\alpha^p}\ \mathrm{d}\mu \\
+    &\le \frac1{\alpha^p}\int |f(x)|^p \ \mathrm{d}\mu \\
+  \end{align*} 
+  (Probabilitiy may call this Markov's inequality)
+\end{proof}
+
+$\mu_{cf}(\alpha) = \mu(\{x : |cf(x)| \ge \alpha\}) = \mu(\{x : |f(x)| \ge \frac{\alpha}{|c|}\})$
+
+$\alpha\mu_{cf}(\alpha)^{\frac1p} = |c|\frac\alpha{|c|}\mu_f\left(\frac\alpha{|c|}\right)^{\frac1p} 
+% \le |c|\|f\|_p
+$
+
+
+\begin{claim}
+  If $\delta_0 + \delta_1 = 1$, $\delta_0, \delta_1 \ge 0$, then
+  \[E_\alpha(f + g) \subseteq E_{\alpha\delta_0}(f) \cup E_{\alpha\delta_1}(f)\]
+\end{claim}
+
+\begin{theorem}
+  If $\mu(X) < \infty$ then $L^q \subseteq L^p$ for $p \le q$ 
+\end{theorem}
+
+\begin{proof}
+  We need an inequality $\|f\|_p \le C \|f\|_q$
+
+  \begin{align*}
+    \left(\int 1 |f(x)|^p \ \mathrm{d}\mu\right)^{\frac1p} &\le C\left(\int |f(x)|^q \ \mathrm{d}\mu\right)^{\frac1q} \\
+  \end{align*}
+  Apply Holder with exponent $\frac{q}{p} > 1, \left(\frac{q}{p}\right)'$ where
+  \[\frac1{\left(\frac qp\right)} + \frac1{\left(\frac qp\right)'} = 1\]
+  \begin{align*}
+    \int |f|^p \cdot 1\ \mathrm{d}\mu &\le \left(\int (|f|^p)^\frac{q}{p} \ \mathrm{d}\mu\right)^{\frac{p}{q}}\left(\int_X 1^{\left(\frac qp\right)'} \ \mathrm{d}\mu\right)^{\frac1{\left(\frac{q}p\right)'}} \\
+    &= \|f\|_q^p\mu(X)^{\frac1{\left(\frac{q}p\right)'}} \\
+    &= \left[\|f\|_q \mu(X)^{\frac1{\left(\frac{q}p\right)'}}\right]^p
+  \end{align*}
+\end{proof}
+
+Another extreme case would be $\NN$ with counting measure 
+In this $L^p(\NN, \mu)$ is denoted by $\ell^p(\NN)$
+
+\begin{theorem}
+  For $p \ge 1$, $\ell^p \subseteq \ell^q$ for $p \le q$
+\end{theorem}
+
+\begin{proof}
+  We wan to prove $\|f\|_{\ell^q} \le C\|f\|_{\ell^p}$
+  If $\|f\|_{\ell^p} < 1$ , this means 
+  \[\sum_{n=1}^\infty |f(n)|^p \le 1\]
+  $\implies$ $|f(n)|^p \le 1$ for all $n$
+  \[\sum_{n=1}^\infty |f(n)|^q \le \sum_{n=1}^\infty |f(n)|^p\]
+  provided that $|f(n)|^q \le |f(n)|^p$
+
+  For $f \in \ell^p$, $\frac{f}{\|f\|_p}$ has $\ell^p$ norm equal to 1
+  therefore $\left\|\frac f{\|f\|_p}\right\|_q \le 1$ then $\|f\|_q \le \|f\|_p$
+\end{proof}
