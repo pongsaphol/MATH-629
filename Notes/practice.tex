@@ -13,6 +13,186 @@
   $\mu\left(\bigcap_n E_n\right) = 0$.
 \end{proof}
 
+% q2
 \begin{problem}
+  Let 
+  \begin{align*}
+    E = \{x &= (x_1, x_2) \in \RR^2 : \\
+    &\frac1{1 + (x_1 - x^2)^3} \le e^{\sin x} \text{ if } x_1^{23} < 3|\cos(x_1 + x_2)|, \\
+    &\sqrt{1 + e^{|x_2| + |x_1|}} > e^{x_1^2} \text{ if } x_1^{23} > 3|\cos(x_1 + x_2)|\text{ and }x_2 \in \RR\setminus\QQ, \\
+    &\sqrt{\cos(|x_1x_2|)}\sin(x_1x_2) > 0 \text{ if } x_1^{23} > 3|\cos(x_1 + x_2)|\text{ and }x_2 \in \QQ\}
+  \end{align*}
+  \begin{enumerate}[(i)]
+    \item Is the characteristic function of $E$ Borel measurable?
+    \item If $\SM$ denote the $\sigma$-algebra of Lebesgue measurable subsets of $\RR$ does $E$ belong to $\SM \oplus \SM$?
+  \end{enumerate}
+\end{problem}
+
+%q3
+\begin{problem}
+  For each of the statements give a proof of find a counterexample.
+  \begin{enumerate}[(i)]
+    \item For each $r \in \RR$ let $f_r : \RR \to \RR$ be a continuous function. Define 
+    $G(x) = \sup_{r \in \RR} f_r(x)$. Is $G$ a Borel measurable function?
+    \item For each $r \in \RR$ let $f_r : \RR \to \RR$ be a Borel measurable function. 
+    Define $G(x) = \sup_{r \in \RR} f_r(x)$. Is $G$ a Borel measurable function?
+    \item For each $r \in \RR$ let $f_r : \RR \to \RR$ be a Borel measurable function.
+    Define $G(x) = \sup_{r \in \QQ} f_r(x)$. Is $G$ a Borel measurable function?
+    \item For each $r \in \QQ$ let $f_r : \RR \to \RR$ be a Borel measurable function.
+    Define $S(x) = \sum_{r \in \QQ} f_r(x)$. Is $S$ a Borel measurable function?
+    \item What happens if you replace Borel measurable by Lebesgue measurable in the above statements?
+  \end{enumerate}
+\end{problem}
+
+%q4
+\begin{problem}
+  Assume that $f_n$ is a sequence of $L^1(\mu)$ functions.
+  \begin{enumerate}[(i)]
+    \item If in addition $\mu(X) < \infty$ and 
+    \[\lim_{n\to\infty}\sup_{x \in X} |f_n(x) - f(x)| = 0\]
+    then you have learned that $f \in L^1(\mu)$ and that $\lim_{n\to\infty}\int f_n \ \mathrm{d}\mu = \int f\ \mathrm{d}\mu$.
+    Review the proof.
+    \item Show that if $\mu(X) = \infty$ both conclusions may fail in (i).
+    \item If $\mu(X) < \infty$ if $f_n \to f$ converges just pointwise show that for every $\eps > 0$
+    there exists a set $A$ of measure $< \eps$ such that 
+    \[\int_{A^\complement} |f_n - f| \ \mathrm{d}\mu < \eps\]
+  \end{enumerate}
+\end{problem}
+\begin{proof}[solution]
+  \begin{enumerate}[(i)]
+    \item Suppose that $\lim_{n\to\infty} \|f_n - f\|_{\sup} \to 0$ then 
+    \[\lim_{n\to\infty}\int |f_n - f| \ \mathrm{d}\mu \le \lim_{n\to\infty}\mu(X)\|f_n - f\|_{\sup} = 0\]
+    and we know that $f = (f - f_n) + (f_n)$ then
+    \[\int |f| \ \mathrm{d}\mu = \int |f - f_n + f_n| \ \mathrm{d}\mu \le \int |f - f_n| \ \mathrm{d}\mu + \int |f_n| \ \mathrm{d}\mu\]
+    so, $f \in L^1$ and 
+    \[\left| \int f_n - f \ \mathrm{d}\mu\right|\le \int |f_n - f| \ \mathrm{d}\mu\]
+    So, 
+    \[\ \lim_{n\to\infty}\int f_n\ \mathrm{d}\mu = \int f \ \mathrm{d}\mu\]
+    \item Let $f_n(x) = \frac1x\mathbbm{1}_{[1, n]}$ then $f_n \in L^1$ but $f_n \to f = \frac{1}x\mathbbm{1}_{[1, \infty)}$ and $f \not\in L^1$.
+    \item Define $E_n(k) = \{x : \exists m \ge n, |f_m(x) - f(x)| > 1/k\}$ fix $k$, then 
+    \[E_n(k) \supseteq E_{n+1}(k) \text{ and } \bigcup_{n \in \NN} E_n(k) = \emptyset\]
+    From continuity from above, there exists $n_k$ such that $\mu(E_{n_k}(k)) < \frac\eps{2^k}$.
+    Define 
+    \[A = \bigcup_{k \in \NN} E_{n_k}(k), \mu(A) < \eps\]
+    and for all $x \in A^\complement$, there exists $k$ such that $\frac1k < \eps$ for $m \ge n_k$,
+    \[|f_m(x) - f(x)| < \eps\]
+    Then substitute $\eps = \eps / \mu(X)$ and we get the result.
+  \end{enumerate}
+\end{proof}
+
+%q5
+\begin{problem}
+  Let $\SM$ be a $\sigma$-algebra on $X$.
+  \begin{enumerate}[(i)]
+    \item Consider a function $f = \begin{pmatrix}
+      f_1\\
+      f_2
+    \end{pmatrix} : X \to \RR^2$ such that for all rational number $r_1, r_2$ the sets
+    \[\{x \in X : r_1 < f_1(x), f_2(x) < r_2\}\]
+    belong to $\SM$. Is $f$ ($\SM, \mathcal{B}(\RR^2)$)-measurable?
+    \item Let $f_n : X \to \overline{\RR}$ a sequence of measurable functions. Show that the set
+    \[E = \{x \in X : \{f_n(x)\}_{n=1}^\infty \text{ is a nondecreasing sequence}\}\]
+    is measurable.
+  \end{enumerate} 
+\end{problem}
+\begin{problem}
+  Let $f$ be a Lebesgue measurable function on $\RR^n$. Let $m$ denote Lebesgue measure on $\RR^n$.
+
+  Show that the following  three statements are equivalent:
+  \begin{enumerate}[(a)]
+    \item $f$ is integrable (i.e. belong to $L^1(\RR^n)$).
+    \item $\sum_{k \in \ZZ} 2^km(\{x : |f(x)| < 2^k\}) < \infty$.
+    \item $\sum_{k \in \ZZ} 2^km(\{x : 2^k \le |f(x)| < 2^{k+1}\}) < \infty$.
+  \end{enumerate}
+\end{problem}
+\begin{problem}
+  Let $m$ be Lebesgue measure on $\RR$ and $f$ be a Lebesgue measurable function with $\int |f|\ \mathrm{d}m < \infty$. 
+  Define $G(x) = \int_{-\infty}^x f\ \mathrm{d}m$. Prove that $G$ is uniformly continuous on $\RR$.
+\end{problem}
+\begin{problem}
+  Determine the limits 
+  \begin{enumerate}[(i)]
+    \item $\lim_{n\to\infty} \int_0^n (1 - \frac xn)^n e^{x/2}\ \mathrm{d}x$
+    \item $\lim_{n\to\infty} \int_0^n (1 + \frac xn)^n e^{x/2}\ \mathrm{d}x$
+  \end{enumerate}
+  and, in both cases carefully justify your computation.
+\end{problem}
+\begin{proof}[solution]
+   \begin{enumerate}[(i)]
+    \item define \[f_n = \mathbbm{1}_{[0, n]} \left(1 - \frac xn\right)^n e^{x/2}\]
+    and $f = e^{-x}e^{x/2}$
+    then $|f_n| \le |f| \in L^1([0, \infty))$ then by Dominated Convergence Theorem,
+    \[\lim_{n\to\infty}\int_{0}^\infty f_n\ \mathrm{d}x = \int_{0}^\infty\lim_{n\to\infty} f_n\ \mathrm{d}x = \int_0^\infty e^{-x/2}\ \mathrm{d}x = 2\]
+    % \item Similarly, define \[f_n = \mathbbm{1}_{[0, n]} \left(1 + \frac xn\right)^n e^{x/2}\]
+    % and $f = e^{x}e^{x/2}$
+    % then $|f_n| \le |f| \in L^1$ then by Dominated convergence theorem,
+    % \[\lim_{n\to\infty}\int_{0}^\infty f_n\ \mathrm{d}x = \int_{0}^\infty\lim_{n\to\infty} f_n\ \mathrm{d}x = \int_0^\infty e^{3x/2}\ \mathrm{d}x = 2\]
+   \end{enumerate}
+\end{proof}
+
+\begin{problem}
+  Let $f \in \mathcal{L}^1(\RR^n)$. Let m be Lebesgue measure in $\RR^n$. Prove that for $t > 0$
+  \[t^n \int f(tx)\ \mathrm{d}m = \int f(x)\ \mathrm{d}x\]
+Hint: First prove this for indicator functions of cubes, then for indicator
+functions of sets of finite measure.
+\end{problem}
+
+\begin{proof}[solution]
+  Suppose that $f = \mathbbm{1}_E$ where $E$ is a cube, then
   
+\end{proof}
+
+\begin{problem}
+  Let $f \in \mathcal{L}^1(\RR^n)$. Then
+  \begin{enumerate}[(i)]
+    \item $\lim_{|h| \to 0} \int |f(x+h) - f(x)|\ \mathrm{d}m = 0$.
+    \item $\lim_{t \to 1} \int |f(tx) - f(x)|\ \mathrm{d}m = 0$.
+    \item Can the Lebesgue dominated convergence be used for the proof of (i) or (ii)?
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  Let $I = [a, b], f \in \mathcal{L}^1(I)$. Show that
+  \[\lim_{n\to\infty} \int_I f(x)\sin(nx)\ \mathrm{d}m(x) = 0\]
+\end{problem}
+
+\begin{problem}
+  Recall the monotone convergence theorem and Fatou's lemma.
+  \begin{enumerate}[(i)]
+    \item Show that Fatou's lemma implies the monotone convergence theorem.
+    \item Show that the monotone convergence theorem implies Fatou's lemma.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  Determine
+  \[\lim_{n\to\infty} \int_0^\infty\frac{2n \sin(x/n)}{x(1+x^2)}\ \mathrm{d}x\]
+  Provide justifications.
+\end{problem}
+
+\begin{problem}
+  Let $f(x) = \sin(x^2)$ on the measure space $X = [1, \infty)$ (with Lebesgue measure $m$). Prove:
+  \begin{enumerate}[(i)]
+    \item $\int_{[1, \infty)} |f| \ \mathrm{d}m = \infty$
+    \item $\lim_{R \to \infty}\int_{[0, R]} f\ \mathrm{d}m$ exists (and is finite).
+  \end{enumerate}
+  Hint: For part (ii) use that $2x\sin(x^2)$ is the derivative of $-\cos(x^2)$.
+\end{problem}
+
+\begin{problem}
+  Let $f : X \to \overline{\RR}$ be a nonnegative measurable function on the measure space $(X, \SM, \mu)$
+  and assume $\mu(X) < \infty$.
+  \begin{enumerate}[(i)]
+    \item Let $E_R = \{x \in X : |f(x) > R\}$. Prove: If $|f(x)| < \infty$ for almost every $x \in X$ then 
+    $\lim_{R \to \infty}\mu(E_R) = 0$.
+    \item Is the conclusion in (i) still valid if we drop the assumption of finite measure space?
+    Give a proof or counterexample.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  Let $p > 0$. For $x \in \RR^n$ let $|x|_p = (\sum_{i=1}^n |x_i|^p)^{1/p}$. Let $\Omega = \{x \in \RR^n : |x|_p > 3\}$.
+  Show that 
+  \[\int_{\Omega} |x|_p^{-\alpha}\ \mathrm{d}m < \infty\]
+  if and only if $\alpha > n$. What is the result if you replace $\Omega$ by $\Omega^\complement$?
 \end{problem}
