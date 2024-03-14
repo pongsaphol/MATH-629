@@ -121,24 +121,30 @@ $\{f_n\}$ cxauchy, For every $\eps > 0$, there exists $N(\eps)$ such that for $l
 \end{proof}
 
 \begin{claim}[Holder's inequality]
-  Given $p > 1$, $p'$ to be such that 
-  \[\frac1{p'}+\frac1p = 1\ \ \left(p' = \frac p{p-1}\right)\]
-  for $f \in L^p, g \in L^{p'}$, then $fg \in L^1$ and
-  \[\int |fg| \ \mathrm{d}\mu \le \|f\|_p\|g\|_{p'}\]
+  Given $p > 1$, $q$ to be such that 
+  \[\frac1{p}+\frac11 = 1\ \ \left(q = \frac p{p-1}\right)\]
+  for $f \in L^p, g \in L^{q}$, then $fg \in L^1$ and
+  \[\int |fg| \ \mathrm{d}\mu \le \|f\|_p\|g\|_{q}\]
 \end{claim}
 
 \begin{proof}
-  Rewrite AM-GM (generalized) as ``Young's inquality'' substitute $a = u^p, 1-\theta = \frac1p, b = v^{p'}, \theta = \frac1{p'}$
+  Rewrite AM-GM (generalized) as ``Young's inquality'' substitute $a = u^p, 1-\theta = \frac1p, b = v^{q}, \theta = \frac1{q}$
   then we get 
-  \[uv \le \frac1pu^p + \frac1{p'}v^{p'}\]
+  \[uv \le \frac1pu^p + \frac1{q}v^{q}\]
   apply $f(x)g(x)$
-  \[\int |f(x)||g(x)|\ \mathrm{d}\mu \le \int \frac{|f(x)|^p}{p} \ \mathrm{d}\mu + \int \frac{|g(x)|^{p'}}{p'}\ \mathrm{d}\mu = \frac{\|f\|_p^p}{p} + \frac{\|g\|_{p'}^{p'}}{p'}\]
-  (This is Holder when two norms are normalized $\|f\|_p = 1 = \|g\|_{p'}$)
+  \[\int |f(x)||g(x)|\ \mathrm{d}\mu \le \int \frac{|f(x)|^p}{p} \ \mathrm{d}\mu + \int \frac{|g(x)|^{q}}{q}\ \mathrm{d}\mu = \frac{\|f\|_p^p}{p} + \frac{\|g\|_{q}^{q}}{q}\]
+  (This is Holder when two norms are normalized $\|f\|_p = 1 = \|g\|_{q}$)
 
   Then $\frac{f(x)}{\|f\|_p}$ has ``p-norm'' equal to 1 because
   \[\left(\int \left|\frac{f(x)}{\|f\|_p}\right|^p \ \mathrm{d}\mu\right)^{\frac1p} = \frac{1}{\|f\|_p}\left(\int |f(x)|^p \ \mathrm{d}\mu\right)^{\frac1p}\]
-  So
-  \[\int \frac{|f|}{\|f\|_p}\frac{|g|}{\|g\|_{p'}}  \le 1\]
+  Substitute $f = \frac{f}{\|f\|_p}$ and $g = \frac{g}{\|g\|_{q}}$ then we get
+  \begin{align*}
+    \int \frac{|f|}{\|f\|_p}\frac{|g|}{\|g\|_{q}} \ \mathrm{d}\mu  &\le \frac1p + \frac1q = 1 \\
+    \int |fg| \ \mathrm{d}\mu &\le \|f\|_p\|g\|_{q} 
+  \end{align*}
+  % So
+  % \[\int \frac{|f|}{\|f\|_p}\frac{|g|}{\|g\|_{q}}  \le 1\]
+
 \end{proof}
   
 \begin{theorem}[Minkowski's inquality]
@@ -159,9 +165,9 @@ $\{f_n\}$ cxauchy, For every $\eps > 0$, there exists $N(\eps)$ such that for $l
 
 \begin{remark}
   Holder's inequality holds
-  \[\int fg\ \mathrm{d}\mu \le \|f\|_{p}\|g\|_{p'}\]
-  where $\frac1p + \frac1{p'} = 1$ can be generalized to several factors
-  \[\int f_1f_2\dotsm f_n\ \mathrm{d}\mu = \prod_{j=1}^n \|f\|_{p_j}\]
+  \[\int fg\ \mathrm{d}\mu \le \|f\|_{p}\|g\|_{q}\]
+  where $\frac1p + \frac1{q} = 1$ can be generalized to several factors
+  \[\int f_1f_2\dotsm f_n\ \mathrm{d}\mu \le \prod_{j=1}^n \|f_j\|_{p_j}\]
   where $\sum_{j=1}^n \frac1{p_j} = 1$
 \end{remark}
 
@@ -250,7 +256,7 @@ In this $L^p(\NN, \mu)$ is denoted by $\ell^p(\NN)$
 \end{example}
 
 \begin{example}
-  \[\sum_{k=1}^\infty \frac1{|x - r_k|^10}2^{-k} \mathbbm{1}_{[a, b]}\]
+  \[\sum_{k=1}^\infty \frac1{|x - r_k|^{10}}2^{-k} \mathbbm{1}_{[a, b]}\]
   (this function is in $L^p$, if $p < \frac1{10}$).
   The Challenging part is to find a $K$ as in Lusin's theorem such that
   $f = f|_K$ is continuous.
@@ -278,16 +284,29 @@ $m(A \setminus K) < \eps$ and $f|_K$ is continuous.
 \end{proof}
 
 \section{Outer Measure}
+
+\begin{definition}
+  Abstract outer measure, 
+  \[\varrho: \mathfrak{P}(X) \to [0, \infty]\]
+  $\varrho(\emptyset) = 0$, which have
+  \begin{itemize}
+    \item Monoticity $A \subseteq B, \varrho(A) \le \varrho(B)$
+    \item $\sigma$-Subadditivity $\varrho\left(\bigcup_{j=1}^\infty E_j\right) \le \sum_{j=1}^\infty \varrho(E_j)$
+  \end{itemize}
+\end{definition}
+
+
 \begin{definition}
   Given $X$, $\SE \subseteq \mathfrak{P}(X)$ where $\emptyset \in \SE$ and $X \in \SE$, $u: \SE \to [0, \infty]$.
   For any set 
   \[u^*(E) = \inf_{\bigcup E_j \supseteq E}\sum_{j=1}^\infty u(E_j)\]
-  where $E_j \in \SE$, called the outer measure induced by $\SE$.
+  where $E_j \in \SE$, called the (concrete) outer measure induced by $\SE$.
+  ($u^*(E) = \infty$ if we cannot cover $E$ with a countable collection of sets in $\SE$
 \end{definition}
 
 \begin{remark}
   It is not necessary to assume that $X \in \SE$.
-  In this case, $u*(E) = \infty$ if we cannot cover $E$ with a countable collection of sets in $\SE$.
+  In this case, $u^*(E) = \infty$ if we cannot cover $E$ with a countable collection of sets in $\SE$.
 \end{remark}
 
 \begin{lemma}
@@ -297,8 +316,79 @@ $m(A \setminus K) < \eps$ and $f|_K$ is continuous.
     \item For $A \subseteq B$, $u^*(A) \le u^*(B)$ Monotonicity
     \item $u^*(\bigcup E_j) \le \sum u^*(E_j)$ Subaddictivity
   \end{enumerate}
+  E.g., A (concrete) outer measure is an abstract outer measure
 \end{lemma}
 
 \begin{proof}
-  
+  $u*(\bigcup A_j) \subseteq \sum u^*(A_j)$
+  WLOG, $LHS < \infty$, for each $j$ find a collection $\{F_k^\gamma\}_{k \in \NN}$
+  \[\sum u(E_k^j) < u*(A_j) + \eps 2^{-j-1}\]
+  $\{E_k^j\}_{j, k=1}^\infty$ covers $\bigcup A_j$
+  \[u^*\left(\bigcup A_j\right)\le \sum_j\sum_k u(E_k^j) \le \sum_j u^*(A_j) + \eps \sum_j {2^{-j-1}}\]
 \end{proof}
+
+\section{Caratheodory's Construction}
+
+\begin{definition}
+  Given $\varrho$ abstract outer measure,
+  a set $A$ is Caratheodory measure or $\varrho$-measurable (in the sence of) 
+  if \textbf{for all} $E \in \mathfrak{P}(X)$, 
+  \[\varrho(E) = \varrho(E \cap A) + \varrho(E\cap A^\complement)\]
+\end{definition}
+
+\begin{remark}
+  It is trivial that 
+  \[\varrho(E) \le \varrho(E \cap A) + \varrho(E \cap A^\complement)\] 
+  So, we only need 
+  \[\varrho(E) \ge \varrho(E \cap A) + \varrho(E \cap A^\complement)\] 
+  to show the equality of the outer measure.
+\end{remark}
+
+\begin{theorem}[Caratheodory's Theorem]
+  The collection of $\varrho$-measurable sets is a $\sigma$-algebra $\SM$,
+  $\varrho|_\SM$
+  is a measure (in fact, a complete measure)
+\end{theorem}
+
+\begin{proof}
+  for any set $\varrho(\emptyset) = 0$. For $A \neq \emptyset$, $\varrho(A) = c \neq 0$,
+  $\varrho(E) = \varrho(E \cap A) + \varrho(E\cap A^\complement)$
+  \begin{enumerate}
+    \item want to show that for any $A, B \in \SM$, $A \cap B \in \SM$
+      \begin{align*}
+        \varrho(E) &\ge \varrho(E \cap A) + \varrho(E \cap A^\complement) \\
+        &= \varrho(E\cap A\cap B) + \varrho(E \cap A \cap B^\complement) + 
+          \varrho(E \cap A^\complement \cap B) + \varrho(E \cap A^\complement \cap B^\complement) \\
+        &\ge \varrho(E \cap (A \cap B)) 
+      \end{align*}
+      This shos that $\SM$ is an algebra.
+      A finite union of sets in $\SM$ can be written as a finite disjoint union.
+      We also get the addicitivity of $\varrho$ when applied to sets in $\SM$
+      let $E = A \uplus B$ then 
+      \[\varrho(A \uplus B) = \varrho((A \uplus B) \cap A) + \varrho((A \uplus B) \cap A^\complement) = \varrho(A) + \varrho(B)\]
+    \item $A_1, \dotsc, A_n$ parwise \textbf{disjoint}, let $u_n = \biguplus_{j=1}^n A_j$. 
+      We claim that $$\varrho(u_n \cap E) = \sum_{j=1}^n \varrho(A_j \cap E)$$ (for all $E$)
+      Observe that $u_n = A_n \uplus u_{n-1}$, $A_n, u_{n-1} \in \SM$ then
+      \begin{align*}
+        \varrho(u_n \cap E) &= \varrho(A_n \cap u_n \cap E) + \varrho(A_n^\complement \cap u_n \cap E) \\
+        &= \varrho(A_n \cap E) + \varrho(u_{n-1} \cap E) \\
+      \end{align*}
+      Iterate and we get the claim.
+
+      Set $U = \bigcup_{j=1}^\infty A_j$, GOAL: is to show $\varrho(E) = \varrho(E \cap U) + \varrho(E \cap U^\complement)$.
+      \begin{align*}
+        \varrho(E) &\ge \varrho(u_n \cap E) + \varrho(u_n^\complement \cap E) \\
+        &\ge \varrho(u_n \cap E) + \varrho(U^\complement \cap E) \\
+        &= \sum_{j=1}^n\varrho(A_j \cap E) + \varrho(U^\complement \cap E) \\
+        &\ge \varrho(U \cap E) + \varrho(U^\complement \cap E)
+      \end{align*}
+      So $\varrho$ is $\sigma$-addictive on $\SM$.
+  \end{enumerate} 
+\end{proof}
+
+\begin{definition}
+  $\varrho$ is complete if for $A \in \SM$, if $\varrho(A) = 0$ then $\varrho(N) = 0$ for $N \subseteq A$.
+\end{definition}
+
+
+
