@@ -44,6 +44,15 @@
   \end{enumerate}
 \end{problem}
 
+\begin{proof}[solution]
+  \begin{enumerate}[(i)]
+    \item $G^{-1}((-\infty, x]) = \bigcap_{r \in \RR} f_r^{-1}((-\infty, x])$ and $f_r$ is continuous so, $G$ is Borel measurable.
+    \item No, $f_r = \mathbbm{1}_{\{c_r\}}$ where $c_r \in \QQ + r$ and $c_r \in [0, 1)$ then $G^{-1}(\{1\})$ is Vitali set.
+    \item For $E \in \SM$, $G^{-1}(E) = \bigcap_{r \in \QQ} f_r^{-1}(E)$ and $f_r$ is Borel measurable so, $G$ is Borel measurable.
+    \item the function is not well-defined.
+  \end{enumerate} 
+\end{proof}
+
 %q4
 \begin{problem}
   Assume that $f_n$ is a sequence of $L^1(\mu)$ functions.
@@ -95,20 +104,66 @@
     is measurable.
   \end{enumerate} 
 \end{problem}
+
+\begin{proof}
+  \begin{enumerate}[(i)]
+    \item $\{x : r_1 < f_1(x), f_2(x) < r_2\} = f_1^{-1}((r_1, \infty)) \cap f_2^{-1}((-\infty, r_2))$
+    \item Let $g_k = f_k - f_{k+1}$ then $g_k$ is measurable. So,
+    \[E = \bigcap_{k=1}^\infty \{x \in X : g_k(x) \ge 0 \}\]
+  \end{enumerate}
+\end{proof}
+
+%q6
 \begin{problem}
   Let $f$ be a Lebesgue measurable function on $\RR^n$. Let $m$ denote Lebesgue measure on $\RR^n$.
 
   Show that the following  three statements are equivalent:
   \begin{enumerate}[(a)]
     \item $f$ is integrable (i.e. belong to $L^1(\RR^n)$).
-    \item $\sum_{k \in \ZZ} 2^km(\{x : |f(x)| < 2^k\}) < \infty$.
+    \item $\sum_{k \in \ZZ} 2^km(\{x : |f(x)| > 2^k\}) < \infty$.
     \item $\sum_{k \in \ZZ} 2^km(\{x : 2^k \le |f(x)| < 2^{k+1}\}) < \infty$.
   \end{enumerate}
 \end{problem}
+
+\begin{proof}[solution]
+  \begin{itemize}
+    \item (a) $\Rightarrow$ (c): 
+      \[\sum_{k \in \ZZ} 2^km(\{x : 2^k \le |f(x)| < 2^{k+1}\}) \le \int |f| \ \mathrm{d}m < \infty\]
+    \item (b) $\Rightarrow$ (c): 
+    \[\sum_{k \in \ZZ} 2^km(\{x : 2^k \le |f(x)| < 2^{k+1}\}) < \sum_{k \in \ZZ} 2^km(\{x : |f(x)| > 2^{k-1}\}) < \infty\]
+    \item (c) $\Rightarrow$ (a): 
+    \[\int |f| \ \mathrm{d}m \le \sum_{k\in \ZZ} 2^{k+1}m(\{x : 2^k \le |f(x)| < 2^{k+1}\}) < \infty\]
+    \item (c) $\Rightarrow$ (b): 
+    \begin{align*}
+      \sum_{k \in \ZZ} 2^km(\{x : |f(x)| > 2^k\}) &\le \sum_{k \in \ZZ} 2^k \sum_{j=k-1}^\infty m(\{x : 2^j \le |f(x)| < 2^{j+1}\})\\
+      &\le \sum_{k \in \ZZ} 2\cdot2^k m(\{x : 2^k \le |f(x)| < 2^{k+1}\})\\
+    \end{align*}
+    \[ \]
+  \end{itemize}
+\end{proof}
+
+%q7
 \begin{problem}
   Let $m$ be Lebesgue measure on $\RR$ and $f$ be a Lebesgue measurable function with $\int |f|\ \mathrm{d}m < \infty$. 
   Define $G(x) = \int_{-\infty}^x f\ \mathrm{d}m$. Prove that $G$ is uniformly continuous on $\RR$.
 \end{problem}
+
+\begin{proof}[solution]
+  I want to show that for any $\eps > 0$, there exists $\delta > 0$ such that for any $E \in \SM$ with $m(E) < \delta$,
+  implies that $\int_E |f|\ \mathrm{d}m < \eps$. Define $E_n = \{x : |f(x)| > n\}$.
+  Define $f_n = 1_{E_n}|f|$ then $|f_n| \le |f|$. Then by Dominated Convergence Theorem,
+  \[\lim_{n\to\infty}\int f_n \ \mathrm{d}m = 0\]
+  There exists $k$ such that $\int f_k \ \mathrm{d}m < \eps/2$, select $\delta = \frac\eps{2k}$.
+  Given any $E \in \SM$ then 
+  \begin{align*}
+    \int_E |f|\ \mathrm{d}m &= \int_{E \cap E_n} |f|\ \mathrm{d}m + \int_{E \cap E_n^\complement} |f|\ \mathrm{d}m\\
+    &\le \frac\eps2+ n\mu(E) \\
+    &\le \eps
+  \end{align*}
+  For any $\eps > 0$, pick $\delta$ to be in this theorem, then 
+  if $|x - y| < \delta$ then $|G(x) - G(y)| < \eps$. 
+\end{proof}
+
 \begin{problem}
   Determine the limits 
   \begin{enumerate}[(i)]
@@ -138,8 +193,15 @@ functions of sets of finite measure.
 \end{problem}
 
 \begin{proof}[solution]
-  Suppose that $f = \mathbbm{1}_E$ where $E$ is a cube, then
-  
+  Suppose that $f = \mathbbm{1}_E$, then
+  \[\mathbbm{1}_E(tx) = \begin{cases}
+    1 & \text{if } tx \in E\\
+    0 & \text{otherwise}
+  \end{cases} = \begin{cases}
+    1 & \text{if } x \in \frac1tE\\
+    0 & \text{otherwise}
+  \end{cases} = \mathbbm{1}_{\frac1tE}(x)\] 
+  and $m(\frac1tE) = t^{-n}m(E)$1
 \end{proof}
 
 \begin{problem}
@@ -151,11 +213,37 @@ functions of sets of finite measure.
   \end{enumerate}
 \end{problem}
 
+\begin{proof}[solution]
+\begin{enumerate}[(i)]
+  \item there exists $g$ continuous function such that $\int |f-g| < \frac\eps3$ then
+  \[|f(x+h) - f(x)| \le |f(x+h) - g(x+h)| + |g(x+h) - g(x)| + |g(x) - f(x)|\]
+  Obviously, $\int |f(x+h) - g(x+h)| \ \mathrm{d}m < \frac\eps3$ and $\int |g(x) - f(x)| \ \mathrm{d}m < \frac\eps3$ then
+  \begin{align*}
+    \int |g(x+h) - g(x)| \ \mathrm{d}m &\le \int |g(x+h) - g(x)| \ \mathrm{d}m\\
+  \end{align*}
+\end{enumerate}
+\end{proof}
+
 \begin{problem}
   Let $I = [a, b], f \in \mathcal{L}^1(I)$. Show that
   \[\lim_{n\to\infty} \int_I f(x)\sin(nx)\ \mathrm{d}m(x) = 0\]
 \end{problem}
 
+\begin{proof}[solution]
+  There exists $g$ step such that $\int |f-g| \ \mathrm{d}m < \eps$ then 
+  \begin{align*}
+    \left|\int f(x)\sin(nx) - g(x)\sin(nx) \ \mathrm{d}m\right| &\le \int |f(x) - g(x)||\sin(nx)|\ \mathrm{d}m\\ 
+    \left|\int f(x)\sin(nx)\ \mathrm{d}m\right|- \left|\int g(x)\sin(nx) \ \mathrm{d}m\right|&\le \eps
+  \end{align*}
+  then fix some interval $c$ then 
+  \begin{align*}
+    \left|\int c\sin(nx) \ \mathrm{d}m\right| &= \frac1n\left|\int c\sin(x) \ \mathrm{d}m\right|\\
+    &\to 0
+  \end{align*}
+  as $n \to \infty$.
+\end{proof}
+
+%q12 
 \begin{problem}
   Recall the monotone convergence theorem and Fatou's lemma.
   \begin{enumerate}[(i)]
@@ -164,11 +252,43 @@ functions of sets of finite measure.
   \end{enumerate}
 \end{problem}
 
+\begin{proof}[solution]
+  \begin{enumerate}[(i)]
+    \item $f_n \le f \implies \int f_n \le \int f$ So, $\lim_{n\to\infty} \int f_n \le \int f$.
+    Then from Fatou's lemma, we have
+      \[\int \liminf_{k\to\infty} f_k \ \mathrm{d}\mu \le \liminf_{k\to\infty}\int f_k \ \mathrm{d}\mu\]
+    Since $f_n$ is non-decreasing, so, $\int f_n$ is also non-decreasing. So, we have $\displaystyle\liminf_{k\to\infty} f_k = \lim_{k\to\infty} f_k$ then
+    \[\int \lim_{k\to\infty} f_k \ \mathrm{d}\mu \le \lim_{k\to\infty}\int f_k \ \mathrm{d}\mu\]
+    \item we want to show that 
+    \[\int \liminf_{k\to\infty} f_k \ \mathrm{d}\mu \le \liminf_{k\to\infty}\int f_k \ \mathrm{d}\mu\]
+    It is enough to show that
+    \[\int \lim_{n\to\infty} \inf_{m \ge n} f_m \ \mathrm{d}\mu \le \lim_{n\to\infty} \inf_{m \ge n}\int f_m \ \mathrm{d}\mu\]
+    From the monotone convergence theorem, we have
+    \[\int \lim_{n\to\infty} \inf_{m \ge n} f_m \ \mathrm{d}\mu \underset{\text{MCT}}= \lim_{n\to\infty}\int \inf_{m \ge n} f_m \ \mathrm{d}\mu\]
+    Then for any $k \ge n$, we have $\inf_{m \ge n} f_m \le f_k$ then
+    \[\int \inf_{m \ge n} f_m \ \mathrm{d}\mu\le \int f_k \ \mathrm{d}\mu\]
+    So, we have 
+    \[\int \lim_{n\to\infty} \inf_{m \ge n} f_m \ \mathrm{d}\mu \le \lim_{n\to\infty} \inf_{m \ge n}\int f_m \ \mathrm{d}\mu\]
+  \end{enumerate} 
+\end{proof}
+
 \begin{problem}
   Determine
   \[\lim_{n\to\infty} \int_0^\infty\frac{2n \sin(x/n)}{x(1+x^2)}\ \mathrm{d}x\]
   Provide justifications.
 \end{problem}
+
+\begin{proof}[solution]
+  We know that $|n/x \sin(x/n)| \le 1$ then define 
+  \[f_n = \frac{2n \sin(x/n)}{x(1+x^2)}\]
+  Then $|f_n| \le \frac{2n}{x(1+x^2)}$ and $\int \frac{2n}{x(1+x^2)} \ \mathrm{d}x < \infty$ then by Dominated Convergence Theorem,
+  \begin{align*}
+  \lim_{n\to\infty} \int_0^\infty\frac{2n \sin(x/n)}{x(1+x^2)}\ \mathrm{d}x &= \int_0^\infty \lim_{n\to\infty} \frac{2n \sin(x/n)}{x(1+x^2)}\ \mathrm{d}x \\
+  &= \int_0^\infty \frac{2}{1+x^2}\ \mathrm{d}x\\
+  &= \pi
+  \end{align*}
+
+\end{proof}
 
 \begin{problem}
   Let $f(x) = \sin(x^2)$ on the measure space $X = [1, \infty)$ (with Lebesgue measure $m$). Prove:
@@ -179,20 +299,53 @@ functions of sets of finite measure.
   Hint: For part (ii) use that $2x\sin(x^2)$ is the derivative of $-\cos(x^2)$.
 \end{problem}
 
+\begin{proof}[solution]
+  \begin{enumerate}[(i)]
+    \item Constructing triangles under the curve, we have 
+  \begin{align*}
+    \int_{[0, \infty)} |f| \ \mathrm{d}m &\ge \sum_{k=1}^\infty \frac12 \sqrt{(k+1)\pi} - \sqrt{k\pi}\\
+    &= \frac12\sqrt{\pi}\sum_{k=1}^\infty \sqrt{k+1} - \sqrt{k}\\
+    &= \frac12\sqrt{\pi} \left(\lim_{k \to \infty} \sqrt{k} - \sqrt{1}\right) \\
+    &= \infty
+  \end{align*}
+  \item Define $u = 1/2x$ then $dv = 2x \sin(x^2)\ \mathrm{d}x$ then $v = -\cos(x^2)$ and $du = -1/2x^2\ \mathrm{d}x$ then
+  \begin{align*}
+    \int_0^R f \ \mathrm{d}x &= uv\Big|_0^R - \int_0^R v\ \mathrm{d}u\\
+    &= -\frac12\cos(R^2) + \frac12\cos(0) - \int_0^R -\cos(x^2)\ \mathrm{d}u\\
+  \end{align*}
+
+  \end{enumerate}
+\end{proof}
+
+% q15
 \begin{problem}
   Let $f : X \to \overline{\RR}$ be a nonnegative measurable function on the measure space $(X, \SM, \mu)$
   and assume $\mu(X) < \infty$.
   \begin{enumerate}[(i)]
-    \item Let $E_R = \{x \in X : |f(x) > R\}$. Prove: If $|f(x)| < \infty$ for almost every $x \in X$ then 
+    \item Let $E_R = \{x \in X : |f(x)| > R\}$. Prove: If $|f(x)| < \infty$ for almost every $x \in X$ then 
     $\lim_{R \to \infty}\mu(E_R) = 0$.
     \item Is the conclusion in (i) still valid if we drop the assumption of finite measure space?
     Give a proof or counterexample.
   \end{enumerate}
 \end{problem}
 
+\begin{proof}[solution]
+  \begin{enumerate}[(i)]
+    \item Using continuity from above, we have
+    \[\lim_{n\to\infty} \mu(E_n) = \mu\left(\bigcap_{n=1}^\infty E_n\right)\]
+    and $|f(x)| < \infty$ for almost every $x \in X$ then $\mu\left(\bigcap_{n=1}^\infty E_n\right) = 0$, so $\lim_{R\to\infty} \mu(E_R) = 0$.
+    \item $f(x) = x$
+  \end{enumerate}
+\end{proof}
+
+% q16
 \begin{problem}
   Let $p > 0$. For $x \in \RR^n$ let $|x|_p = (\sum_{i=1}^n |x_i|^p)^{1/p}$. Let $\Omega = \{x \in \RR^n : |x|_p > 3\}$.
   Show that 
   \[\int_{\Omega} |x|_p^{-\alpha}\ \mathrm{d}m < \infty\]
   if and only if $\alpha > n$. What is the result if you replace $\Omega$ by $\Omega^\complement$?
 \end{problem}
+
+\begin{proof}[solution]
+
+\end{proof}
