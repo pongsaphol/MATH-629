@@ -546,3 +546,72 @@ There is a finite subcover of $[a + \eps, b]$ by $(a_{j_i}, b_{j_i} + \eps 2^{-j
 $$\sum_{i=1}^M (b_{j_i} + \eps 2^{-j_i} - a_{j_i}) \le \sum_{j} (b_j - a_j) + \sum_{j=1}^\infty \eps2^{-j-1}$$
 
 \end{proof}
+
+Extend premeasures to measure on a $\sigma$-algebra.
+
+Idea: use the outer measure $\nu^*$
+\[\nu^*(E) = \inf \sum_{A_j \in S, \bigcup A_j \supseteq E} \nu(A_j)\]
+use the Caratheodory construction to produce a measure $\nu^*$ on some $\sigma$-algebra $\SM^*$.
+
+$\nu^{**}(E) = $ same except $S$ is replaced by $\mathcal{R}(S)$
+
+\begin{claim}
+  $\nu^{**}(E) = \nu^{*}(E)$
+  if $\nu$ is a \underline{content}.
+\end{claim}
+
+\begin{proof}
+  Show $\le$, WLOG $\nu^{**}(E) < \infty$. 
+  Given $\eps > 0$ fin $A_j \in \mathcal{R}(S)$ such that $\sum \nu(A_j) < \nu^{**}(A) + \eps$
+  \[A_j =\biguplus_{k=1}^{M(j)} C_{j, k}, \nu(A) = \sum_{n=1}^{M(j)} \nu(C_{j, k})\]
+  then 
+  \[\sum_j\sum_{k=1}^{M(j)} \nu(C_{j, k}) < \nu^{**}(A) + \eps \implies \nu^{*}(A) \le \nu^*(A) + \eps\]
+\end{proof}
+
+\begin{theorem}[Hahn-Kolomogorov-Caratheodory-Frechet] 
+  \begin{enumerate}[(i)]
+    \item If $\nu$ is a content on $S$ (semiring) over $X$, (and therefore on $\mathcal{R}(S)$).  
+      Then the Caratheodory $\sigma$-algebra $\SM^*$ of $\nu^*$-measurable set contains $S$ {and $\mathcal{R}(S)$} and $\kM(S) \subseteq \overline{\kM}$)
+    \item If $\nu$ is a premeasure then $\nu^*|_{S} = \nu$
+    then $\nu^*$ is a measure (on $\SM^* \supseteq \overline{\kM(S)}$)
+  \end{enumerate}
+\end{theorem}
+
+$\nu^*$-measurable if for all $E \subseteq X$, $\nu^*(E) \ge \nu^*(E \cap A) + \nu^*(E \cap A^\complement)$
+(for another direction is obvious, so, we need to only check one direction)
+
+\begin{proof}
+  Show that $S \subseteq \SM^*$. Let $A \subseteq S$. 
+  Fix $E \subseteq X$, work with an $\eps$-efficient cover, i.e.,
+  find a collection $\{A_j\}_{j=1}^\infty$ such that $A_j \in S, \bigcup A_j \supseteq E$ : 
+  $\sum \nu(A_j) \le \nu^*(E) + \eps$
+  We get that $A_j = (A_j \cap A) \uplus (A_j \cap A^\complement)$
+  $\nu(A_j) = \nu(A_j \cap A) + \nu(A_j \cap A^\complement)$
+  \[\nu^*(E) + \eps \ge \sum \nu(A_j) = \sum \nu(A_j \cap A) + \sum \nu(A_j \cap A^\complement) \]
+  We know that $E \cap A \subseteq \bigcup (A_j \cap A)$ and $E \cap A^\complement \subseteq \bigcup (A_j \cap A^\complement)$
+  then 
+  \begin{align*}
+   \nu^*(E) + \eps \ge \nu^*(E \cap A) + \nu^{**}(E \cap A^\complement) = \nu^*(E \cap A) + \nu^*(E \cap A^\complement)
+  \end{align*}
+
+  For $A \in S$ show $\nu*(A) = \nu(A)$.
+
+  It is easy to show that $\nu*(A) \le \nu(A)$ since $\{A\}$ is a cover of $A$.
+
+  We need $\nu(A) \le \nu^*(A) + \eps$ (for all $\eps > 0$)
+
+  Pick $\{A_j\}$, $\bigcup A_j \supseteq A$, $\sum \nu(A_j) < \nu^*(A) + \eps = \nu^{**}(A) + \eps$
+  Define $B_1 = A_1, B_2 = A_2 \setminus A_1, B_3 = A_3 \setminus (A_1 \cup A_2), \dotsc$ $B_j$ is disjoint and $B_n \in \mathcal{R}(S)$ (but might not in the semiring)
+  We claim that premeasure assumption
+  We know that $\bigcup_n (A \cap B_n) = A$
+  \[\nu(A) = \sum_n \nu(A\cap B_n) \le \sum_n \nu(A_n) \le \nu^{**}(E) + \eps\]
+\end{proof}
+
+\begin{example}
+  $E \subseteq \NN$ 
+  \[\varrho(E) = \limsup_{n\to\infty} \frac{|E \cap [1, n]|}n\]
+  If $E$ is finite $\varrho(E) = 0$, if $E = \NN$ then $\varrho(E) = 1$
+  But 
+  \[\varrho(\NN) \not\le \sum_{n=1}^\infty \varrho(\{n\})\]
+  So, Subaddictivity fails, not a premeasure
+\end{example}

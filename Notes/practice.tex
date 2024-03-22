@@ -18,7 +18,7 @@
   Let 
   \begin{align*}
     E = \{x &= (x_1, x_2) \in \RR^2 : \\
-    &\frac1{1 + (x_1 - x^2)^3} \le e^{\sin x} \text{ if } x_1^{23} < 3|\cos(x_1 + x_2)|, \\
+    &\frac1{1 + (x_1 - x_2)^3} \le e^{\sin x_1} \text{ if } x_1^{23} < 3|\cos(x_1 + x_2)|, \\
     &\sqrt{1 + e^{|x_2| + |x_1|}} > e^{x_1^2} \text{ if } x_1^{23} > 3|\cos(x_1 + x_2)|\text{ and }x_2 \in \RR\setminus\QQ, \\
     &\sqrt{\cos(|x_1x_2|)}\sin(x_1x_2) > 0 \text{ if } x_1^{23} > 3|\cos(x_1 + x_2)|\text{ and }x_2 \in \QQ\}
   \end{align*}
@@ -27,6 +27,17 @@
     \item If $\SM$ denote the $\sigma$-algebra of Lebesgue measurable subsets of $\RR$ does $E$ belong to $\SM \oplus \SM$?
   \end{enumerate}
 \end{problem}
+
+\begin{proof}[solution]
+  \begin{enumerate}[(i)]
+    \item Let $f_1(x_1, x_2) = \frac1{1 + (x_1 - x_2)^3} - e^{\sin x_1}$, $f_2(x_1, x_2) = \sqrt{1 + e^{|x_2| + |x_1|}} - e^{x_1^2}$, $f_3(x_1, x_2) = \sqrt{\cos(|x_1x_2|)}\sin(x_1x_2)$ 
+    and $g(x_1, x_2) = x_1^{23} - 3|\cos(x_1 + x_2)|$ 
+    Then $E = \{x : f_1(x) \le 0 \text{ if } g(x) < 0, f_2(x) > 0 \text{ if } g(x) > 0 \text{ and } x_2 \in \RR \setminus \QQ \text{ ...}\}$
+    $E = (f_1^{-1}(-\infty, 0] \cap g^{-1}(-\infty, 0)) \cup (f_2^{-1}(0, \infty) \cap g^{-1}((0, \infty)) \cap \RR \times (\RR \setminus \QQ)) \cup \dots$
+    Then $f_1, f_2, f_3, g$ are Borel measurable (because it is continuous) functions then $E$ is Borel measurable.
+    \item 
+  \end{enumerate}
+\end{proof}
 
 %q3
 \begin{problem}
@@ -49,7 +60,8 @@
     \item $G^{-1}((-\infty, x]) = \bigcap_{r \in \RR} f_r^{-1}((-\infty, x])$ and $f_r$ is continuous so, $G$ is Borel measurable.
     \item No, $f_r = \mathbbm{1}_{\{c_r\}}$ where $c_r \in \QQ + r$ and $c_r \in [0, 1)$ then $G^{-1}(\{1\})$ is Vitali set.
     \item For $E \in \SM$, $G^{-1}(E) = \bigcap_{r \in \QQ} f_r^{-1}(E)$ and $f_r$ is Borel measurable so, $G$ is Borel measurable.
-    \item the function is not well-defined.
+    \item Suppose that $\{q_r\}$ is an enumeration of $\QQ$ then define $g_n = \sum_{r=1}^n f_{q_r}$ then suppose that limit exists then
+    $\limsup g_n$ and $\liminf g_n$ are Borel measurable then $S$ is Borel measurable.
   \end{enumerate} 
 \end{proof}
 
@@ -78,14 +90,17 @@
     So, 
     \[\ \lim_{n\to\infty}\int f_n\ \mathrm{d}\mu = \int f \ \mathrm{d}\mu\]
     \item Let $f_n(x) = \frac1x\mathbbm{1}_{[1, n]}$ then $f_n \in L^1$ but $f_n \to f = \frac{1}x\mathbbm{1}_{[1, \infty)}$ and $f \not\in L^1$.
-    \item Define $E_n(k) = \{x : \exists m \ge n, |f_m(x) - f(x)| > 1/k\}$ fix $k$, then 
-    \[E_n(k) \supseteq E_{n+1}(k) \text{ and } \bigcup_{n \in \NN} E_n(k) = \emptyset\]
-    From continuity from above, there exists $n_k$ such that $\mu(E_{n_k}(k)) < \frac\eps{2^k}$.
-    Define 
-    \[A = \bigcup_{k \in \NN} E_{n_k}(k), \mu(A) < \eps\]
-    and for all $x \in A^\complement$, there exists $k$ such that $\frac1k < \eps$ for $m \ge n_k$,
-    \[|f_m(x) - f(x)| < \eps\]
-    Then substitute $\eps = \eps / \mu(X)$ and we get the result.
+    \item By Egorov's theorem, for any $\eps > 0$ there exists $A \in \SM$ such that $\mu(A) < \eps$ and $f_n \to f$ uniformly on $A^\complement$.
+    Then select $n$ such that $\|f_n - f\| < \frac\eps{\mu(X)}$ then
+    \[\int_{A^\complement} |f_n - f| \mathrm{d}\mu < \eps\]
+    % \item Define $E_n(k) = \{x : \exists m \ge n, |f_m(x) - f(x)| > 1/k\}$ fix $k$, then 
+    % \[E_n(k) \supseteq E_{n+1}(k) \text{ and } \bigcup_{n \in \NN} E_n(k) = \emptyset\]
+    % From continuity from above, there exists $n_k$ such that $\mu(E_{n_k}(k)) < \frac\eps{2^k}$.
+    % Define 
+    % \[A = \bigcup_{k \in \NN} E_{n_k}(k), \mu(A) < \eps\]
+    % and for all $x \in A^\complement$, there exists $k$ such that $\frac1k < \eps$ for $m \ge n_k$,
+    % \[|f_m(x) - f(x)| < \eps\]
+    % Then substitute $\eps = \eps / \mu(X)$ and we get the result.
   \end{enumerate}
 \end{proof}
 
@@ -105,9 +120,16 @@
   \end{enumerate} 
 \end{problem}
 
-\begin{proof}
+\begin{proof}[solution]
   \begin{enumerate}[(i)]
     \item $\{x : r_1 < f_1(x), f_2(x) < r_2\} = f_1^{-1}((r_1, \infty)) \cap f_2^{-1}((-\infty, r_2))$
+    It is enough to show that for any $p \in \RR$, $f_1^{-1}(p, \infty) \in \SM$ and $f_2^{-1}(-\infty, p) \in \SM$.
+    \begin{itemize}
+      \item Fix $p$, there exists a sequence $\{x_n\}, \{y_n\}$ of $\QQ$ such that $x_n \to p^+$ and $y_n \to \infty$
+      Then \[f_1^{-1}(p, \infty) = \bigcup_{n=1}^\infty f_1^{-1}((x_n, \infty)) \cap f_2^{-1}((-\infty, y_n)) \in \SM\]
+      \item Similarly, there exists a sequence $\{x_n\}, \{y_n\}$ of $\QQ$ such that $x_n \to -\infty$ and $y_n \to p^-$ 
+      Then \[f_2^{-1}(-\infty, p) = \bigcup_{n=1}^\infty f_1^{-1}((x_n, \infty)) \cap f_2^{-1}((-\infty, y_n)) \in \SM\]
+    \end{itemize}
     \item Let $g_k = f_k - f_{k+1}$ then $g_k$ is measurable. So,
     \[E = \bigcap_{k=1}^\infty \{x \in X : g_k(x) \ge 0 \}\]
   \end{enumerate}
@@ -134,9 +156,14 @@
     \item (c) $\Rightarrow$ (a): 
     \[\int |f| \ \mathrm{d}m \le \sum_{k\in \ZZ} 2^{k+1}m(\{x : 2^k \le |f(x)| < 2^{k+1}\}) < \infty\]
     \item (c) $\Rightarrow$ (b): 
+    Let $E_k = \{x : 2^k \le |f(x)| < 2^{k+1}\}$ then
     \begin{align*}
-      \sum_{k \in \ZZ} 2^km(\{x : |f(x)| > 2^k\}) &\le \sum_{k \in \ZZ} 2^k \sum_{j=k-1}^\infty m(\{x : 2^j \le |f(x)| < 2^{j+1}\})\\
-      &\le \sum_{k \in \ZZ} 2\cdot2^k m(\{x : 2^k \le |f(x)| < 2^{k+1}\})\\
+      \sum_{k \in \ZZ} 2^km(\{x : |f(x)| > 2^k\}) &\le \sum_{k \in \ZZ} 2^k \sum_{j=k-1}^\infty E_j\\
+      &= \left(\sum_{k \in \ZZ} 2^k E_{k-1} + E_k\right) + \left(\sum_{k \in \ZZ}2^k\sum_{j=k+1}^\infty E_j\right) \\
+      &= 3\sum_{k \in \ZZ} 2^kE_k + \left(\sum_{j \in \ZZ} \sum_{k=-\infty}^{j-1} 2^k E_j\right) \\
+      &\le 3\sum_{k \in \ZZ} 2^kE_k + \left(\sum_{j \in \ZZ} 2^j E_j\right) \\
+      &= 4\sum_{k \in \ZZ} 2^kE_k
+      % &\le \sum_{k \in \ZZ} 2\cdot2^k m(\{x : 2^k \le |f(x)| < 2^{k+1}\})\\
     \end{align*}
     \[ \]
   \end{itemize}
@@ -167,17 +194,20 @@
 \begin{problem}
   Determine the limits 
   \begin{enumerate}[(i)]
-    \item $\lim_{n\to\infty} \int_0^n (1 - \frac xn)^n e^{x/2}\ \mathrm{d}x$
-    \item $\lim_{n\to\infty} \int_0^n (1 + \frac xn)^n e^{x/2}\ \mathrm{d}x$
+    \item $\lim_{n\to\infty} \int_0^{n^{99/100}} (x/n)^n\ \mathrm{d}x$
+    \item $\lim_{n\to\infty} \int_0^n (1 - \frac xn)^n e^{-2x}\ \mathrm{d}x$
+    % \item $\lim_{n\to\infty} \int_0^n (1 + \frac xn)^n e^{x/2}\ \mathrm{d}x$
   \end{enumerate}
   and, in both cases carefully justify your computation.
 \end{problem}
 \begin{proof}[solution]
    \begin{enumerate}[(i)]
-    \item define \[f_n = \mathbbm{1}_{[0, n]} \left(1 - \frac xn\right)^n e^{x/2}\]
-    and $f = e^{-x}e^{x/2}$
-    then $|f_n| \le |f| \in L^1([0, \infty))$ then by Dominated Convergence Theorem,
-    \[\lim_{n\to\infty}\int_{0}^\infty f_n\ \mathrm{d}x = \int_{0}^\infty\lim_{n\to\infty} f_n\ \mathrm{d}x = \int_0^\infty e^{-x/2}\ \mathrm{d}x = 2\]
+    \item define $f_n = \mathbbm{1}_{[0, n^{99/100}]} (x/n)^n$ 
+    and $f = $ then $|f_n| \le |f| \in L^1([0, \infty))$ then by Dominated Convergence Theorem,
+    % \item define \[f_n = \mathbbm{1}_{[0, n]} \left(1 - \frac xn\right)^n e^{x/2}\]
+    % and $f = e^{-x}e^{x/2}$
+    % then $|f_n| \le |f| \in L^1([0, \infty))$ then by Dominated Convergence Theorem,
+    % \[\lim_{n\to\infty}\int_{0}^\infty f_n\ \mathrm{d}x = \int_{0}^\infty\lim_{n\to\infty} f_n\ \mathrm{d}x = \int_0^\infty e^{-x/2}\ \mathrm{d}x = 2\]
     % \item Similarly, define \[f_n = \mathbbm{1}_{[0, n]} \left(1 + \frac xn\right)^n e^{x/2}\]
     % and $f = e^{x}e^{x/2}$
     % then $|f_n| \le |f| \in L^1$ then by Dominated convergence theorem,
@@ -215,12 +245,13 @@ functions of sets of finite measure.
 
 \begin{proof}[solution]
 \begin{enumerate}[(i)]
-  \item there exists $g$ continuous function such that $\int |f-g| < \frac\eps3$ then
+  \item there exists $g$ continuous function with compact support such that $\int |f-g| < \frac\eps3$ then
   \[|f(x+h) - f(x)| \le |f(x+h) - g(x+h)| + |g(x+h) - g(x)| + |g(x) - f(x)|\]
   Obviously, $\int |f(x+h) - g(x+h)| \ \mathrm{d}m < \frac\eps3$ and $\int |g(x) - f(x)| \ \mathrm{d}m < \frac\eps3$ then
   \begin{align*}
-    \int |g(x+h) - g(x)| \ \mathrm{d}m &\le \int |g(x+h) - g(x)| \ \mathrm{d}m\\
+    \int |g(x+h) - g(x)| \ \mathrm{d}m &\le \eps \cdot 2\mu(K)
   \end{align*}
+  \item 
 \end{enumerate}
 \end{proof}
 
@@ -347,5 +378,21 @@ functions of sets of finite measure.
 \end{problem}
 
 \begin{proof}[solution]
-
+  Define $E_k = \{x \in \RR^n : 3^k \le |x|_p < 3^{k+1}\}$ then
+  \begin{align*}
+    \int_{\Omega} |x|_p^{-\alpha}\ \mathrm{d}m &= \sum_{k=1}^\infty \int_{E_k} |x|_p^{-\alpha}\ \mathrm{d}m\\
+    &\le \sum_{k=1}^\infty c_1 3^{-\alpha k}\mu(E_k)\\
+    &\le \sum_{k=1}^\infty c_1 3^{-\alpha k}c_23^{kn}\\
+    &= c_1c_2\sum_{k=1}^\infty 3^{k(n - \alpha)}\\
+  \end{align*}
+  So, $n - \alpha < 0$ then $\alpha > n$. For the converse use the same bound (but lower bound)
+  
+  For $\Omega^\complement$, define $E_k = \{x \in \RR^n : 3^{-k} \le |x|_p < 3^{-k+1}\}$ then
+  \begin{align*}
+    \int_{\Omega^\complement} |x|_p^{-\alpha}\ \mathrm{d}m &= \sum_{k=1}^\infty \int_{E_k} |x|_p^{-\alpha}\ \mathrm{d}m\\
+    &\le \sum_{k=1}^\infty c_1 3^{\alpha k}\mu(E_k)\\
+    &\le \sum_{k=1}^\infty c_1 3^{\alpha k}c_23^{-kn}\\
+    &= c_1c_2\sum_{k=1}^\infty 3^{k(\alpha - n)}\\
+  \end{align*}
+  So, $\alpha - n < 0$ then $\alpha < n$.
 \end{proof}
