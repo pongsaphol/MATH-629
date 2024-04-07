@@ -1,15 +1,16 @@
 \chapter{Outer Measure}
 \section{Abstract Outer Measure}
 
-\begin{definition}
-  Abstract outer measure, 
-  \[\varrho: \mathfrak{P}(X) \to [0, \infty]\]
-  $\varrho(\emptyset) = 0$, which have
-  \begin{itemize}
-    \item Monoticity $A \subseteq B, \varrho(A) \le \varrho(B)$
-    \item $\sigma$-Subadditivity $\varrho\left(\bigcup_{j=1}^\infty E_j\right) \le \sum_{j=1}^\infty \varrho(E_j)$
-  \end{itemize}
-\end{definition}
+% \begin{definition}
+%   Abstract outer measure, 
+%   \[\varrho: \mathfrak{P}(X) \to [0, \infty]\]
+%   $\varrho(\emptyset) = 0$, which have
+%   \begin{itemize}
+%     \item Monoticity $A \subseteq B, \varrho(A) \le \varrho(B)$
+%     \item $\sigma$-Subadditivity $\varrho\left(\bigcup_{j=1}^\infty E_j\right) \le \sum_{j=1}^\infty \varrho(E_j)$
+%   \end{itemize}
+% \end{definition}
+
 
 
 \begin{definition}
@@ -17,7 +18,7 @@
   For any set 
   \[u^*(E) = \inf_{\bigcup E_j \supseteq E}\sum_{j=1}^\infty u(E_j)\]
   where $E_j \in \SE$, called the (concrete) outer measure induced by $\SE$.
-  ($u^*(E) = \infty$ if we cannot cover $E$ with a countable collection of sets in $\SE$
+  ($u^*(E) = \infty$ if we cannot cover $E$ with a countable collection of sets in $\SE$).
 \end{definition}
 
 \begin{remark}
@@ -29,16 +30,16 @@
   An outer measure $u^*$ incuced by the collection $\SE$ satisfies
   \begin{enumerate}[(i)]
     \item $u^*(\emptyset) = 0$
-    \item For $A \subseteq B$, $u^*(A) \le u^*(B)$ Monotonicity
-    \item $u^*(\bigcup E_j) \le \sum u^*(E_j)$ Subaddictivity
+    \item If $A \subseteq B$ then $u^*(A) \le u^*(B)$
+    \item $u^*(\bigcup_{j=1}^\infty E_j) \le \sum_{j=1}^\infty u^*(E_j)$ 
   \end{enumerate}
   E.g., A (concrete) outer measure is an abstract outer measure
 \end{lemma}
 
 \begin{proof}
-  $u*(\bigcup A_j) \subseteq \sum u^*(A_j)$
-  WLOG, $LHS < \infty$, for each $j$ find a collection $\{F_k^\gamma\}_{k \in \NN}$
-  \[\sum u(E_k^j) < u*(A_j) + \eps 2^{-j-1}\]
+  $u^*(\bigcup_{j=1}^\infty E_j) \le \sum_{j=1}^\infty u^*(E_j)$.
+  WLOG, LHS $< \infty$, for each $j$ find a collection $\{E_k^j\}_{k \in \NN}$ such that
+  \[\sum u(E_k^j) < u^*(A_j) + \eps 2^{-j-1}\]
   $\{E_k^j\}_{j, k=1}^\infty$ covers $\bigcup A_j$
   \[u^*\left(\bigcup A_j\right)\le \sum_j\sum_k u(E_k^j) \le \sum_j u^*(A_j) + \eps \sum_j {2^{-j-1}}\]
 \end{proof}
@@ -55,13 +56,14 @@
 \begin{remark}
   It is trivial that 
   \[\varrho(E) \le \varrho(E \cap A) + \varrho(E \cap A^\complement)\] 
-  So, we only need 
+  By subaddictivity, so we only need 
   \[\varrho(E) \ge \varrho(E \cap A) + \varrho(E \cap A^\complement)\] 
   to show the equality of the outer measure.
 \end{remark}
 
 \begin{theorem}[Caratheodory's Theorem]
   The collection of $\varrho$-measurable sets is a $\sigma$-algebra $\SM$,
+  \[\SM = \{A \subseteq X : \forall E \subseteq X, \varrho(E) = \varrho(E\cap A) + \varrho(E \cap A^\complement)\}\]
   $\varrho|_\SM$
   is a measure (in fact, a complete measure)
 \end{theorem}
@@ -106,61 +108,71 @@
   $\varrho$ is complete if for $A \in \SM$, if $\varrho(A) = 0$ then $\varrho(N) = 0$ for $N \subseteq A$.
 \end{definition}
 
+\section{Rings and semirings}
+
 ``Intervals'' or ``I-cells'' half open intervals of the form $(a, b]$
 \[(a, b] \uplus (b, c] = (a, c]\]
 n-dimensional analogy n-cells
 \[(a_1, b_1] \times (a_2, b_2] \times \dotsm \times (a_n, b_n]\]
 
 \begin{definition}[Semiring]
-  Given $X$, a collection of subsets $\mathcal{S}$ of $X$ is a semiring if 
+  Given $X$, a collection of subsets $\SSS$ of $X$ is a semiring if 
   \begin{enumerate}[(i)]
-    \item $\emptyset \in \mathcal{S}$
-    \item $A, B \in \mathcal{S} \implies A \cap B \in \mathcal{S}$
-    \item $A, B \in \mathcal{S} \implies A \setminus B = \biguplus_{j=1}^n C_j$ where $C_j \in \mathcal{S}$
+    \item $\emptyset \in \SSS$
+    \item $A, B \in \SSS \implies A \cap B \in \SSS$
+    \item $A, B \in \SSS \implies A \setminus B = \biguplus_{j=1}^n C_j$ where $C_j \in \mathcal{S}$
   \end{enumerate}
 \end{definition}
 
+\begin{example}
+  $\SSS = \{(a, b] \mid a, b \in \RR\}$ is a semiring.
+\end{example}
+
 \begin{definition}[Ring]
-  A collection of subsets $R$ is a ring if 
+  A collection of subsets $\SR$ is a ring if 
   \begin{enumerate}[(i)]
-    \item $\emptyset \in R$
-    \item $A, B \in R \implies A \setminus B \in R$
-    \item $A, B \in R \implies A \cup B \in R$
+    \item $\emptyset \in \SR$
+    \item $A, B \in \SR \implies A \setminus B \in \SR$
+    \item $A, B \in \SR \implies A \cup B \in \SR$
   \end{enumerate}
 \end{definition}
 
 \begin{remark}
-  $A \cap B = A \setminus (A \setminus B)$, $A \bigtriangleup B = (A \setminus B) \uplus (B \setminus A)$
+  $A \cap B = A \setminus (A \setminus B)$, $A \bigtriangleup B = (A \setminus B) \cup (B \setminus A)$
   
-  The ring is equivalent to for $A, B \in R$
+  The ring is equivalent to for $A, B \in \SR$
   \begin{enumerate}[(i)]
-    \item $\emptyset \in R$
-    \item $A \cap B \in R$
-    \item $A \bigtriangleup B \in R$
+    \item $\emptyset \in \SR$
+    \item $A \cap B \in \SR$
+    \item $A \bigtriangleup B \in \SR$
   \end{enumerate}
   where $\cap$ is multiplication and $\bigtriangleup$ is addition.
 
-  Finite $\implies$ unions of disjoint sets in $R$ are in $R$.
+  Finite $\implies$ unions of disjoint sets in $\SR$ are in $\SR$.
   \[A \cup B = (A \cap B) \uplus (A \bigtriangleup B)\]
   \[(A \bigtriangleup B)\cap A = (A \setminus B \cup B \setminus A) \cup A = A \setminus B\]
 \end{remark}
   
 \begin{definition}
-  $\SE$ a collection. $\mathcal{R}(\SE)$ is the smallset ring that contains the collection. 
-  \[\mathcal{R}(\SE) = \bigcap_{\underset{\text{contains }\SE}{R \text{ ring}}} R\]
+  $\SE$ a collection. $\kR(\SE)$ is the smallset ring that contains the collection. 
+  \[\kR(\SE) = \bigcap_{\underset{\SR \text{ ring}}{\SE \subseteq \SR}} \SR\]
 \end{definition}
 
 \begin{lemma}
-  If $\SE$ any collection. if $\SE \subseteq R$ then $\mathcal{R}(\SE) \subseteq R$
+  Suppose that $\SE$ any collection and $\SR$ is a ring. If $\SE \subseteq \SR$ then $\kR(\SE) \subseteq \SR$
 \end{lemma}
 
+\begin{proof}
+  Obvious
+\end{proof}
+
 \begin{theorem}
-  Let $\mathcal{S}$ be a semiring (of subsets of $X$). Then $\mathcal{R}(\mathcal{S})$ is a ring generated by $\mathcal{S}$,
-  is the collection of finite disjoint unions of sets in $\mathcal{S}$.
+  Let $\SSS$ be a semiring (of subsets of $X$). Then $\kR(\SSS)$ is a ring generated by $\SSS$,
+  is the collection of finite disjoint unions of sets in $\SSS$.
 \end{theorem}
 
 \begin{proof}
-  GOAL: $A \setminus B \in \mathcal{R}(\mathcal{S})$.
+  GOAL: $A \setminus B \in \kR(\mathcal{S})$.
   \[\biguplus A_j \setminus \biguplus B_k = \biguplus_j (A_j \setminus \biguplus B_k)\]
   Neet to check that for each $j$, $(A_j \setminus \biguplus B_k)$ is a disjoint union of $\mathcal{S}$. 
   Take $A \in \mathcal{S}$, $B_1, \dotsc, B_n \in \mathcal{S}$, $B_i$ are disjoint
@@ -197,20 +209,35 @@ n-dimensional analogy n-cells
     \end{align*}
   \end{itemize}
 \end{proof}
-Content on a semiring
+
+\section{Contents, premeasures, and their extensions}
+% Content on a semiring
 
 \begin{definition}
-  A content on a semiring $\mathcal{S}$ (ring) is 
+  A \textbf{content} on a semiring $\SSS$ (ring) is 
   $\varrho : \mathcal{S} \to [0, \infty]$
-  $\varphi(\emptyset) = 0$, for $A_1, A_2, \dotsc, A_n \in \mathcal{S}$, $A_1, A_2, \dotsc, A_n$ disjoint then
-  $\varrho\left(\biguplus A_j\right) = \sum \varrho(A_j)$
+  \begin{enumerate}[(i)]
+    \item $\varrho(\emptyset) = 0$
+    \item If $\{A_k\}_{k=1}^N$ disjoint, $A_k \in \mathcal{S}$ and if $\biguplus_{k=1}^N A_k \in \mathcal{S}$ then 
+      $\varrho\left(\biguplus_{k=1}^N A_k\right) = \sum_{k=1}^N \varrho(A_k)$
+  \end{enumerate}
+  % $\varphi(\emptyset) = 0$, for $A_1, A_2, \dotsc, A_n \in \mathcal{S}$, $A_1, A_2, \dotsc, A_n$ disjoint then
+  % $\varrho\left(\biguplus A_j\right) = \sum \varrho(A_j)$
 \end{definition}
-(in a ring $R$ same definition but we have $\biguplus A_j \in R$ if $A_j \in R$)
+
+\begin{remark}
+  In a ring $\SR$ same definition but we have $\biguplus_{k=1}^N A_j \in \SR$ if $A_j \in \SR$
+\end{remark}
 
 \begin{definition}
-  A pre-measure on a semiring (ring) is $\nu: \mathcal{S} \to [0, \infty)$ such that
-  $\nu(\emptyset) = 0$ and if $A_1, A_2, \dotsc, A_n \in \mathcal{S}$, disjoint and if 
-  $\biguplus A_j \in \mathcal{S}$ then $\nu\left(\biguplus A_j\right) = \sum \nu(A_j)$
+  A \textbf{premeasure} on a semiring (ring) is $\nu: \mathcal{S} \to [0, \infty]$ such that
+  \begin{enumerate}[(i)]
+    \item $\nu(\emptyset) = 0$
+    \item If $\{A_k\}_{k=1}^\infty$ disjoint, $A_k \in \mathcal{S}$ and if $\biguplus_{k=1}^N A_k \in \mathcal{S}$ then 
+      $\nu\left(\biguplus_{k=1}^N A_k\right) = \sum_{k=1}^N \nu(A_k)$
+  \end{enumerate}
+  % $\nu(\emptyset) = 0$ and if $A_1, A_2, \dotsc, A_n \in \mathcal{S}$, disjoint and if 
+  % $\biguplus A_j \in \mathcal{S}$ then $\nu\left(\biguplus A_j\right) = \sum \nu(A_j)$
 \end{definition}
 
 \begin{example}
@@ -226,13 +253,13 @@ Content on a semiring
 % \end{example}
 
 \begin{theorem}
-  A conten on a semiring extends (uniquely) to the $\mathcal{R}(S)$. 
-  \[\varrho\left(\biguplus A_j\right) = \sum \varrho(A_j)\]
+  A content on a semiring extends (uniquely) to the $\kR(\SSS)$. 
+  \[\varrho\left(\biguplus_{j=1}^N A_j\right) = \sum_{j=1}^N \varrho(A_j)\]
 \end{theorem}
 
 \begin{proof}
-  Hvae to check well-defined.  
-  Let $A \in \mathcal{R}(S)$
+  Have to check well-defined.  
+  Let $A \in \kR(\SSS)$
   \[A = \biguplus_{j=1}^{M_1} A_j = \biguplus_{k=1}^{M_2} B_k \]
   Want to show that
   \[\sum_{j=1}^{M_1} \varrho(A_j) = \sum_{k=1}^{M_2} \varrho(B_k)\]
@@ -243,9 +270,14 @@ Content on a semiring
     \sum_{k=1}^{M_2} \varrho(B_k) &= \sum_{k=1}^{M_2} \sum_{j=1}^{M_1} \varrho(A_j \cap B_k) \\
   \end{align*}
   % Check additivity for the element 
+\end{proof}
 
-Half oepn interval length is a premeasure.
-Preliminary consideration: If $(a_j, b_j], (a, b) \subseteq \bigcup(a_j, b_j]$ then
+\begin{claim}
+  Half oepn interval length is a premeasure.
+\end{claim}
+\begin{proof}
+  
+Preliminary consideration: If $(a_j, b_j], (a, b] \subseteq \bigcup(a_j, b_j]$ then
 $b-a \le \sum (b_j - a_j)$
 
 Now $(a, b] = \biguplus_{j=1}^\infty (a_j, b_j]$, $a_j < b_j$ then 
@@ -263,7 +295,7 @@ $$\sum_{i=1}^M (b_{j_i} + \eps 2^{-j_i} - a_{j_i}) \le \sum_{j} (b_j - a_j) + \s
 
 \end{proof}
 
-Extend premeasures to measure on a $\sigma$-algebra.
+\section{Extend premeasures to measure on a $\sigma$-algebra}
 
 Idea: use the outer measure $\nu^*$
 \[\nu^*(E) = \inf \sum_{A_j \in S, \bigcup A_j \supseteq E} \nu(A_j)\]
@@ -331,3 +363,63 @@ $\nu^*$-measurable if for all $E \subseteq X$, $\nu^*(E) \ge \nu^*(E \cap A) + \
   \[\varrho(\NN) \not\le \sum_{n=1}^\infty \varrho(\{n\})\]
   So, Subaddictivity fails, not a premeasure
 \end{example}
+
+Extenshion of a premeasure $\nu$ on a (semi) ring $\mathcal{S}$
+to a measure $\mu$ on the $\sigma$-algebra generated by $\mathcal{S}$.
+% \section{Fubini's Theorem}
+% TODO: Include the image from the class (and review all of them)
+
+% Caratheodory show that $\nu^*|_{\SM^*}$ is a measure
+
+% We showed that $\nu^*|_{\mathcal{R}(\mathcal{S})} = \nu|_\mu = \nu^*|_{\SM}
+
+% TODO: DON'T KNOW WTF IS GOING ON HERE, ask L
+% Uniqueness 
+
+% $\SSS = \{\emptyset\}$, $\nu= \mu(\emptyset) = 0$
+% $\nu^*(E) = \infty$ for $E \neq \emptyset$
+
+% Any subset $A$ of $X$ is $\nu^*$-measurable, 
+% \[\nu^*(E) = \begin{cases}
+%   \infty & \text{if }E \neq \emptyset \\
+%   0 & \text{if }E = \emptyset
+% \end{cases} 
+%   \]
+
+1. If $\widetilde{\mu}$ is an extension of $\nu$ and $\mu = \nu^*|_{\SM}$ then $\widetilde{\mu}(E) \le \mu(E)$. 
+
+  If $E \in \SM$ is such $\mu(E) < \infty\implies \mu(E) = \widetilde{\mu}(E)$.  
+
+If $\nu$ is a $\sigma$-finite premeasure on $\SSS$ then $\mu = \widetilde{\mu}$
+$X = \bigcup_{j=1}^\infty X_j, X_j \in \SSS, \nu(X_j) < \infty$. 
+
+\begin{proof}
+  1. WLOG $\mu(E) < \infty$, $\mu(E) = \nu^*(E) = \inf_{A_K \in \SSS, \bigcup A_k \supseteq E} \sum_{k=1}^\infty \nu(A_k)$ or $\infty$
+  Given $\eps > 0$ we find a $\{A_k\}$ of set in $\SSS$
+  \[\nu^*(E) = \sum_{k=1}^\infty \nu(A_k) < \nu^*(E) + \eps\]
+  replace $A_k$ by $A_k \setminus(A_1 \cup \dotsm \cup A_{k-1})$ to get a disjoint collection
+  (May assume that the $A_k$ are disjoint)
+  \[\widetilde{\mu}(E) = \widetilde{\mu}\left(\biguplus A_k = \sum \widetilde{\mu}(A_k) = \sum \nu(A_k) \le \nu^*(E) + \eps\right)\]
+\end{proof}
+
+On \underline{complete} union of set $\SR(\SSS)$, $\mu$ and $\widetilde{\mu}$ coincide.
+
+Take $E \in \SM$, $\mu(E) = \nu^*(E) < \infty$, show that $\widetilde{\mu}(E) = \mu(E)$
+
+Find a countable cover of $E$ with set $B_k \in \SR(\SSS)$ such that 
+
+\[\sum \nu(B_k) < \nu^*(E) + \eps, B = \bigcup_{k=1}^\infty B_k, \mu(B) = \widetilde{\mu}(B)\]
+
+$\mu(E) \le \mu(B) = \widetilde{\mu}(B) = \widetilde{\mu}(E) + \widetilde{\mu}(B\setminus E) \le \widetilde{\mu}(E) + \mu(B\setminus E)$
+
+\begin{theorem}
+  \begin{enumerate}[(i)]
+    \item \[\nu^*|_{\kM}(E) = \begin{cases}
+      \bar{\mu}(E) & \text{if } E \in \overline{\SM}\\
+      \infty & \text{if } E \in \kM^* \setminus \overline{\SM}
+    \end{cases}\]
+    \item $E \in \kM^*$ if and only if $E$ is locally $\overline\SM$-measurable.
+    i.e. for every set $A \in \overline\SM$ such $\overline{\mu}(A) < \infty$, we have $E \cap A \in \overline{\SM}$
+    (If $\nu$ is $\sigma$-finite $\overline{\SM} = \kM^*$)
+  \end{enumerate}
+\end{theorem}
