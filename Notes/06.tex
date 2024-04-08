@@ -93,7 +93,7 @@ Extend the set function $\mu$, defined on the general rectangles to all of $\SM_
   \end{align*}
 \end{proof}
 
-\section{Cavalievi's Principle}
+\section{Cavalieri's Principle}
 
 \begin{theorem}
   Let $(X_1, \SM_1, \mu_1), (X_2, \SM_2, \mu_2)$ be $\sigma$-finite and let $\mu$  be a product measure of two measure space.
@@ -131,4 +131,49 @@ Extend the set function $\mu$, defined on the general rectangles to all of $\SM_
 
   Suppose $E_1, E_2$ satisfy the theorem (i), does $E_1 \cup E_2$ satisfy the theorem
   Hard (implssible) to check directly theorem (i) for the union $E_1 \cup E_2$ 
+
+  To go from finite to $\sigma$-finite, 
+  \[X_1 = \biguplus_{j=1}^\infty A_{j, 1}\]
+  \[X_2 = \biguplus_{k=1}^\infty A_{k, 2}\]
+  then 
+  \[sl_{x_1}(E) = \biguplus_{k=1}^\infty (sl_{x_1}(E)\cap A_{k, 2})\]
+  By using countable additivity of $\mu_2$ we get
+  \[\mu_2(sl_{x_1}(E)) = \sum_{k=1}^\infty \mu_2(sl_{x_1}(E) \cap A_{k, 2})\]
+  then for each $k$ we konw that $\mu_2(sl_{x_1}(E) \cap A_{k, 2})$ is measurable in $X_1$ then applying 
+  countable sum of measurable function is measurable.
+  \begin{align*}
+    \int \mu_2(sl_{x_1}(E))\ \mathrm{d}x_1 &= \int \sum_{k=1}^\infty \mu_2(sl_{x_1}(E) \cap A_{k, 2})\ \mathrm{d}x_1\\ 
+    &= \sum_{k=1}^\infty \int \mu_2(sl_{x_1}(E) \cap A_{k, 2})\ \mathrm{d}x_1\\
+    &= \sum_{k=1}^\infty \mu(E \cap A_{k, 2})\\
+    &= \mu(E)
+  \end{align*}
 \end{proof}
+
+\begin{theorem}
+  Let $(X_i, \SM_i, \mu_i), i=1,2$ $\sigma$-finite measure spaces, $\mu = \mu_1 \times \mu_2$ be a product measure on $\SM_1 \otimes \SM_2$. 
+  Let $f \in \mathcal{L}^+(X, \mu)$ then 
+  \begin{itemize}
+    \item $x_1 \mapsto \int f_{x_1} \ \mathrm{d}\mu_2$ belongs to $\mathcal{L}^+(X_1, \mu_1)$
+    \item $x_2 \mapsto \int f^{x_2} \ \mathrm{d}\mu_1$ belongs to $\mathcal{L}^+(X_2, \mu_2)$
+  \end{itemize}
+  and 
+  \[\int f \ \mathrm{d}\mu = \int \int f_{x_1} \ \mathrm{d}\mu_2 \mathrm{d}\mu_1\]
+\end{theorem}
+
+\begin{proof}
+  We have proved this theorem for simple functions / indicator functions of measureable sets.
+  Let $\{s_n\}_{n=1}^\infty$ be a sequence of simple functions such that $s_n(x) \nearrow f(x)$ for all $x$. 
+  define 
+  \[g_n(x_1) = \int s_n(x_1, x_2) \ \mathrm{d}\mu_2,\ h_n(x_2) = \int s_n(x_1, x_2) \ \mathrm{d}\mu_1\]
+  \[g(x_1) = \int f(x_1, x_2) \ \mathrm{d}\mu_2,\ h(x_2) = \int f(x_1, x_2) \ \mathrm{d}\mu_1\]
+  By Monotone Convergence Theorem, we have $g_n \nearrow g$, $h_n \nearrow h$ and limit of measureable functions is measureable.
+  By the fact that $g_n \nearrow g$, 
+  \[\lim_{n\to\infty}\int g_n \ \mathrm{d}\mu_1 = \int g \ \mathrm{d}\mu_1 = \int \int f(x_1, x_2) \ \mathrm{d}\mu_1 \mathrm{d}\mu_2 \]
+  \[\lim_{n\to\infty}\int g_n \ \mathrm{d}\mu_1 = \lim_{n\to\infty} \int\int s_n(x_1, x_2) \ \mathrm{d}\mu_2 \mathrm{d}\mu_1 \overset{Cavalieri}= \lim_{n\to\infty} \int s_n \ \mathrm{d}\mu \overset{\text{def}}= \int f \ \mathrm{d}\mu\]
+\end{proof}
+
+\begin{theorem}
+  $f \in \mathcal{L}^1(X, \mu)$ then $f_{x_1} \in \mathcal{L}^1(X_2, \mu_2)$ for $\mu_1$ almost every $x_1$ and $f^{x_2} \in \mathcal{L}^1(X_1, \mu_1)$ for $\mu_2$ almost every $x_2$
+  and 
+  \[\int f \ \mathrm{d}\mu = \int \int f_{x_1} \ \mathrm{d}\mu_2 \ \mathrm{d}\mu_1 = \int \int f^{x_2} \ \mathrm{d}\mu_1 \ \mathrm{d}\mu_2\]
+\end{theorem}
