@@ -44,6 +44,15 @@
   \[u^*\left(\bigcup A_j\right)\le \sum_j\sum_k u(E_k^j) \le \sum_j u^*(A_j) + \eps \sum_j {2^{-j-1}}\]
 \end{proof}
 
+\begin{definition}[Abstract Outer Measure]
+  A set function $\varrho: \mathfrak{P}(X) \to [0, \infty]$ is an abstract outer measure if 
+  \begin{enumerate}[(i)]
+    \item $\varrho(\emptyset) = 0$
+    \item Monotonicity: $A \subseteq B \implies \varrho(A) \le \varrho(B)$
+    \item Subadditivity: $\varrho\left(\bigcup_{j=1}^\infty E_j\right) \le \sum_{j=1}^\infty \varrho(E_j)$
+  \end{enumerate}
+\end{definition}
+
 \section{Caratheodory's Construction}
 
 \begin{definition}
@@ -69,44 +78,70 @@
 \end{theorem}
 
 \begin{proof}
-  for any set $\varrho(\emptyset) = 0$. For $A \neq \emptyset$, $\varrho(A) = c \neq 0$,
-  $\varrho(E) = \varrho(E \cap A) + \varrho(E\cap A^\complement)$
-  \begin{enumerate}
-    \item want to show that for any $A, B \in \SM$, $A \cap B \in \SM$
-      \begin{align*}
-        \varrho(E) &\ge \varrho(E \cap A) + \varrho(E \cap A^\complement) \\
-        &= \varrho(E\cap A\cap B) + \varrho(E \cap A \cap B^\complement) + 
-          \varrho(E \cap A^\complement \cap B) + \varrho(E \cap A^\complement \cap B^\complement) \\
-        &\ge \varrho(E \cap (A \cap B)) 
-      \end{align*}
-      This shows that $\SM$ is an algebra.
-      A finite union of sets in $\SM$ can be written as a finite disjoint union.
-      We also get the addicitivity of $\varrho$ when applied to sets in $\SM$
-      let $E = A \uplus B$ then 
-      \[\varrho(A \uplus B) = \varrho((A \uplus B) \cap A) + \varrho((A \uplus B) \cap A^\complement) = \varrho(A) + \varrho(B)\]
-    \item $A_1, \dotsc, A_n$ parwise \textbf{disjoint}, let $u_n = \biguplus_{j=1}^n A_j$. 
-      We claim that $$\varrho(u_n \cap E) = \sum_{j=1}^n \varrho(A_j \cap E)$$ (for all $E$)
-      Observe that $u_n = A_n \uplus u_{n-1}$, $A_n, u_{n-1} \in \SM$ then
-      \begin{align*}
-        \varrho(u_n \cap E) &= \varrho(A_n \cap u_n \cap E) + \varrho(A_n^\complement \cap u_n \cap E) \\
-        &= \varrho(A_n \cap E) + \varrho(u_{n-1} \cap E) \\
-      \end{align*}
-      Iterate and we get the claim.
+  First, I will show that $\SM$ is an algebra. 
+  \begin{enumerate}[(i)]
+    \item $\varrho(E) = \varrho(E \cap X) + \varrho(E \cap X^\complement)$, so $X \in \SM$.
+    \item If $A \in \SM$, then for any $E \in \kP(X)$, 
+    \begin{align*}
+      \varrho(E) &= \varrho(E \cap A) + \varrho(E \cap A^\complement) \\
+      &= \varrho(E \cap A^\complement) + \varrho(E \cap (A^\complement)^\complement) 
+    \end{align*}
+    so $A^\complement \in \SM$.
+    \item For $A, B \in \SM$, it is enough to show that $A \cup B \in \SM$.
+    For any $E \in \kP(X)$,
+    \begin{align*}
+      \varrho(E) &= \varrho(E \cap A) + \varrho(E \cap A^\complement) \\
+      &= \varrho(E \cap A \cap B) + \varrho(E \cap A \cap B^\complement) + 
+        \varrho(E \cap A^\complement \cap B) + \varrho(E \cap A^\complement \cap B^\complement) 
+    \end{align*}
+    We know that $A \cup B = (A \cap B) \cup (A \cap B^\complement) \cup (A^\complement \cap B)$, so
+    from the subaddictivity of $\varrho$, we get that 
+    \[\varrho(E \cap (A \cup B)) \le \varrho(E\cap(A \cap B)) + \varrho(E \cap(A \cap B^\complement)) + \varrho(E \cap (A^\complement \cap B))\]
+    hence,
+    \begin{align*}
+      \varrho(E) &\ge \varrho(E \cap (A \cup B)) + \varrho(E \cap A^\complement \cap B^\complement) \\
+      &= \varrho(E \cap (A \cup B)) + \varrho(E \cap (A \cup B)^\complement)
+    \end{align*}
+  \end{enumerate}
+  Now, we can conclude that $\SM$ is an algebra and we know that for any $A, B \in \SM$, if $A \cap B = \emptyset$ then 
+  \[\varrho(A \uplus B) = \varrho((A \uplus B) \cap A) + \varrho((A \uplus B) \cap A^\complement) = \varrho(A) + \varrho(B)\]
+  so $\varrho$ is finite additive on $\SM$.
 
-      Set $U = \bigcup_{j=1}^\infty A_j$, GOAL: is to show $\varrho(E) = \varrho(E \cap U) + \varrho(E \cap U^\complement)$.
-      \begin{align*}
-        \varrho(E) &\ge \varrho(u_n \cap E) + \varrho(u_n^\complement \cap E) \\
-        &\ge \varrho(u_n \cap E) + \varrho(U^\complement \cap E) \\
-        &= \sum_{j=1}^n\varrho(A_j \cap E) + \varrho(U^\complement \cap E) \\
-        &\ge \varrho(U \cap E) + \varrho(U^\complement \cap E)
-      \end{align*}
-      So $\varrho$ is $\sigma$-addictive on $\SM$.
-  \end{enumerate} 
+  To show that $\SM$ is a $\sigma$-algebra, it is enough to show that $\SM$ is closed under countable disjoint unions.
+  Considering $\{A_j\}_{j=1}^\infty$ pairwise disjoint, $A_j \in \SM$, define $B_n = \biguplus_{j=1}^n A_j$ and $B = \biguplus_{j=1}^\infty A_j$. For any $E \in \kP(X)$,
+  \begin{align*}
+    \varrho(E \cap B_n) &= \varrho(E \cap B_n \cap A_n) + \varrho(E \cap B_n \cap A_n^\complement) = \varrho(E \cap A_n) + \varrho(E \cap B_{n-1})
+  \end{align*}
+  then from iteration, we get that
+  \[\varrho(E \cap B_n) = \sum_{j=1}^n \varrho(E \cap A_j)\]
+  and
+  \[\varrho(E) = \varrho(E \cap B_n) + \varrho(E \cap B_n^\complement) \ge \sum_{j=1}^n \varrho(E\cap A_j) + \varrho(E \cap B^\complement)\]
+  then $n\to \infty$ gives that
+  \begin{align*}
+    \varrho(E) &\ge \sum_{j=1}^\infty \varrho(E \cap A_j) + \varrho(E \cap B^\complement) \ge \varrho\left(\biguplus_{j=1}^\infty E \cap A_j\right) + \varrho(E \cap B^\complement) \\
+    &= \varrho(E \cap B) + \varrho(E \cap B^\complement) \ge \varrho(E)
+  \end{align*}
+  Therefore, $B \in \SM$ and finally we get that
+  \[\varrho\left(\biguplus_{j=1}^\infty A_j\right) = \sum_{j=1}^\infty \varrho(A_j)\]
+  Now, we can conclude that $\mu := \varrho|_\SM$ is a measure on $\SM$.
+  then we need to show that $\mu$ is complete.
+  Let $A \in \SM$ such that $\mu(A) = 0$.
+  For any $E \in \kP(X)$, we have that
+  \[\varrho(E) \le \varrho(E\cap A) + \varrho(E \cap A^\complement) = \varrho(E \cap A^\complement) \le \varrho(E)\]
+  Therefore, $\mu$ is complete.
 \end{proof}
 
 \begin{definition}
   $\varrho$ is complete if for $A \in \SM$, if $\varrho(A) = 0$ then $\varrho(N) = 0$ for $N \subseteq A$.
 \end{definition}
+\begin{example}
+  For any $X$ there exists a trivial $\sigma$-algebra $\SM = \{\emptyset, X\}$ satisfies $\varrho$-measurable sets.
+  Fix $c > 0$, define 
+  \[\varrho(E) = \begin{cases}
+    0 & \text{if }E = \emptyset \\
+    c & \text{if }E \neq \emptyset
+  \end{cases}\]
+\end{example}
 
 \section{Rings and semirings}
 
