@@ -149,7 +149,7 @@ Extend the set function $\mu$, defined on the general rectangles to all of $\SM_
   \end{align*}
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}[Tonelli's Theorem]
   Let $(X_i, \SM_i, \mu_i), i=1,2$ $\sigma$-finite measure spaces, $\mu = \mu_1 \times \mu_2$ be a product measure on $\SM_1 \otimes \SM_2$. 
   Let $f \in \mathcal{L}^+(X, \mu)$ then 
   \begin{itemize}
@@ -172,8 +172,100 @@ Extend the set function $\mu$, defined on the general rectangles to all of $\SM_
   \[\lim_{n\to\infty}\int g_n \ \mathrm{d}\mu_1 = \lim_{n\to\infty} \int\int s_n(x_1, x_2) \ \mathrm{d}\mu_2 \mathrm{d}\mu_1 \overset{Cavalieri}= \lim_{n\to\infty} \int s_n \ \mathrm{d}\mu \overset{\text{def}}= \int f \ \mathrm{d}\mu\]
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}[Fubini's Theorem]
   $f \in \mathcal{L}^1(X, \mu)$ then $f_{x_1} \in \mathcal{L}^1(X_2, \mu_2)$ for $\mu_1$ almost every $x_1$ and $f^{x_2} \in \mathcal{L}^1(X_1, \mu_1)$ for $\mu_2$ almost every $x_2$
   and 
   \[\int f \ \mathrm{d}\mu = \int \int f_{x_1} \ \mathrm{d}\mu_2 \ \mathrm{d}\mu_1 = \int \int f^{x_2} \ \mathrm{d}\mu_1 \ \mathrm{d}\mu_2\]
 \end{theorem}
+
+\section{Distribution Function}
+\begin{definition}
+  Given $(X, \SM, \mu)$, given measurable function $f$, define
+  \[\alpha \mapsto \mu_f(\alpha) = \mu(\{x : |f| > \alpha\})\]
+  $\alpha > 0$
+\end{definition}
+
+\begin{theorem}
+  Given $(X, \SM, \mu)$, 
+  \[\int |f|^p \ \mathrm{d}\mu = \int_0^\infty p\alpha^{p-1} \mu_f(\alpha) \ \mathrm{d}\alpha\]
+\end{theorem}
+
+\begin{example}
+  example where $\mu_f$ shows
+  \[\mu_f(\alpha) = \frac{\|f\|^p_p}{\alpha^p}\]
+  Chebyshev's inequality
+
+  $L^{p, \infty} =$ ``weake type p-spaces'' $\iff$ $f$ measurable $\iff$ $\sup_{\alpha} \alpha^p \mu_f(\alpha) < \infty$
+\end{example}
+
+\begin{proof}
+  % careful about non-sigma finite 
+  We first assume $\mu$ is $\sigma$-finite.
+  Considering Right-hand-side 
+  \begin{align*}
+    \int_0^\infty p\alpha^{p-1} \mu_f(\alpha) \ \mathrm{d}\alpha &= \int_0^\infty p\alpha^{p-1}\int_{|f(x)| > \alpha} \ \mathrm{d}\mu \mathrm{d}\alpha\\
+    &= \int_0^\infty \int_X p\alpha^{p-1} \mathbbm{1}_{\{x : |f(x)| - \alpha > 0\}} (x, \alpha) \ \mathrm{d}\mu \mathrm{d}\alpha
+  \end{align*}
+  $x \mapsto f(x)$ is measurable as a function on $X$, and as a function on $X\times [0, \infty)$. 
+  define $g: \RR^2 \to \RR, (t, \alpha) \mapsto (|t| - \alpha)\mathbbm{1}_{\alpha > 0}$ then $g \circ f$ is $\SM$-measurable 
+  because $(g \circ f)^{-1} = f^{-1} \circ g^{-1}$ then
+  \begin{align*}
+    \int_0^\infty p\alpha^{p-1} \mu_f(\alpha) \ \mathrm{d}\alpha &= \int_X \underbrace{\int_{\alpha=0}^{|f(x)|} p\alpha^{p-1} \ \mathrm{d}\alpha}_{|f(x)|^p}\mathrm{d}\mu  
+  \end{align*}
+  This proves the formula for $\sigma$-finite $X$.
+
+  For the general cases, let assume that there exists $\alpha$ such that $\mu_f(\alpha) = \infty$,
+  $\mu(\{x : |f(x) > \alpha\}) = \infty$ $\implies \mu_f(\beta) = \infty$ for $0 < \beta < \alpha$.
+  In this case, we have $\infty = \infty$
+
+  Assume $\mu_f(\alpha) < \infty$ for all $\alpha > 0$
+
+  claim: $\{x : |f(x)| > 0\} = \bigcup_{n} \{x : |f(x) > \frac1n \}$, $\sigma$-finite because 
+  $ \mu(\{x : |f(x) > \frac1n \}) = \mu_f(\frac{1}n)< \infty$
+\end{proof}
+
+\begin{example}
+  \[\int_{-\infty}^\infty e^{-x^2} \ \mathrm{d}x = \sqrt\pi\]
+  equivalent to
+  \[\int_{0}^\infty e^{-x^2} \ \mathrm{d}x = \frac{\sqrt\pi}2\]
+ 
+
+\end{example}
+
+\begin{proof}
+  Let 
+  \[
+    F(x, y) = \begin{cases}
+      ye^{-y^2(1+x^2)} & x \ge 0, y \ge 0 \\
+      0 & \text{otherwise}
+    \end{cases}
+  \]
+  \begin{align*}
+    \int F \ \mathrm{d}m(x, y) = \int_{y=0}^\infty e^{-y^2}\int_{x=0}^\infty e^{-y^2x^2}y \ \mathrm{d}x\mathrm{d}y
+  \end{align*}
+  By changing variable, let $w = yx, \mathrm{d}w = y \ \mathrm{d}x$ then
+  \begin{align*}
+    \int_{y=0}^\infty e^{-y^2}\int_{x=0}^\infty e^{-y^2x^2}y \ \mathrm{d}x\mathrm{d}y = \int_{y=0}^\infty e^{-y^2}\ \mathrm{d}y \int_{w=0}^\infty e^{-w^2} \ \mathrm{d}w
+  \end{align*}
+  Considering LHS
+  \begin{align*}
+    \int F\ \mathrm{d}m = \int_{x=0}^\infty \int_y y \frac{\sqrt{1+x^2}}{\sqrt{1+x^2}} e^{-y^2(1+x^2)} \ \mathrm{d}y\mathrm{d}x 
+  \end{align*}
+  let $w = y \sqrt{1+x^2}$, $\mathrm{d}w = \sqrt{1+x^2} \ \mathrm{d}y$ then
+  \begin{align*}
+    \int F \ \mathrm{d}m &= \int_0^\infty \frac{1}{1+x^2} \int_0^\infty \frac{2w}2 e^{-w^2} \ \mathrm{d}w \mathrm{d}x \\
+    &= \frac12 \int_0^\infty \frac1{1+x^2}\ \mathrm{d}x = \frac\pi4
+  \end{align*}
+  Considering the first integration and the second integration, we get that
+  \begin{align*}
+    \left(\int_0^\infty e^{-s^2} \ \mathrm{d}s\right)^2 &= \frac\pi4 \\
+    \int_0^\infty e^{-s^2} \ \mathrm{d}s &= \frac{\sqrt{\pi}}2 \\
+  \end{align*}
+\end{proof}
+
+\begin{example}
+  \[\int_0^\infty e^{-ax} (\sin x)^2 \frac{\mathrm{d}x}x\]
+  Hint: To apply Fubini-Tonelli, 
+  \[\iint_{[0, \infty]\times[0, 1]} e^{-ax} \sin(2xy) \ \mathrm{d}m(x, y)\]
+  (value $1/4 \ln(1+4/a^2)$)
+\end{example}
