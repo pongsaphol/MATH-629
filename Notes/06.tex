@@ -18,8 +18,8 @@ Extend the set function $\mu$, defined on the general rectangles to all of $\SM_
 \end{theorem}
 
 \begin{proof}
-  $\SSS_{\text{rect}} = $ semiring of rectangles.
-  Neet to show that $\nu: \SSS_{\text{rect}} \to [0, \infty)$ is a premeasure
+  $\SSS_{\text{rect}} = \SM_1 \times \SM_2$ semiring of rectangles.
+  Need to show that $\nu: \SSS_{\text{rect}} \to [0, \infty)$ is a premeasure
   verify $\sigma$-additivity on $\SSS_{\text{rect}}$ If 
   $$E_1 \times E_2 = \biguplus_{j=1}^\infty E_{j, 1} \times E_{j, 2}$$then
   $$\nu(E_1 \times E_2) = \sum_{j=1}^\infty \nu(E_{j, 1} \times E_{j, 2})$$
@@ -55,12 +55,12 @@ Extend the set function $\mu$, defined on the general rectangles to all of $\SM_
   (this is unique if $\SM_1, \SM_2$ are $\sigma$-finite)
 \end{remark}
 
-\begin{proposition}
+\begin{lemma}
   Let $E \in \SM_1 \otimes \SM_2$, Define  
   \[sl_{x_1}(E) = \{x_2: (x_1, x_2) \in E\}\]
   \[sl^{x_2}(E) = \{x_1 : (x_1, x_2) \in E\}\]
   Then $sl_{x_1}(E) \in \SM_2$, $sl^{x_2}(E) \in \SM_1$
-\end{proposition}
+\end{lemma}
 
 \begin{proof}
   Considering the rectangle case, this is ``easy''
@@ -69,13 +69,19 @@ Extend the set function $\mu$, defined on the general rectangles to all of $\SM_
     E_2, & x_1 \in E_1
   \end{cases}\]
   Define
-  \[\mathcal{C}_{x_1} = \{E \subseteq f(X_1 \times X_2) : sl_{x_1}(E) \in \SM_2\}\]
-  konw $\mathcal{C}_{x_1}$ contains $\SSS_{\text{rect}}$ 
+  \[\mathfrak{C}_{x_1} = \{E \in \kP(X_1 \times X_2) : sl_{x_1}(E) \in \SM_2\}\]
+  we know that $\SSS_{\text{rect}} \subseteq \mathfrak{C}_{x_1}$
 
-  Check $\mathcal{C}_{x_1}$ is a $\sigma$-algebra (If so, $\mathcal{C}_{x_1}$ contains $\kM(\SSS_{\text{rect}}) = \SM_1 \otimes \SM_2$)
-
-  Let $E \in \mathcal{C}_{x_1}$, consider $E^\complement = X \setminus E$  
-  \[sl_{x_1}(E^\complement) = \{x_2 : (x_1, x_2) \not\in E\} = \{x_2 : x_2 \not\in sl_{x_1}(E)\} = (sl_{x_1}(E))^\complement = X_2 \setminus sl_{x_1}(E)\]
+  Check $\mathfrak{C}_{x_1}$ is a $\sigma$-algebra (If so, $\mathfrak{C}_{x_1}$ contains $\kM(\SSS_{\text{rect}}) = \SM_1 \otimes \SM_2$)
+  \begin{enumerate}[(i)]
+    \item $sl_{x_1}(X_1 \times X_2) = X_2 \in \SM_2$, so, $X_1 \times X_2 \in \mathfrak{C}_{x_1}$
+    \item Let $E \in \mathfrak{C}_{x_1}$, we know that $sl_{x_1}(E) \in \SM_2$, consider $E^\complement = X \setminus E$  
+  \[sl_{x_1}(E^\complement) = \{x_2 : (x_1, x_2) \not\in E\} = \{x_2 : x_2 \not\in sl_{x_1}(E)\} = (sl_{x_1}(E))^\complement \in \SM_2\]
+    \item For $E_j \in \mathfrak{C}_{x_1}$, we know that $sl_{x_1}(E_j) \in \SM_2$, then
+  \[sl_{x_1}\left(\bigcup_{j=1}^\infty E_j\right) = \bigcup_{j=1}^\infty sl_{x_1}\left( E_j\right) \in \SM_2\]
+  \end{enumerate}
+  So, $\mathfrak{C}_{x_1}$ is a $\sigma$-algebra, and $\mathfrak{C}_{x_1}$ contains $\SSS_{\text{rect}}$, so $\mathfrak{C}_{x_1}$ contains $\SM_1 \otimes \SM_2$.
+  Hence, for any $E \in \SM_1 \otimes \SM_2$, $sl_{x_1}(E) \in \SM_2$.
   % and is a $\sigma$-algebra. 
 \end{proof}
 
@@ -88,65 +94,110 @@ Extend the set function $\mu$, defined on the general rectangles to all of $\SM_
   Check: $f^{-1}_{x_1}(I) \in \SM_2$, for any Borel set $I$
   \begin{align*}
     f^{-1}_{x_1}(I) &= \{x_2 : f_{x_1}(x_2) = f(x_1, x_2) \in I\} \\
-    &= sl_{x_1}\{(x_1, x_2) : f(x_1, x_2) \in I\} \\
+    &= sl_{x_1}(\{(x_1, x_2) : f(x_1, x_2) \in I\}) \\
     &= sl_{x_1}(\underbrace{f^{-1}(I)}_{\in \SM_1 \otimes \SM_2})
   \end{align*}
 \end{proof}
 
-\section{Cavalieri's Principle}
+\section{Extension of Measure on Integral}
 
-\begin{theorem}
+\begin{theorem}[Cavalieri's Principle]
   Let $(X_1, \SM_1, \mu_1), (X_2, \SM_2, \mu_2)$ be $\sigma$-finite and let $\mu$  be a product measure of two measure space.
   For any $E \in \SM_1 \otimes \SM_2$, then
   \begin{enumerate}[(i)]
     \item $g_E : x_1 \mapsto \mu_2(sl_{x_1}(E))$ is $\SM_1$-measurable
-    \item $h_E : x_2 \mapsto \mu_1(sl_{x_2}(E))$ is $\SM_2$-measurable
+    \item $h_E : x_2 \mapsto \mu_1(sl^{x_2}(E))$ is $\SM_2$-measurable
   \end{enumerate}
   and 
   \begin{enumerate}[(i)]
-    \item $\mu(E) = \int \mu_2(sl_{x_1}(E)) \ \mathrm{d}\mu_1$
-    \item $\mu(E) = \int \mu_1(sl_{x_2}(E)) \ \mathrm{d}\mu_2$
+    \item $\mu(E) = \int g_E \ \mathrm{d}\mu_1 = \int \mu_2(sl_{x_1}(E)) \ \mathrm{d}\mu_1$
+    \item $\mu(E) = \int h_E \ \mathrm{d}\mu_2 = \int \mu_1(sl^{x_2}(E)) \ \mathrm{d}\mu_2$
   \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-  Using standard trick $\varphi \subseteq \kP(X_1 \times X_2)$ for which part (i) of the theorem is true
-  check $\varphi$ is a $\sigma$-algebra and it contains the $\SSS_{\text{rect}}$
-
-  Cor of claim: $\varphi$ contains $\kM(\SSS_{\text{rect}}) \overset{\text{def}}{=} \SM_1 \otimes \SM_2$
-
-  Consider $E \in \SSS_{\text{rect}}$, i.e., $E = E_1 \times E_2$, $E_1 \in \SM_1, E_2 \in \SM_2$
-  then \[sl_{x_1}(E) = \begin{cases}
-    E_2  & \text{if } x_1 \in E_1 \\
-    \emptyset & \text{if } x_1 \notin E_1
+  First, consider the case that $\mu_1(X_1) < \infty$ and $\mu_2(X_2) < \infty$. 
+  Similarly, considering the rectangle case, for any $E \in \SSS_{\text{rect}}$, 
+  \[g_E(x_1) = \begin{cases}
+    \mu_2(E_2) & \text{if } x_1 \in E_1 \\
+    0 & \text{if } x_1 \notin E_1
   \end{cases}\]
-  \[g_E(x_1) = \mu_2(sl_{x_1}(E)) = \mathbbm{1}_{E_1}(x_1) \mu_2(E_2)\]
-  \[\int g_E \ \mathrm{d}\mu_1 = \mu_1(E_1)\mu_2(E_2) = \mu(E)\implies \SSS_{\text{rect}} \in \varphi\]
+  So, $g_E$ is $\SM_1$-measurable.
+  Moreover, 
+  \[\int g_E \ \mathrm{d}\mu_1 = \int_{E_1}\mu_2(E_2) \ \mathrm{d}\mu_1 = \mu_1(E_1)\mu_2(E_2) = \mu(E)\]
+  proved the theorem for the rectangle case.
 
-  We do the proof only for finite measure spaces ($\mu_1(X_1) < \infty, \mu_2(X_2) < \infty$)
+  Next, define 
+  \[\mathfrak{C} = \left\{E \in \kP(X) : g_E \text{ is }\SM_1\text{-measurable, } \mu(E) = \int g_E \ \mathrm{d}\mu_1\right\}\]
+  I will show that $\mathfrak{C}$ is a Dynkin system.
+  For the case $\SM_1$-measurable,
+  \begin{enumerate}[(i)]
+    \item $g_X(x_1) = \mu_2(sl_{x_1}(X)) = \mu_2(X_2)$ is a constant function, so it is $\SM_1$-measurable.
+    \item For $E \in \mathfrak{C}$, $g_{E^\complement}(x_1) = \mu_2(sl_{x_1}(E^\complement)) = \mu_2(X_2 \setminus sl_{x_1}(E)) = \mu_2(X_2) - \mu_2(sl_{x_1}(E))$ is $\SM_1$-measurable.
+    \item For $E_j \in \mathfrak{C}$, where $E_j$ are disjoint, 
+    \[g_{\biguplus_{j=1}^\infty E_j}(x_1) = \mu_2\left(sl_{x_1}\left(\biguplus_{j=1}^\infty E_j\right)\right) = \sum_{j=1}^\infty \mu_2(sl_{x_1}(E_j))\]
+     is $\SM_1$-measurable.
+  \end{enumerate}
+  For the case of $\mu(E) = \int g_E \ \mathrm{d}\mu_1$,
+  \begin{enumerate}[(i)]
+    \item $$\int g_X \ \mathrm{d}\mu_1 = \int \mu_2(sl_{x_1}(X)) \ \mathrm{d}\mu_1 = \mu_1(X_1)\mu_2(X_2)= \mu(X)$$
+    \item For $E \in \mathfrak{C}$,
+    \begin{align*}
+      \int g_{E^\complement} \ \mathrm{d}\mu &= \int \mu_2(sl_{x_1}(E^\complement)) \ \mathrm{d}\mu = \int \mu_2(X_2) - \mu_2(sl_{x_1}(E)) \ \mathrm{d}\mu \\
+      &= \mu(X) - \mu(E) = \mu(E^\complement)
+    \end{align*}
+    \item For $E_j \in \mathfrak{C}$, where $E_j$ are disjoint,
+    \begin{align*}
+      \int g_{\biguplus_{j=1}^\infty E_j} \ \mathrm{d}\mu &= \int \sum_{j=1}^\infty \mu_2(sl_{x_1}(E_j)) \ \mathrm{d}\mu = \sum_{j=1}^\infty \int \mu_2(sl_{x_1}(E_j)) \ \mathrm{d}\mu\\
+      &= \sum_{j=1}^\infty \mu(E_j) = \mu\left(\biguplus_{j=1}^\infty E_j\right)
+    \end{align*}
+  \end{enumerate}
+  We have a theorem stating that if $\SE$ is $\cap$-stable then $\mathcal{D}(\SE) = \kM(\SE)$. 
+  I will show that $\mathfrak{C}$ is a Dynkin system containing $\SSS_{\text{rect}}$ and $\kM(\SSS_{\text{rect}}) \subseteq \mathfrak{C}$.
+  Since the ractangle cases are $\SM_1$-measurable, $\mathfrak{C}$ contains $\SSS_{\text{rect}}$. Moreover, since $\SSS_{\text{rect}}$ is 
+  semiring, so it is $\cap$-stable,
+  and from the definition of Dynkin system, 
+  $\kM(\SSS_{\text{rect}}) = \mathcal{D}(\SSS_{\text{rect}}) \subseteq \mathfrak{C}$. 
+  Hence, for any $E \in \SM_1 \otimes \SM_2$, $g_E$ is $\SM_1$-measurable and $\mu(E) = \int g_E \ \mathrm{d}\mu_1$.
 
-  Let $E \in \varphi$, $sl_{x_1}(E^\complement)$, $\mu_2(sl_{x_1}(E^\complement)) = \mu_2(X_2 \setminus sl_{x_1}(E)) = \mu_2(X_2) - \mu_2(sl_{x_1}(E))$.
 
-  \[\int \mu(sl_{x_1}(E^\complement)) = \int \mu(X_2) - \mu_2(sl_{x_1}(E)) \ \mathrm{d}\mu_1 = \underbrace{\mu_1(X_1)\mu_2(X_2)}_{\mu(X)} - \mu(E) = \mu(E^\complement)\]
+    % Using standard trick $\varphi \subseteq \kP(X_1 \times X_2)$ for which part (i) of the theorem is true
+  % check $\varphi$ is a $\sigma$-algebra and it contains the $\SSS_{\text{rect}}$
 
-  Suppose $E_1, E_2$ satisfy the theorem (i), does $E_1 \cup E_2$ satisfy the theorem
-  Hard (implssible) to check directly theorem (i) for the union $E_1 \cup E_2$ 
+  % Cor of claim: $\varphi$ contains $\kM(\SSS_{\text{rect}}) \overset{\text{def}}{=} \SM_1 \otimes \SM_2$
 
-  To go from finite to $\sigma$-finite, 
-  \[X_1 = \biguplus_{j=1}^\infty A_{j, 1}\]
-  \[X_2 = \biguplus_{k=1}^\infty A_{k, 2}\]
-  then 
-  \[sl_{x_1}(E) = \biguplus_{k=1}^\infty (sl_{x_1}(E)\cap A_{k, 2})\]
-  By using countable additivity of $\mu_2$ we get
-  \[\mu_2(sl_{x_1}(E)) = \sum_{k=1}^\infty \mu_2(sl_{x_1}(E) \cap A_{k, 2})\]
-  then for each $k$ we konw that $\mu_2(sl_{x_1}(E) \cap A_{k, 2})$ is measurable in $X_1$ then applying 
-  countable sum of measurable function is measurable.
-  \begin{align*}
-    \int \mu_2(sl_{x_1}(E))\ \mathrm{d}x_1 &= \int \sum_{k=1}^\infty \mu_2(sl_{x_1}(E) \cap A_{k, 2})\ \mathrm{d}x_1\\ 
-    &= \sum_{k=1}^\infty \int \mu_2(sl_{x_1}(E) \cap A_{k, 2})\ \mathrm{d}x_1\\
-    &= \sum_{k=1}^\infty \mu(E \cap A_{k, 2})\\
-    &= \mu(E)
-  \end{align*}
+  % Consider $E \in \SSS_{\text{rect}}$, i.e., $E = E_1 \times E_2$, $E_1 \in \SM_1, E_2 \in \SM_2$
+  % then \[sl_{x_1}(E) = \begin{cases}
+  %   E_2  & \text{if } x_1 \in E_1 \\
+  %   \emptyset & \text{if } x_1 \notin E_1
+  % \end{cases}\]
+  % \[g_E(x_1) = \mu_2(sl_{x_1}(E)) = \mathbbm{1}_{E_1}(x_1) \mu_2(E_2)\]
+  % \[\int g_E \ \mathrm{d}\mu_1 = \mu_1(E_1)\mu_2(E_2) = \mu(E)\implies \SSS_{\text{rect}} \in \varphi\]
+
+  % We do the proof only for finite measure spaces ($\mu_1(X_1) < \infty, \mu_2(X_2) < \infty$)
+
+  % Let $E \in \varphi$, $sl_{x_1}(E^\complement)$, $\mu_2(sl_{x_1}(E^\complement)) = \mu_2(X_2 \setminus sl_{x_1}(E)) = \mu_2(X_2) - \mu_2(sl_{x_1}(E))$.
+
+  % \[\int \mu(sl_{x_1}(E^\complement)) = \int \mu(X_2) - \mu_2(sl_{x_1}(E)) \ \mathrm{d}\mu_1 = \underbrace{\mu_1(X_1)\mu_2(X_2)}_{\mu(X)} - \mu(E) = \mu(E^\complement)\]
+
+  % Suppose $E_1, E_2$ satisfy the theorem (i), does $E_1 \cup E_2$ satisfy the theorem
+  % Hard (implssible) to check directly theorem (i) for the union $E_1 \cup E_2$ 
+
+  % To go from finite to $\sigma$-finite, 
+  % \[X_1 = \biguplus_{j=1}^\infty A_{j, 1}\]
+  % \[X_2 = \biguplus_{k=1}^\infty A_{k, 2}\]
+  % then 
+  % \[sl_{x_1}(E) = \biguplus_{k=1}^\infty (sl_{x_1}(E)\cap A_{k, 2})\]
+  % By using countable additivity of $\mu_2$ we get
+  % \[\mu_2(sl_{x_1}(E)) = \sum_{k=1}^\infty \mu_2(sl_{x_1}(E) \cap A_{k, 2})\]
+  % then for each $k$ we konw that $\mu_2(sl_{x_1}(E) \cap A_{k, 2})$ is measurable in $X_1$ then applying 
+  % countable sum of measurable function is measurable.
+  % \begin{align*}
+  %   \int \mu_2(sl_{x_1}(E))\ \mathrm{d}x_1 &= \int \sum_{k=1}^\infty \mu_2(sl_{x_1}(E) \cap A_{k, 2})\ \mathrm{d}x_1\\ 
+  %   &= \sum_{k=1}^\infty \int \mu_2(sl_{x_1}(E) \cap A_{k, 2})\ \mathrm{d}x_1\\
+  %   &= \sum_{k=1}^\infty \mu(E \cap A_{k, 2})\\
+  %   &= \mu(E)
+  % \end{align*}
 \end{proof}
 
 \begin{theorem}[Tonelli's Theorem]
@@ -168,7 +219,7 @@ Extend the set function $\mu$, defined on the general rectangles to all of $\SM_
   \[g(x_1) = \int f(x_1, x_2) \ \mathrm{d}\mu_2,\ h(x_2) = \int f(x_1, x_2) \ \mathrm{d}\mu_1\]
   By Monotone Convergence Theorem, we have $g_n \nearrow g$, $h_n \nearrow h$ and limit of measureable functions is measureable.
   By the fact that $g_n \nearrow g$, 
-  \[\lim_{n\to\infty}\int g_n \ \mathrm{d}\mu_1 = \int g \ \mathrm{d}\mu_1 = \int \int f(x_1, x_2) \ \mathrm{d}\mu_1 \mathrm{d}\mu_2 \]
+  \[\lim_{n\to\infty}\int g_n \ \mathrm{d}\mu_1 = \int g \ \mathrm{d}\mu_1 = \int \int f(x_1, x_2) \ \mathrm{d}\mu_2 \mathrm{d}\mu_1 \]
   \[\lim_{n\to\infty}\int g_n \ \mathrm{d}\mu_1 = \lim_{n\to\infty} \int\int s_n(x_1, x_2) \ \mathrm{d}\mu_2 \mathrm{d}\mu_1 \overset{Cavalieri}= \lim_{n\to\infty} \int s_n \ \mathrm{d}\mu \overset{\text{def}}= \int f \ \mathrm{d}\mu\]
 \end{proof}
 
@@ -269,3 +320,109 @@ Extend the set function $\mu$, defined on the general rectangles to all of $\SM_
   \[\iint_{[0, \infty]\times[0, 1]} e^{-ax} \sin(2xy) \ \mathrm{d}m(x, y)\]
   (value $1/4 \ln(1+4/a^2)$)
 \end{example}
+
+\section{Linear Change of Variable}
+\begin{theorem}
+  Let $f \in L^1(\RR^n)$ or ($L^+(\RR^n)$) and let $A: \RR^n \to \RR^n$ be an invertible $n \times n$ matrix. Then 
+  \[|\det A| \int f(Ax) \ \mathrm{d}m(x) = \int f(x) \ \mathrm{d}m(x)\]
+  Moreover, $m(AE) = |\det A| m(E)$
+  for every Lebesgue measureable set $E$.
+\end{theorem}
+\begin{proof}
+  We first assume that $f$ is Borel measurable, then $x \mapsto f(Ax)$ is Borel measurable.
+  (since $x \mapsto Ax$ is continuous) We consider a number of special cases.
+  In what follows write $\RR^n \ni (x_1, x')$ where $x_1 \in \RR, x' \in \RR^{n-1}$.
+
+  \textbf{Case 1:}
+  \[ A = \begin{bmatrix}
+    \lambda & 0 & 0 & \dotsm & 0 \\
+    0 & 1 & 0 & \dotsm & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \dotsm & 1
+  \end{bmatrix}\]
+  $\lambda  \neq 0$ then $\det A = \lambda$. then 
+  \begin{align*}
+    |c| \int f(Ax)\ \mathrm{d}m(x) &= |c|\int_{\RR^{d-1}} \left[\int_\RR f(cx, x') \ \mathrm{d}m_1(x_1)\right]\mathrm{d}m_{d-1}(x') \\
+    \int_{\RR^{d-1}} \left[\int_\RR f(cx, x') \ \mathrm{d}m_1(x_1)\right]\mathrm{d}m_{d-1}(x') &= \int f(x) \ \mathrm{d}m(x) 
+  \end{align*}
+
+  \textbf{Case 2:}
+  \[A = \begin{bmatrix}
+    1 & \lambda \\
+    0 & 1  \\
+  \end{bmatrix}\]
+  Then $\det A = 1$ 
+  \[1 \int f(Ax) \ \mathrm{d}m(x) = \int_{\RR^{d-1}}\left[\int_\RR f(x_1 + \lambda x_2, x')\ \mathrm{d}m_1(x_1)\right] \mathrm{d}m_{d-1}(x') \]
+  \[\int_{\RR^{d-1}}\left[\int_\RR f(x_1 + \lambda x_2, x')\ \mathrm{d}m_1(x_1)\right] \mathrm{d}m_{d-1}(x') = \int f(x) \ \mathrm{d}m(x)\]
+
+  \textbf{Case 3:} A permutes two coordinates: there exist $j \neq k$ 
+  where $A(e_i) = e_i$ if $i \not\in \{j, k\}$, $A(e_j) = e_k$, $A(e_k) = e_j$.
+  Then $\det A = -1$.
+  \[1 \int f(Ax) \ \mathrm{d}m(x) = \int f(x) \ \mathrm{d}m(x)\]
+
+  \textbf{General case:} In general we can write $A = E_1\dotsc E_n$ where each $E_j$ is in Case 1, 2, or 3.
+  \begin{align*}
+    |\det A| \int f(Ax) \ \mathrm{d}x &= |\det (E_1 \dotsm E_{n-1})||\det E_n| \int f(f\circ E_1\dotsc E_{n-1})(E_n x) \ \mathrm{d}x  \\
+    &= |\det (E_1 \dotsm E_{n-1})| \int f(E_1 \dotsm E_{n-1} x) \ \mathrm{d}x \\
+    &= \dotsm \int f(x)\ \mathrm{d}x
+  \end{align*}
+  This proves the theorem when $f$ is Borel measurable. In particular, if $E$ is Borel measurable then
+  \begin{align*}
+    \divideontimes m(AE) &= \int \mathbbm{1}_{AE}(x) \ \mathrm{d}m(x)  \\
+    &= |\det A| \int \mathbbm{1}_{AE}(Ax) \ \mathrm{d}m(x) \\
+    &= |\det A| \int \mathbbm{1}_E(x) \ \mathrm{d}m(x) \\
+    &= |\det A| m(E)
+  \end{align*}
+
+  Finally consider the case when $f$ is Lebesgue measurable.
+  Then there is a Borel measurable function $g$ and a Borel measurable set $E$ with $m(E) = 0$
+  and $f = g$ on $\RR^d \setminus E$ (so $f = g$ almost everywhere).
+  Then $f \circ A = g\circ A$ on $\RR^d \setminus A^{-1}(E)$. By $\divideontimes$ $m(A^{-1}E) = 0$
+  So $f \circ A$ is Lebesbue measurable and $f\circ A = g \circ A$ almost everywhere. So
+  \begin{align*}
+    |\det A| \int f(Ax) \ \mathrm{d}m(x) &= |\det A| \int g(Ax) \ \mathrm{d}m(x) \\
+    \int g(x) \ \mathrm{d}m(x) &= \int f(x) \ \mathrm{d}m(x)
+  \end{align*}
+  Also, arguing exactly as in $\divideontimes$ we have $m(AE) = |\det A| m(E)$ for every Lebesgue measurable set $E$.
+\end{proof}
+
+\begin{theorem}
+  Assume $f, g : [a, b] \to \RR$ are Lebesgue integrable. 
+  Define
+  \[F(x) = \int_{[a, x]} f \ \mathrm{d}m\]
+  \[G(x) = \int_{[a, x]} g \ \mathrm{d}m\]
+  then 
+  \[\int_{[a, b]} Fg \ \mathrm{d}m = F(b)G(b) - \int_{[a, b]} fG \ \mathrm{d}m\]
+\end{theorem}
+\begin{remark}
+  if $u, v: [a, b] \to \RR$ are continuously differentiable with $u(a) = v(a) = 0$, then 
+  \[u(x) \int_{[a, x]} u' \ \mathrm{d}m\]
+  \[v(x) \int_{[a, x]} v' \ \mathrm{d}m\]
+  So, the above theorem implies 
+  \[\int_{[a, b]}uv' \ \mathrm{d}m = u(b)v(b) - \int_{[a, b]} u'v \ \mathrm{d}m\]
+\end{remark}
+
+\begin{proof}
+  Let $T = \{(x, t) : a \le x \le b, a \le t \le x\} = \{(x, t) : a \le t \le b, t \le x \le b\}$
+  Then $T$ is a Lebesgue measurable set in $\RR^2$ and $(x, t) \mapsto f(t)g(x) \mathbbm{1}_T(x, t)$ is Lebesgue measurable. 
+  Also by Tonelli's Theorem, 
+  \begin{align*}
+    \int |f(t)g(x) \mathbbm{1}_T(x, t)| \ \mathrm{d}m_2(x, t) &= \int_{[a, b]} |g(x)|\left[\int_{[a, x]}|f(t)|\ \mathrm{d}t\right] \mathrm{d}x \\
+    &\le \int_{[a, b]} |g| \ \mathrm{d}m \int_{[a, b]} |f| \ \mathrm{d}m < \infty
+  \end{align*}
+  So, by Fubini's Theorem,
+  \begin{align*}
+    \int f(t) g(x) \mathbbm{1}_T(x, t) \ \mathrm{d}m_2(x, t) &= \int_{[a, b]}g(x) \left[\int_{[a, x]} f(t) \ \mathrm{d}t\right] \mathrm{d}x \\
+    &= \int_{[a, b]} gF \ \mathrm{d}m
+  \end{align*}
+  and 
+  \begin{align*}
+    \int f(t)g(x)\mathbbm{1}_T(x, t) \ \mathrm{d}m_2(x, t) &= \int_{[a, b]} f(t) \left[\int_{[t, b]} g(x) \ \mathrm{d}x\right] \mathrm{d}t \\
+    &= \int_{[a, b]} f(t) \left[\int_{[a, b]} g(x) \ \mathrm{d}x - \int_{[a, t]} g(x) \ \mathrm{d}x\right]\mathrm{d}t \\
+    &= \int_{[a, b]} f(t) \left[ \int_{[a, b]} g(x) \ \mathrm{d}x \right]\mathrm{d}t \\
+    &- \int_{[a, b]} f(t) \left[ \int_{[a, t]} g(x) \ \mathrm{d}x \right]\mathrm{d}t \\
+    &= F(b)G(a) - \int_{[a, b]} fG \ \mathrm{d}m 
+  \end{align*}
+  So,
+  \[\int_{[a, b]} Fg \ \mathrm{d}m = F(b)G(b) - \int_{[a, b]} fG \ \mathrm{d}m\]
+\end{proof}
