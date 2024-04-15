@@ -396,8 +396,8 @@ Extend the set function $\mu$, defined on the general rectangles to all of $\SM_
 \end{theorem}
 \begin{remark}
   if $u, v: [a, b] \to \RR$ are continuously differentiable with $u(a) = v(a) = 0$, then 
-  \[u(x) \int_{[a, x]} u' \ \mathrm{d}m\]
-  \[v(x) \int_{[a, x]} v' \ \mathrm{d}m\]
+  \[u(x) =\int_{[a, x]} u' \ \mathrm{d}m\]
+  \[v(x) =\int_{[a, x]} v' \ \mathrm{d}m\]
   So, the above theorem implies 
   \[\int_{[a, b]}uv' \ \mathrm{d}m = u(b)v(b) - \int_{[a, b]} u'v \ \mathrm{d}m\]
 \end{remark}
@@ -425,4 +425,78 @@ Extend the set function $\mu$, defined on the general rectangles to all of $\SM_
   \end{align*}
   So,
   \[\int_{[a, b]} Fg \ \mathrm{d}m = F(b)G(b) - \int_{[a, b]} fG \ \mathrm{d}m\]
+\end{proof}
+
+\section{Change of Variable}
+We konw $A \in GL(n, \RR)$ $A$ is $n \times n$ matrix, $A$ is invertible $\iff$ $\det A = 0$.
+If $f \in \mathcal{L}^+$ or $f \in \mathcal{L}^1$ then
+\[\int f(x) \ \mathrm{d}m(x) = \int f(Ax) |\det A| \ \mathrm{d}m(x)\]
+\[A \Omega = \{Ax : x \in \Omega\}\]
+
+The step is to replace linear transformation to non-linear transformation.
+
+$\phi(x) = \phi(x_1, \dotsc, x_n)$, $\phi$, $\RR^n$-valued, $\phi = (\phi_1, \dotsc, \phi_n)$.
+we know that $\phi$ is differentiable on $\Omega$. if $\frac{\partial \phi_j}{\partial x_k}$ exist and are continuous. 
+\[\phi'(x) = \begin{pmatrix}
+  \frac{\partial \phi_1}{\partial x_1} & \dotsm & \frac{\partial \phi_1}{\partial x_n} \\
+  \vdots & \ddots & \vdots \\
+  \frac{\partial \phi_n}{\partial x_1} & \dotsm & \frac{\partial \phi_n}{\partial x_n} \\
+\end{pmatrix}\]
+$\phi(x) = Ax, \phi'(x) = A$
+
+
+\begin{definition}
+  Let $\Omega_1 \subseteq \RR^n$, $\Omega_2 \subseteq \RR^n$. 
+  We say that $\phi: \Omega_1 \to \Omega_2$ is a $C^1$-diffeomorphism.
+  if \begin{enumerate}[(i)]
+    \item $\phi$ is bijective
+    \item $\phi \in C^1$ (or $\frac{\partial \phi_j}{\partial x_k}$ exist and are continuous)
+    \item $\det \phi'(x) \neq 0$ (i.e., $\phi'(x)$ is invertible)
+  \end{enumerate}
+\end{definition}
+
+\begin{remark}
+  We say that $\phi_1$ and $\phi_2$ are diffeomorphially equivalent.
+  \begin{enumerate}
+    \item $\Omega_1 \sim \Omega_1$, $\phi(x) = x$, $\phi'(x) = I$
+    \item $\phi: \Omega_1 \to \Omega_2$, $C^1$-diffeomorphism, $\phi^{-1}(x)$ is also a $C^1$-diffeomorphism. 
+    (use the inverse function theorem which proves the differentiability of $\phi^{-1}$)
+    $(\phi^{-1})'(y) = (\phi'(\phi^{-1}(y)))^{-1} = (\phi'(x))^{-1}$ where $x = \phi^{-1}(y)$
+    \item  
+  \end{enumerate}
+\end{remark}
+
+\begin{example}
+  $\phi:\underbrace{(0, 2) \times (0, \pi/4)}_{\Omega_1} \to \Omega_2$ defined by
+  $\phi(x_1, x_2) = (x_1 \sin x_2, x_1 \cos x_2)$
+  $\phi(r, \theta) = (r\sin \theta, r\cos \theta)$
+  \[\phi'(x) = \begin{pmatrix}
+    \sin x_2 & x_1 \cos x_2 \\
+    \cos x_2 & -x_1 \sin x_2
+  \end{pmatrix}\]
+  $\det \phi'(x) = -x_1 = -r$
+\end{example}
+
+\begin{theorem}
+  Let $\Omega_1, \Omega_2$ are open sets in $\RR^n$, $\phi: \Omega_1 \to \Omega_2$ is a $C_1$-diffeomorphism.
+  $f \in \mathcal{L}^1(\Omega_2)$ or $f \in \mathcal{L}^+(\Omega_2)$ then 
+  \[\int_{\Omega_2} f(y) \ \mathrm{d}m(y) = \int_{\Omega_1} f(\phi(x)) |\det \phi'(x)|\ \mathrm{d}m(x)\]
+\end{theorem}
+
+\begin{remark}
+  In calculus, we have substitution rule
+  \[\int_{\phi(a)}^{\phi(b)} f(y)\ \mathrm{d}y = \int_a^b f(\phi(x))\phi'(x)\ \mathrm{d}x\]
+\end{remark}
+
+\begin{proof}
+  It is enough to show that 
+  \[\int_{\Omega_2} f(y) \ \mathrm{d}m(y) \le \int_{\Omega_1} f(\phi(x)) |\det \phi'(x)| \ \mathrm{d}m(x)\]
+  Then we may apply this inequality for the diffeomorphism $\phi^{-1}: \Omega_2 \to \Omega_1$ to get the reverse inequality.
+  \[\int_{\Omega_1} g(x) \ \mathrm{d}m(x) \le \int_{\Omega_2} g(\phi^{-1}(y)) |\det(\phi^{-1})'(y)| \ \mathrm{d}m(y)\]
+  Apply
+  \[g(x) = f(\phi(x)) |\det \phi'(x)|\]
+  \[\int_{\Omega_1} g(x) \ \mathrm{d}m(x) \le \int_{\Omega_2} f(\phi(\phi^{-1}(y))) |\det \phi'(\phi^{-1}(y))| |\det(\phi^{-1})'(y)| \ \mathrm{d}m(y)\]
+  we know that $\phi(\phi^{-1}(y)) = y$, $\phi^{-1}(\phi'(x)) = x$ then take the differentiable, we get
+  \[(\phi^{-1})'(\phi(x)) \phi'(x) = I\]
+  \[\phi'(\phi^{-1}(y)) (\phi^{-1})'(y) = I\]
 \end{proof}
