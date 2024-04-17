@@ -499,4 +499,64 @@ $\phi(x) = Ax, \phi'(x) = A$
   we know that $\phi(\phi^{-1}(y)) = y$, $\phi^{-1}(\phi'(x)) = x$ then take the differentiable, we get
   \[(\phi^{-1})'(\phi(x)) \phi'(x) = I\]
   \[\phi'(\phi^{-1}(y)) (\phi^{-1})'(y) = I\]
+
+  If we can prove $f \in L^+(\Omega_2)$ we can also prove it for general $f \in L^1$
+
+  Noted that it suffices to prove the $\le$
+
+  \textbf{First step:} $f = \mathbbm{1}_{\phi(E)}$ we need to prove 
+  \[m(\phi(E))\footnote{Note that $\mathbbm{1}_{\phi(E)}(\phi(x)) = \mathbbm{1}_E(x)$} \le \int_E |\det \phi'(x)|\ \mathrm{d}x\]
+  Assume that $E$ is a cube $Q$ away from the boundary $\mathrm{dist}(Q, \Omega_1^\complement) > 0$
+  For any $\eps > 0$, let $\delta > 0$, 
+  \[\|\phi'(\widetilde{x})^{-1}\phi'(x) - I\|_{\infty-\infty} < \eps,\ \ \text{where }|x - \widetilde{x}|_{\infty}  < \delta\]
+  where $|x - \widetilde{x}|_{\infty} = \max_{1\le j \le n} |x_j - \widetilde{x}_j|$ and $\|A\|_{\infty-\infty} = \max_{i} \sum_{k=1}^n|a_{ik}|$
+  we decompose $Q = \biguplus Q^\nu$ where $\mathrm{diam} Q^\nu < \delta$ then
+  $|\det \phi'(x) - \det\phi'(\widetilde{x})| < \eps$ if $|x - \widetilde{x}| < \delta$ 
+  Now, we get that $\phi(Q_\nu)$ are all disjoint then 
+  \[m(\phi(Q)) = \sum_{\nu} m(\phi(Q_\nu))\]
+  \[\phi(Q_\nu) = \phi'(x_\nu) \phi'(x_\nu)^{-1}\phi\]
+  then 
+  \[\Psi^{\nu} = x \mapsto \phi'(x_{\nu})^{-1}\phi(x) \]
+  for $x \in Q^\nu$, $\| (\Psi^\nu)' - I\|_{\infty - \infty} < \eps$
+
+  \textbf{Claim:} $\Psi^\nu(Q^\nu)$ contain in a cube centered at $\Psi^\nu(x^\nu)$
+  with side length = $(1 + \eps)$ side length($Q_\nu$).
+  Thus $m(\Psi^nu(Q^\nu)) \le (1 + \eps)^n m(Q_\nu)$.
+  (Need to estimate $\Psi^\nu(x) - \Psi^\nu(x^\nu)$ for $x \in Q_\nu$)
+
+  Assuming the claim.
+  \[m(\phi(Q_\nu)) = |\det \phi'(x_\nu)|m(\Psi^\nu(Q))\]
+  by the Corollary for linear differentiation then
+  \begin{align*}
+    m(\phi(Q_\nu)) &\le |\det \phi'(x_\nu)|(1+\eps)^n\int_{Q_\nu} \ \mathrm{d}m(x) \\
+    &= (1+\eps)^n \sum_{\nu}\int_{Q_\nu} \underbrace{|\det \phi'(x) - (\det \phi'(x) - \det \phi'(x^\nu))|}_{\le |\det \phi'(x)| + \eps} \ \mathrm{d}m(x) \\
+    &\le (1 + \eps)^n \sum_{\nu}\int_{Q^\nu} |\det\phi'(x)| + (1 + \eps)^n \sum_\nu \int_{Q_\nu} \eps \\
+    &\le (1 + \eps)^n \int_Q |\det \phi'(x)| \ \mathrm{d}m(x) + (1+\eps)^n\eps m(Q)
+  \end{align*}
+
+  For the \textbf{Claim}: we need to check
+  \[|\Psi^\nu_j(x) - \Psi_j^\nu(x^\nu)| \le (1 + \eps)\max_{1 \le k \le n} |x_k - x_k^\nu|\]
+  % Thus $m(\Psi^\nu(Q^\nu)) \le (1 + \eps)^n m(Q^\nu)$
+  \begin{align*}
+    |\Psi^\nu_j(x) - \Psi_j^\nu(x^\nu)| &= \left|\int_{s=0}^1 \sum_{k=1}^n (x_k - x_k^\nu) \frac{\partial \Psi_j^\nu}{\partial x_k} (x^\nu + s(x - x^\nu)) \ \mathrm{d}s\right| \\
+    &=\left|(x_j - x_j^\nu)\int_0^1\sum_{k=1}^n (x_k - x_k^\nu) \left(\frac{\partial\Psi_j^\nu}{\partial{x_k}} - I_{jk}\right)(x^\nu + s(x - x^\nu)) \ \mathrm{d}s\right| \\
+    &\le |x_j - x_j^\nu| + \int_0^1 \|x - x^\nu\|_{\infty} \underbrace{\sum_{k} \left|\frac{\partial\Psi_j^\nu}{\partial{x_k}} - I_{jk}\right| (x^\nu + s(x - x^\nu))}_{\le \eps}  \ \mathrm{d}s \\
+    &\le |x_j - x_j^\nu| + \eps \|x - x^\nu\|_\infty 
+    % &= \sum_{k=1}^n(x_k - x_k^\nu) \int_0^1 \frac{\partial \Psi_j^\nu}{\partial x_k} (x^\nu + s(x - x^\nu)) \ \mathrm{d}s
+  \end{align*}
+  So, $\|\Psi^\nu(x) - \Psi^\nu(x^\nu)\|_\infty\|_\infty \le (1 + \eps)\|x - x^\nu\|_\infty$
+
+  If $E$ is an open set $\mathcal O \subseteq \Omega_1$ then by Whitney theorem, we can decompose 
+  \[\mathcal O = \biguplus_{l=1}^\infty Q_l\]
+  where the cubes $Q_l$ are disjoint and aways stay from the boundary of $\Omega_1$.
+  then
+  \[m(\phi(\mathcal O)) = \sum m(\phi(\mathcal O_l)) \le \sum_l\int_{Q_l} |\det \phi'(x)| \ \mathrm{d}m = \int_{\mathcal O}|\det \phi'(x)| \ \mathrm{d}x\]
+  Let $R \in \NN$ then 
+  \[\Omega_{1, R} \{x : |x| \le R, \mathrm{dist}(x_1, \Omega_1^\complement) \ge \frac1R\}\]
+  and we get that $\overline{\Omega_{1, R}}$ is compact and
+  \[\int_{\Omega_{1, R}} |\det \phi'(x)| < \infty\]
+  Let $E \subseteq \Omega_{1, R}$ then find an $\mathcal{O}_k, m(\mathcal{O}_k) \le m(E) + 2^{-k}$.
+  We can construct such that $\mathcal{O}_1 \supseteq \mathcal{O}_2 \supseteq \dotsm$.
+  we canuse continuity from abouve or dominated convergence theorem to get
+  \[m(E) \le \int_{\mathcal{O}_k} |\det \phi'(x)| \ \mathrm{d}m(x) \to \int_{E} |\det \phi'(x)| \ \mathrm{d}m(x)\]
 \end{proof}
