@@ -335,25 +335,28 @@ Extend the set function $\mu$, defined on the general rectangles to all of $\SM_
 
   \textbf{Case 1:}
   \[ A = \begin{bmatrix}
-    \lambda & 0 & 0 & \dotsm & 0 \\
-    0 & 1 & 0 & \dotsm & 0 \\
-    \vdots & \vdots & \vdots & \ddots & \vdots \\
-    0 & 0 & 0 & \dotsm & 1
+    \lambda & 0 & \dotsm & 0 \\
+    0 & 1 & \dotsm & 0 \\
+    \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & \dotsm & 1
   \end{bmatrix}\]
   $\lambda  \neq 0$ then $\det A = \lambda$. then 
   \begin{align*}
-    |c| \int f(Ax)\ \mathrm{d}m(x) &= |c|\int_{\RR^{d-1}} \left[\int_\RR f(cx, x') \ \mathrm{d}m_1(x_1)\right]\mathrm{d}m_{d-1}(x') \\
-    \int_{\RR^{d-1}} \left[\int_\RR f(cx, x') \ \mathrm{d}m_1(x_1)\right]\mathrm{d}m_{d-1}(x') &= \int f(x) \ \mathrm{d}m(x) 
+    |\lambda| \int f(Ax)\ \mathrm{d}m(x) &= |\lambda|\int_{\RR^{d-1}} \left[\int_\RR f(\lambda x, x') \ \mathrm{d}m_1(x_1)\right]\mathrm{d}m_{n-1}(x') \\
+    \int_{\RR^{n-1}} \left[\int_\RR f(cx, x') \ \mathrm{d}m_1(x_1)\right]\mathrm{d}m_{n-1}(x') &= \int f(x) \ \mathrm{d}m(x) 
   \end{align*}
 
   \textbf{Case 2:}
   \[A = \begin{bmatrix}
-    1 & \lambda \\
-    0 & 1  \\
+    1 & \lambda  & \dotsm & 0\\
+    0 & 1   & \dotsm & 0\\
+    % 0 & 0 & 1 & \dotsm & 0\\
+    \vdots & \vdots & \ddots & \vdots \\
+    0 & 0  & \dotsm & 1
   \end{bmatrix}\]
   Then $\det A = 1$ 
-  \[1 \int f(Ax) \ \mathrm{d}m(x) = \int_{\RR^{d-1}}\left[\int_\RR f(x_1 + \lambda x_2, x')\ \mathrm{d}m_1(x_1)\right] \mathrm{d}m_{d-1}(x') \]
-  \[\int_{\RR^{d-1}}\left[\int_\RR f(x_1 + \lambda x_2, x')\ \mathrm{d}m_1(x_1)\right] \mathrm{d}m_{d-1}(x') = \int f(x) \ \mathrm{d}m(x)\]
+  \[1 \int f(Ax) \ \mathrm{d}m(x) = \int_{\RR^{d-1}}\left[\int_\RR f(x_1 + \lambda x_2, x')\ \mathrm{d}m_1(x_1)\right] \mathrm{d}m_{n-1}(x') \]
+  \[\int_{\RR^{n-1}}\left[\int_\RR f(x_1 + \lambda x_2, x')\ \mathrm{d}m_1(x_1)\right] \mathrm{d}m_{n-1}(x') = \int f(x) \ \mathrm{d}m(x)\]
 
   \textbf{Case 3:} A permutes two coordinates: there exist $j \neq k$ 
   where $A(e_i) = e_i$ if $i \not\in \{j, k\}$, $A(e_j) = e_k$, $A(e_k) = e_j$.
@@ -559,4 +562,80 @@ $\phi(x) = Ax, \phi'(x) = A$
   We can construct such that $\mathcal{O}_1 \supseteq \mathcal{O}_2 \supseteq \dotsm$.
   we canuse continuity from abouve or dominated convergence theorem to get
   \[m(E) \le \int_{\mathcal{O}_k} |\det \phi'(x)| \ \mathrm{d}m(x) \to \int_{E} |\det \phi'(x)| \ \mathrm{d}m(x)\]
+
+  \textbf{Main Step:} (special case of $f = \mathbbm{1}_E$)
+  \[m(\phi(E)) \le \int_E |\det \phi'| \ \mathrm{d}m\]
+  for $E \subseteq \Omega_1$ open set.
+  replace $\phi(E)$ by $A$ and $E$ by $\phi^{-1}(A)$
+  $A_1, \dotsc, A_j$ are given, $c_1, \dotsc, c_j$, $c_j > 0$,
+  let 
+  \[s(x) = \sum_{i=1}^j c_i \mathbbm{1}_{A_i}\]
+  then
+  \begin{align*}
+    \sum_{i=1}^j c_k \int \mathbbm{1}_{A_i} \ \mathrm{d}m \le \sum_{i=1}^j c_i \int_{\phi^{-1}(A_i)} |\det \phi'(x)| \ \mathrm{d}m
+  \end{align*}
+  \[x \in \phi^{-1}(A_i) \iff \phi(x) \in A_i\]
+  then $\mathbbm{1}_{\phi^{-1}(A_i)} = \mathbbm{1}_{A_i} (\phi(x))$
+  so
+  \begin{align*}
+    \int s(y) \ \mathrm{d}m(y) &\le \int \sum c_i \mathbbm{1}_{\phi^{-1}(A_i)}(x) |\det \phi'(x)| \ \mathrm{d}m(x)
+    &\le \int s(\phi(x)) |\det \phi'(x)| \ \mathrm{d}m(x)
+  \end{align*}
+  then $s_n \nearrow f$ apply MCT given the formula for $f \in \mathcal{L}^+$
+  \[f \in L^1 \implies f = (\Re f)_+ - (\Re f)_- + i((\Im f)_+ - (\Im f)_-)\]
 \end{proof}
+
+\section{Lebesgue Differentiation Theorem}
+
+In Calculus, $f \in C[a, b]$
+we have theorem that 
+\[F(x) = \int_a^x f(t) \ \mathrm{d}t\]
+then $F$ is differentiable at all $x \in [a, b]$ and $F' = f$
+we use the prove that
+\[\lim_{h \to 0^+} \frac{F(x+h) - F(x)}{h} = f(x), x < b\]
+\[\lim_{h \to 0^-} \frac{F(x+h) - F(x)}{h} = f(x), x > a\]
+rewrite the limit as 
+\[\frac{F(x+h) - f(x)}h = \frac1h \int_x^{x+h} (f(t) - f(x) + f(x)) \ \mathrm{d}t = f(x) + \frac1h\int_x^{x+h}f(t) - f(x) \ \mathrm{d}t\]
+For $t$ close to $x$, use $|f(t) - f(x)| < \eps$, $|t| < \delta$ for given
+similarly for negative
+
+\begin{theorem}[Lebesgue Differentiation Theorem]
+  If $f \in L^1([a, b])$,
+  \[F(x) = \int_{[a, x]} f \ \mathrm{d}m\]
+  then $F$ is differentiable almost everywhere and $F' = f$ almost everywhere.
+  %  then for almost every $x \in \RR^n$
+  % \[\lim_{r \to 0} \frac1{m(B_r(x))} \int_{B_r(x)} f(y) \ \mathrm{d}m(y) = f(x)\]
+\end{theorem}
+\begin{definition}
+  In $\RR^n$ averages over ball $B(x, r) = \{y : |y-x| < r\}$
+  \[\mathcal{A}_r f(x) = \frac{1}{m(B(x, r))} \int_{B(x, r)} |f| \ \mathrm{d}m\]
+\end{definition}
+\begin{definition}
+  \[Mf(x) = \sum_{r > 0} \mathcal{A}_r |f|\] 
+\end{definition}
+
+\begin{remark}
+  Note the function
+  $x \mapsto \mathcal{A}_r f(x)$ is continuous
+  \[\left|\int_{B(x, r)} |f| - \int_{B(\widetilde{x}, r)} |f| \right| \le \int_{B(x, r) \bigtriangleup B(\widetilde{x}, r)} |f| \to 0\]
+  as $x \to \widetilde{x}$
+  Observe that
+  \[\left\{x : \sup_{r > 0} \mathcal{A}_r f(x) > \alpha\right\}\]
+  is an open set
+\end{remark}
+
+\begin{theorem}[Hardy and Littlewood]
+  $M$ satisfies the inequality
+  \begin{enumerate}[(i)]
+    \item $m\left(\left\{x : M f(x) > \alpha\right\}\right) \le C_n \frac{\|f\|_1}{\alpha}$
+    \item If $p > 1$, $\|Mf\|_p \le C_{p, n} \|f\|_p$
+    \item is clearly true for $p = \infty$ (for simplicity for continuous $f$)
+  \end{enumerate}
+  In general part (ii) is an instance of an interpolation.
+\end{theorem}
+
+We say that a constant $A$ essentially bounds a function $f$ if 
+$|f(x)| \le A$ for almost every $x$.
+%TODO: define operator esssup
+\[\mathrm{ess}\ \sup |f(x)| = \inf \{A : A \text{ essentially bounds } |f|\}\]
+\[|f(x)| \le B + \frac1n \text{ for } x\in X \setminus N_n \implies |f(x)| < B \text{ for } x \in X \setminus \bigcup N_n\]
