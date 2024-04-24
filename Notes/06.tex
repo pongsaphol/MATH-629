@@ -611,7 +611,7 @@ similarly for negative
   \[\mathcal{A}_r f(x) = \frac{1}{m(B(x, r))} \int_{B(x, r)} |f| \ \mathrm{d}m\]
 \end{definition}
 \begin{definition}
-  \[Mf(x) = \sum_{r > 0} \mathcal{A}_r |f|\] 
+  \[M_{\mathrm HL}f(x) = \sup_{r > 0} \mathcal{A}_r |f|\] 
 \end{definition}
 
 \begin{remark}
@@ -620,15 +620,15 @@ similarly for negative
   \[\left|\int_{B(x, r)} |f| - \int_{B(\widetilde{x}, r)} |f| \right| \le \int_{B(x, r) \bigtriangleup B(\widetilde{x}, r)} |f| \to 0\]
   as $x \to \widetilde{x}$
   Observe that
-  \[\left\{x : \sup_{r > 0} \mathcal{A}_r f(x) > \alpha\right\}\]
-  is an open set
+  \[\Omega_\alpha = \left\{x : \sup_{r > 0} \mathcal{A}_r f(x) > \alpha\right\}\]
+  is an open set because union of open sets are open set
 \end{remark}
 
 \begin{theorem}[Hardy and Littlewood]
   $M$ satisfies the inequality
   \begin{enumerate}[(i)]
-    \item $m\left(\left\{x : M f(x) > \alpha\right\}\right) \le C_n \frac{\|f\|_1}{\alpha}$
-    \item If $p > 1$, $\|Mf\|_p \le C_{p, n} \|f\|_p$
+    \item $m\left(\left\{x : M_{\mathrm HL}f(x) > \alpha\right\}\right) \le C_n \frac{\|f\|_1}{\alpha}$
+    \item If $p > 1$, $\|M_{\mathrm HL}f\|_p \le C_{p, n} \|f\|_p$
     \item is clearly true for $p = \infty$ (for simplicity for continuous $f$)
   \end{enumerate}
   In general part (ii) is an instance of an interpolation.
@@ -637,5 +637,53 @@ similarly for negative
 We say that a constant $A$ essentially bounds a function $f$ if 
 $|f(x)| \le A$ for almost every $x$.
 %TODO: define operator esssup
-\[\mathrm{ess}\ \sup |f(x)| = \inf \{A : A \text{ essentially bounds } |f|\}\]
+\[\esssup |f(x)| = \inf \{A : A \text{ essentially bounds } |f|\}\]
 \[|f(x)| \le B + \frac1n \text{ for } x\in X \setminus N_n \implies |f(x)| < B \text{ for } x \in X \setminus \bigcup N_n\]
+
+\begin{proof}
+  $\Omega_\alpha = \{x : M_{\mathrm HL}f(x) > \alpha\}$,
+  $m(\Omega_\alpha) = \sup_{K \subseteq \Omega_\alpha} m(K)$.
+  It suffices to show that for every compact set $K$ contained in $\Omega_\alpha$, 
+  $m(K) \le 3^n \frac{\|f\|_1}\alpha$
+  fix $x \in K$ then there exists a ball $B(x, r(x))$ such that 
+  \[\frac1{m(B(x, r(x)))} \int_{B(x, r(x))} |f| \ \mathrm{d}m> \alpha \implies m(B(x, r(x))) < \frac1\alpha\int_{{B(x, r(x))}} |f| \ \mathrm dm\]
+  there is a finite family of ball $B(x_i, r(x_i))$, for $i = 1, \dotsc, L$ such that 
+  \[K \subseteq \bigcup_{B \in \kB} B\]
+  $K$ is compact
+
+  \textbf{Covering Lemma} Given ball $\kB = \{B_1, \dotsc, B_L\}$ there exists subcollection $\widetilde{\kB} \subseteq \kB$
+  of ball $\{B : B \in \widetilde{B}\}$ which is pairwise disjoint such that the three fold balls
+  $\{3B : B \in \widetilde{B}\}$ contain 
+  \[\bigcup_{B \in \kB} B\]
+  (union of the original ball) then
+  Notice that $B^* \equiv 3B\equiv$ ball of radius 3 radius of $B$ centered at the center of $B$.
+  ($x_B + 3(B - x_B)$) 
+
+  \textbf{Proof by induction} on the cardinality of $\kB$. $|\kB| = N > 1$,
+  find ball $B_1 \in \kB$ with the maximal radius. Observe that for any $B \in \kB$, if $B \cap B_1 \neq \emptyset$
+  then $B \subseteq B_1^*$.
+  Consider the collection $\kB_{2} = \{\text{all ball in } \kB \text{ which are disjoint from }B_1\}$
+  By the induction hypothesis (and $|\kB_2| < |\kB| = N$)
+  there are finitely many balls $B_2, \dotsc, B_M$ disjoint and 
+  \[\bigcup_{j=2}^M B_j^* \supseteq \bigcup_{B \in \kB_2}B\]
+  All balls in $\kB$, that intersect $B_1$ are contained in $B_1^*$.
+  \[m(B(x, r(x_j))) \le \frac1\alpha \int_{B(x_j, r(x_j))} |f|\]
+  Apply the covering lemma, we get balls
+  \[B_1 = B(x_1, r(x_1)), \dotsc, B_M = B(x_M, r(x_M))\]
+  disjoint, and 
+  \[\bigcup B_i^* \supseteq K\]
+  then 
+  \begin{align*}
+    m(K) &\le m\left(\bigcup_{i=1}^M B_i^*\right) 
+    \le \sum_{i=1}^M m(B_i^*)  = 3^n \sum_{i=1}^Mm(B_i) \\
+    &\le 3^n\sum_{i=1}^n\frac1\alpha \int_{B_i} |f| \ \mathrm{d}m\le \frac{3^n}\alpha \int|f|\ \mathrm{d}m = 3^n\alpha^{-1}\|f\|_{1}
+  \end{align*}
+\end{proof}
+
+Claim in the Lebesgue differentiation theorem
+Let $f \in L^1$ then for almost every where $x \in \RR^n$ 
+\[\frac1{m(B(x, r))}\int_{B(x, r)} f(y) \ \mathrm{d}m(y) = f(x)\]
+slightly strong statement
+\[\frac1{m(B(x, r))}\int_{B(x, r)} |f(y) - f(x)| \ \mathrm{d}m \to 0\]
+for almost everywhere $x$ (If this is true for a specific $x \in \RR^n$ then we call $x$ a Lebesgue point)
+
