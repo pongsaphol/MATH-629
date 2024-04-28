@@ -64,7 +64,7 @@ $\{f_n\}$ cxauchy, For every $\eps > 0$, there exists $N(\eps)$ such that for $l
   
 % \end{theorem}
 
-\section{Function space}
+\section{Functional space}
 
 \begin{definition}
   \[\|f\|_p = \left(\int |f|^p \ \mathrm{d}\mu\right)^{\frac1p}\]
@@ -89,7 +89,7 @@ $\{f_n\}$ cxauchy, For every $\eps > 0$, there exists $N(\eps)$ such that for $l
 \end{remark}
 
 \begin{theorem}
-  For $p < 1$ we have inequality
+  For $p \le 1$ we have inequality
   \[\|f+g\|_p^p \le \|f\|_p^p + \|g\|_p^p\]
 \end{theorem}
 
@@ -97,8 +97,11 @@ $\{f_n\}$ cxauchy, For every $\eps > 0$, there exists $N(\eps)$ such that for $l
   we claim that
   \[\int |f+g|^p \ \mathrm{d}\mu \le \int |f|^p \ \mathrm{d}\mu + \int |g|^p\ \mathrm{d}\mu\]
   for $a, b \in [0, \infty)$, $(a+b)^p \le a^p + b^p$
-  WLOG $b \le a$
-  $f(x) = 1+x^p - (1-x)^p$, $f'(x) \ge 0 \implies (1+x)^p \le 1 + x^p$ for $0 \le x \le 1$ 
+  WLOG $b \le a,$
+  $f(x) = 1+x^p - (1-x)^p$, $f'(x) \ge 0 \implies (1+x)^p \le 1 + x^p$ for $0 < p \le 1$.  
+  set $x = b/a$ Then
+  \[(a+b)^p \le a^p + b^p\] 
+  then setting $a = |f(x)|, b = |g(x)|$ and we are done.
 \end{proof}
 
 \begin{remark}
@@ -176,11 +179,13 @@ $\{f_n\}$ cxauchy, For every $\eps > 0$, there exists $N(\eps)$ such that for $l
 \section{Application}
 \begin{lemma}[Shebyshev's inequality]
   This is an inequality for the distribution function (given a measure space $(X, \SM, \mu)$) 
-  $\mu_f(\alpha) = \mu(\{x : |f(x)| \ge \alpha\})$
+  $\mu_f(\alpha) = \mu(\{x : |f(x)| \ge \alpha\}), E_\alpha = \{x : |f(x)| \ge \alpha\}$
   The Shebyshev's inequality is 
   \[\mu_f(\alpha) \le \frac{\|f\|_p^p}{\alpha^p}\]
 \end{lemma}
 \begin{proof}
+  for $x \in E_\alpha$, 
+  \[1 \le \frac{|f(x)|^p}{\alpha^p}\]
   \begin{align*}
     \mu_f(\alpha) &= \int_{E_\alpha} \mathbbm{1} \ \mathrm{d}\mu \\
     &\le \int_{E_\alpha} \frac{|f(x)|^p}{\alpha^p}\ \mathrm{d}\mu \\

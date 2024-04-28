@@ -415,3 +415,140 @@ functions of sets of finite measure.
 % & \le \eps
 %   \end{align*}
 % \end{proof}
+
+\section{Practice Exam 2}
+
+%q1
+\begin{problem}
+  Let $a \in \RR$. On $\NN$ consider the measure $\mu_a$ 
+  defined by $\mu_a(E) = \sum_{n\in E}n^{-a}$ where $E \subseteq \NN$.
+  For every pair $(p_1, p_2)$ determine whether the embedding 
+  $L^{p_1}(\NN, \mu_a) \subseteq L^{p_2}(\NN, \mu_a)$ is true.
+\end{problem}
+
+%q2
+\begin{problem}
+  Let $b \in \RR$. On $[0, 1]$ (with the Lebesgue $\sigma$-algebra) 
+  consider the measure $\nu_b$ defined by $\nu_b(E) = \int_E (\sin x)^{-b} \ \mathrm{d}m(x)$
+  where $E$ is a Lebesgue measurable subset of $[0, 1]$. For every pair $(p_1, p_2)$ 
+  determine whether the embedding $L^{p_1}([0, 1], \nu_b) \subseteq L^{p_2}([0, 1], \nu_b)$ is true.
+\end{problem}
+
+%q3
+\begin{problem}
+  Let $f$ be continuous on $[0, 1]$
+  \begin{enumerate}[(i)]
+    \item Show that $\lim_{n\to\infty} f(x)\sin(2\pi nx) \ \mathrm{d}x = 0$.
+    \item *Does the limit
+    \[\lim_{n\to\infty} \int_0^1 f(x)|\sin(2 \pi nx)|\ \mathrm{d}x\]
+    exist? If yes, determine its value.
+    \item What can be said about the above if we just assume $f \in L^1([0, 1])$?
+  \end{enumerate}
+\end{problem}
+
+%q4
+\begin{problem}
+  Let $f \in L^1([0, 2\pi))$.
+  \begin{enumerate}[(i)]
+    \item Prove that
+    \[\lim_{n\to\infty} \int_0^{2\pi} f(x) e^{-inx} \ \mathrm{d}x = 0\]
+    \item Prove that for a set $E \subseteq [0, 2\pi]$ of positive Lebesgue measure $m(E)$,
+    \[\lim_{n\to\infty}\int_E \cos^2(nx + \gamma_n)\ \mathrm{d}x = \frac{m(E)}{2}\]
+    for any sequence $\gamma_n$.
+    \item * Let $F_n(x) = a_n \cos nx + b_n \sin nx$. Assume that the series
+    $\sum_{n=0}^\infty F_n(x)$ converges on a set $E$ of positive measure. Show
+    that $\lim_{n\to\infty} a_n = 0$ and $\lim_{n\to\infty} b_n = 0$.
+  \end{enumerate}
+\end{problem}
+
+%q5
+\begin{problem}
+  \begin{enumerate}[(i)]
+    \item Let $f: \RR^n \to \RR$ be continuous and compactly supported. 
+    Let $P_tf(x) = \int f(x-y)t^{-n/2}e^{-|x|^2/t} \ \mathrm{d}x$.
+
+    Show that $\lim_{t\to 0} P_tf(x)$ exist and determine the limit.
+    \item If $f \in L^1(\RR^n)$ show that $P_tf$ converges in $L^1$ as $t\to 0$.
+    \item Show that for all $t> 0$ and $x \in \RR^n$
+    \[|P_tf(x)| \le CM f(x)\]
+    where $Mf$ is the Hardly-Littlewood maximal function and $C$ is some constant independent of $f$.
+    Show that $P_tf(x)$ converges almost everywhere as $t\to 0$.
+  \end{enumerate}
+\end{problem}
+
+%q6
+\begin{problem}
+  In $\RR^n$ let, for $j = 1, \dotsc, n$, $\pi_j: \RR^n \to \RR^{n-1}$ be the projections
+  \[(x_1, \dotsc, x_n) \mapsto (x_1, \dotsc, x_{j-1}, x_{j+1}, \dotsc, x_n)\]
+  Let $g_j, j=1, \dotsc,j_n$ be functions in $L^{n-1}(\RR^{n-1})$.
+
+  Prove the inequality
+  \[\int_{\RR^n} \prod_{j=1}^n g_j(\pi_j(x))\ \mathrm{d}x \le \prod_{j=1}^n \|g_j\|_{L^{n-1}(\RR^{n-1})}\]
+  Hint: It may help to consider the cases $n=2,3$ first.
+\end{problem}
+
+%q7
+\begin{problem}
+  Let $E \subseteq \RR$ be a Lebesgue measurable set of positive Lebesgue measure, $m(E) > 0$. 
+  Show that for any $\beta < 1$, there is an open interval $I$ such that $m(E \cap I) \ge \beta m(I)$.
+
+  Hint: Argue by contradiction and think about the definition of the outer measure
+  that determines Lebesgue measure.
+\end{problem}
+
+%q8
+\begin{problem}
+  Review the proof of \textit{Steinhaus' theorem}: Let $E \subseteq [0, 1]$ be a Lebesgue 
+  measurable set with $m(E) > 0$. Then the difference set
+  \[E-E = \{x_1 - x_2 : x_1 \in E, x_2 \in E\}\]
+  contains an interval centered at the origin.
+\end{problem}
+
+\begin{proof}
+  We may assume that $E$ is compact (why?). Moreover given (small)
+  $a > 0$ there is an open set $U \supseteq E$ such that
+  \[m(U) < (1+a)m(E)\]
+  Let $\eps = \frac12 \mathrm{dist}(E, U^\complement) > 0$. We show that 
+  $(-\eps, \eps) \subseteq E-E$; in other words we show that for any $t$
+  with $|t| < \eps$ there exists $x \in E$ such that $x+t$ is also in $E$.
+  Hence we need to show that $E \cap (E -t)$ is nonempty, and we do this
+  by showing that $m(E \cap (E-t)) > 0$.
+
+  By our definition of $\eps$, we have $(E-t)\cap U^\complement = \emptyset$
+  if $|t| < \eps$. Hence
+  \[m(U\setminus(E-t)) = m(U) - m(E-t)=m(U)-m(E)<(1+a)m(E)-m(E) \le am(E)\]
+  Therefore
+  \begin{align*}
+    m(E \cap (E-t)) &\ge m(U) - m(U\setminus E) - m(U\setminus(E-t)) \\
+    &\ge m(u) -2am(E) \ge (1-2a)m(E) 
+  \end{align*}
+  and we get $m(E \cap m(E-t)) > 0$ if we specify above that $a < 1/2$.
+\end{proof}
+
+%q9
+\begin{problem}
+  Let $E \subseteq \RR$ be a set of positive Lebesgue measure. The following 
+  statements can be proved by an adaptation of the method used in Steinhaus' theorem. Work this out.
+  \begin{enumerate}[(i)]
+    \item Let $N \in \NN$. Show that $E$ contains an arthmetic progression of length $N$, 
+    i.e there is an $a > 0$ and a real number $x$ so that $x, x+a, x+2a, \dotsc, x+(N-1)a$
+    belong to $E$.
+    \item Show there exist $t > 0$ and $x$ such that $x, x+t$ and $x+t^2$ belong to $E$.
+  \end{enumerate}
+\end{problem}
+
+%q10
+\begin{problem}
+  Below always assume that $E \subseteq \RR^n$ is Lebesgue measurable, with $m(E) = 1$.
+  \begin{enumerate}[(i)]
+    \item Let $f$ be bounded and continuous. Show that for all $x\in\RR^n$
+    \[\lim_{t\to0}\int_E f(x-ty) \ \mathrm{d}m(y) = f(x)\]
+    \item Let $f \in L^1(\RR^n)$ and assume in addition that $E$ is bounded. 
+    Show that $\lim_{t\to0}\int_E f(x-ty) \ \mathrm{d}m(y) = f(x)$ for almost every $x$.
+    \item *Assume $n=2$ and $E \subseteq \RR^2$ is a starlike set in $\RR^2$, i.e.
+    for every $x \in E$ the line connecting $x$ with the origin belongs to $E$.
+    Let $f \in L^p(\RR^2)$ and $p > 1$. Show $\lim_{t\to0}\int_E f(x-ty)\ \mathrm{d}m(y) = f(x)$
+    almost everywhere.
+  \end{enumerate}
+  \textit{(iii) also holds in higher dimensions. It is an open problem whether it holds for $p=1$.}
+\end{problem}
