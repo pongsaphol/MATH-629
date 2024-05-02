@@ -207,7 +207,13 @@ n-dimensional analogy n-cells
 \end{theorem}
 
 \begin{proof}
-  GOAL: $A \setminus B \in \kR(\mathcal{S})$.
+  Define $\SR$ to be the collection of finite disjoint unions of sets in $\SSS$.
+  Obviously, $\SR \subseteq \kR(\SSS)$. want to show that $\kR(\SSS) \subseteq \SR$.
+  If is obvious that $\SSS \subseteq \SR$. So, we only need to show that $\SR$ is a ring.
+
+  Obviously, $\emptyset \in \SR$.
+  
+  GOAL: $A \setminus B \in \SR$.
   \[\biguplus A_j \setminus \biguplus B_k = \biguplus_j (A_j \setminus \biguplus B_k)\]
   Neet to check that for each $j$, $(A_j \setminus \biguplus B_k)$ is a disjoint union of $\mathcal{S}$. 
   Take $A \in \mathcal{S}$, $B_1, \dotsc, B_n \in \mathcal{S}$, $B_i$ are disjoint
@@ -288,8 +294,12 @@ n-dimensional analogy n-cells
 % \end{example}
 
 \begin{theorem}
-  A content on a semiring extends (uniquely) to the $\kR(\SSS)$. 
-  \[\varrho\left(\biguplus_{j=1}^N A_j\right) = \sum_{j=1}^N \varrho(A_j)\]
+  Suppose that $\SSS$ is a semiring and $\varrho: \SSS \to [0, \infty]$ be content. 
+  There exists unique extension $\nu: \kR(\SSS) \to [0, \infty]$ such that for any 
+  $A \in \kR(\SSS)$, $A = \biguplus_{j=1}^N A_j$, $A_j \in \SSS$
+  \[\nu(A) = \sum_{j=1}^m \varrho(A_j)\]
+  % A content on a semiring extends (uniquely) to the $\kR(\SSS)$. 
+  % \[\varrho\left(\biguplus_{j=1}^N A_j\right) = \sum_{j=1}^N \varrho(A_j)\]
 \end{theorem}
 
 \begin{proof}
@@ -308,7 +318,7 @@ n-dimensional analogy n-cells
 \end{proof}
 
 \begin{claim}
-  Half oepn interval length is a premeasure.
+  Half open interval length is a premeasure.
 \end{claim}
 \begin{proof}
   
@@ -332,61 +342,82 @@ $$\sum_{i=1}^M (b_{j_i} + \eps 2^{-j_i} - a_{j_i}) \le \sum_{j} (b_j - a_j) + \s
 
 \section{Extend premeasures to measure on a $\sigma$-algebra}
 
-Idea: use the outer measure $\nu^*$
-\[\nu^*(E) = \inf \sum_{A_j \in S, \bigcup A_j \supseteq E} \nu(A_j)\]
-use the Caratheodory construction to produce a measure $\nu^*$ on some $\sigma$-algebra $\SM^*$.
+\begin{definition}
+  Suppose that $\nu$ is a content on semiring $\SSS$. Define outer measure $\nu^*: \kP(X) \to [0, \infty]$ by
+  \[\nu^*(E) = \inf\left\{\sum_{j=1}^\infty \nu(A_j) : A_j \in \SSS, E \subseteq \bigcup_{j=1}^\infty A_j\right\}\]
+\end{definition}
 
-$\nu^{**}(E) = $ same except $S$ is replaced by $\mathcal{R}(S)$
+\begin{definition}
+  Suppose that $\nu$ is e the extension of a content on a semirig $\SSS$.
+  Define outer measure $\nu^{**}: \kP(X) \to [0, \infty]$ by
+  \[\nu^{**}(E) = \inf\left\{\sum_{j=1}^\infty \nu(A_j) : A_j \in \kR(\SSS), E \subseteq \bigcup_{j=1}^\infty A_j\right\}\]
+\end{definition}
 
-\begin{claim}
+% Idea: use the outer measure $\nu^*$
+% \[\nu^*(E) = \inf \sum_{A_j \in S, \bigcup A_j \supseteq E} \nu(A_j)\]
+% use the Caratheodory construction to produce a measure $\nu^*$ on some $\sigma$-algebra $\SM^*$.
+
+% $\nu^{**}(E) = $ same except $S$ is replaced by $\mathcal{R}(S)$
+
+\begin{lemma}
   $\nu^{**}(E) = \nu^{*}(E)$
   if $\nu$ is a \underline{content}.
-\end{claim}
+\end{lemma}
 
 \begin{proof}
-  Show $\le$, WLOG $\nu^{**}(E) < \infty$. 
-  Given $\eps > 0$ fin $A_j \in \mathcal{R}(S)$ such that $\sum \nu(A_j) < \nu^{**}(A) + \eps$
-  \[A_j =\biguplus_{k=1}^{M(j)} C_{j, k}, \nu(A) = \sum_{n=1}^{M(j)} \nu(C_{j, k})\]
-  then 
-  \[\sum_j\sum_{k=1}^{M(j)} \nu(C_{j, k}) < \nu^{**}(A) + \eps \implies \nu^{*}(A) \le \nu^*(A) + \eps\]
+  Obviously, $\nu^{**}(E) \le \nu^*(E)$. 
+
+  We only need to show that $\nu^*(E) \le \nu^{**}(E)$, WLOG $\nu^{**}(E) < \infty$. 
+  Given $\eps > 0$ find $A_j \in \kR(\SSS)$ such that $\sum_{j=1}^\infty \nu(A_j) < \nu^{**}(E) + \eps$
+  For each $A_j$ we can decompose it as 
+  \[A_j =\biguplus_{k=1}^{M_j} C_{j, k}\]
+  then
+  \[\nu(A_j) = \sum_{n=1}^{M_j} \nu(C_{j, k})\]
+  so,
+  \begin{align*}
+    \nu^*(E) \le \sum_{j=1}^\infty\sum_{k=1}^{M_j} \nu(C_{j, k}) &= \sum_{j=1}^\infty \nu(A_j) < \nu^{**}(E) + \eps \\
+  \end{align*}  
 \end{proof}
 
 \begin{theorem}[Hahn-Kolomogorov-Caratheodory-Frechet] 
   \begin{enumerate}[(i)]
-    \item If $\nu$ is a content on $S$ (semiring) over $X$, (and therefore on $\mathcal{R}(S)$).  
-      Then the Caratheodory $\sigma$-algebra $\SM^*$ of $\nu^*$-measurable set contains $S$ {and $\mathcal{R}(S)$} and $\kM(S) \subseteq \overline{\kM}$)
-    \item If $\nu$ is a premeasure then $\nu^*|_{S} = \nu$
-    then $\nu^*$ is a measure (on $\SM^* \supseteq \overline{\kM(S)}$)
+    \item If $\nu$ is a content on $\SSS$ (semiring) over $X$, (and therefore on $\kR(\SSS)$).  
+      Then the Caratheodory $\sigma$-algebra $\SM^*$ of $\nu^*$-measurable set contains $\SSS$ {and $\kR(\SSS)$} and $\kM(\SSS)$
+    \item If $\nu$ is a premeasure then $\nu^*|_{\SSS} = \nu$
+    and $\mu = \nu^*$ is a measure (on $\SM=\kM(\SSS)$)
   \end{enumerate}
 \end{theorem}
 
-$\nu^*$-measurable if for all $E \subseteq X$, $\nu^*(E) \ge \nu^*(E \cap A) + \nu^*(E \cap A^\complement)$
-(for another direction is obvious, so, we need to only check one direction)
+% $\nu^*$-measurable if for all $E \subseteq X$, $\nu^*(E) \ge \nu^*(E \cap A) + \nu^*(E \cap A^\complement)$
+% (for another direction is obvious, so, we need to only check one direction)
 
 \begin{proof}
-  Show that $S \subseteq \SM^*$. Let $A \subseteq S$. 
+  Show that $\SSS \subseteq \SM^*$. It is enough to show that
+  for any $A \in \SSS$, for any $E \subseteq X$, 
+  \[\nu^*(E) \ge \nu^*(E \cap A) + \nu^*(E \cap A^\complement) \]
+    Let $A \in \SSS$. 
   Fix $E \subseteq X$, work with an $\eps$-efficient cover, i.e.,
-  find a collection $\{A_j\}_{j=1}^\infty$ such that $A_j \in S, \bigcup A_j \supseteq E$ : 
-  $\sum \nu(A_j) \le \nu^*(E) + \eps$
-  We get that $A_j = (A_j \cap A) \uplus (A_j \cap A^\complement)$
+  find a collection $\{A_j\}_{j=1}^\infty$ such that $A_j \in \SSS, E \subseteq \bigcup_{j=1}^\infty A_j $ : 
+  $\sum_{j=1}^\infty \nu(A_j) \le \nu^*(E) + \eps$
+  We get that $A_j = (A_j \cap A) \uplus (A_j \cap A^\complement)$, then 
   $\nu(A_j) = \nu(A_j \cap A) + \nu(A_j \cap A^\complement)$
-  \[\nu^*(E) + \eps \ge \sum \nu(A_j) = \sum \nu(A_j \cap A) + \sum \nu(A_j \cap A^\complement) \]
-  We know that $E \cap A \subseteq \bigcup (A_j \cap A)$ and $E \cap A^\complement \subseteq \bigcup (A_j \cap A^\complement)$
+  \[\nu^*(E) + \eps \ge \sum_{j=1}^\infty \nu(A_j) = \sum_{j=1}^\infty \nu(A_j \cap A) + \sum_{j=1}^\infty \nu(A_j \cap A^\complement) \]
+  We know that $E \cap A \subseteq \bigcup_{j=1}^\infty (A_j \cap A)$ and $E \cap A^\complement \subseteq \bigcup_{j=1}^\infty (A_j \cap A^\complement)$
   then 
   \begin{align*}
-   \nu^*(E) + \eps \ge \nu^*(E \cap A) + \nu^{**}(E \cap A^\complement) = \nu^*(E \cap A) + \nu^*(E \cap A^\complement)
+   \nu^*(E) + \eps \ge  \nu^*(E \cap A) + \nu^*(E \cap A^\complement)
   \end{align*}
 
-  For $A \in S$ show $\nu*(A) = \nu(A)$.
+  For $A \in \SSS$ show $\nu^*(A) = \nu(A)$.
 
-  It is easy to show that $\nu*(A) \le \nu(A)$ since $\{A\}$ is a cover of $A$.
+  It is easy to show that $\nu^*(A) \le \nu(A)$ since $\{A_j\}_{j=1}^\infty$ is a cover of $A$.
 
   We need $\nu(A) \le \nu^*(A) + \eps$ (for all $\eps > 0$)
 
-  Pick $\{A_j\}$, $\bigcup A_j \supseteq A$, $\sum \nu(A_j) < \nu^*(A) + \eps = \nu^{**}(A) + \eps$
-  Define $B_1 = A_1, B_2 = A_2 \setminus A_1, B_3 = A_3 \setminus (A_1 \cup A_2), \dotsc$ $B_j$ is disjoint and $B_n \in \mathcal{R}(S)$ (but might not in the semiring)
+  Pick $\{A_j\}_{j=1}^\infty$, $\bigcup_{j=1}^\infty A_j \supseteq A$, $\sum_{j=1}^\infty \nu(A_j) < \nu^*(A) + \eps = \nu^{**}(A) + \eps$.
+  Define $B_1 = A_1, B_2 = A_2 \setminus A_1, B_3 = A_3 \setminus (A_1 \cup A_2), \dotsc$ $B_j$ is disjoint and $B_n \in \kR(\SSS)$ (but might not in the semiring)
   We claim that premeasure assumption
-  We know that $\bigcup_n (A \cap B_n) = A$
+  We know that $\bigcup_{n=1}^\infty (A \cap B_n) = A$
   \[\nu(A) = \sum_n \nu(A\cap B_n) \le \sum_n \nu(A_n) \le \nu^{**}(E) + \eps\]
 \end{proof}
 
@@ -447,14 +478,14 @@ Find a countable cover of $E$ with set $B_k \in \SR(\SSS)$ such that
 
 $\mu(E) \le \mu(B) = \widetilde{\mu}(B) = \widetilde{\mu}(E) + \widetilde{\mu}(B\setminus E) \le \widetilde{\mu}(E) + \mu(B\setminus E)$
 
-\begin{theorem}
-  \begin{enumerate}[(i)]
-    \item \[\nu^*|_{\kM}(E) = \begin{cases}
-      \bar{\mu}(E) & \text{if } E \in \overline{\SM}\\
-      \infty & \text{if } E \in \kM^* \setminus \overline{\SM}
-    \end{cases}\]
-    \item $E \in \kM^*$ if and only if $E$ is locally $\overline\SM$-measurable.
-    i.e. for every set $A \in \overline\SM$ such $\overline{\mu}(A) < \infty$, we have $E \cap A \in \overline{\SM}$
-    (If $\nu$ is $\sigma$-finite $\overline{\SM} = \kM^*$)
-  \end{enumerate}
-\end{theorem}
+% \begin{theorem}
+%   \begin{enumerate}[(i)]
+%     \item \[\nu^*|_{\kM}(E) = \begin{cases}
+%       \bar{\mu}(E) & \text{if } E \in \overline{\SM}\\
+%       \infty & \text{if } E \in \kM^* \setminus \overline{\SM}
+%     \end{cases}\]
+%     \item $E \in \kM^*$ if and only if $E$ is locally $\overline\SM$-measurable.
+%     i.e. for every set $A \in \overline\SM$ such $\overline{\mu}(A) < \infty$, we have $E \cap A \in \overline{\SM}$
+%     (If $\nu$ is $\sigma$-finite $\overline{\SM} = \kM^*$)
+%   \end{enumerate}
+% \end{theorem}

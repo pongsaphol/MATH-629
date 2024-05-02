@@ -1,0 +1,485 @@
+
+\chapter{Additional Topics}
+\section{Lebesgue Differentiation Theorem}
+
+In Calculus, $f \in C[a, b]$
+we have theorem that 
+\[F(x) = \int_a^x f(t) \ \mathrm{d}t\]
+then $F$ is differentiable at all $x \in [a, b]$ and $F' = f$
+we use the prove that
+\[\lim_{h \to 0^+} \frac{F(x+h) - F(x)}{h} = f(x), x < b\]
+\[\lim_{h \to 0^-} \frac{F(x+h) - F(x)}{h} = f(x), x > a\]
+rewrite the limit as 
+\[\frac{F(x+h) - f(x)}h = \frac1h \int_x^{x+h} (f(t) - f(x) + f(x)) \ \mathrm{d}t = f(x) + \frac1h\int_x^{x+h}f(t) - f(x) \ \mathrm{d}t\]
+For $t$ close to $x$, use $|f(t) - f(x)| < \eps$, $|t| < \delta$ for given
+similarly for negative
+
+\begin{theorem}[Lebesgue Differentiation Theorem]
+  If $f \in L^1([a, b])$,
+  \[F(x) = \int_{[a, x]} f \ \mathrm{d}m\]
+  then $F$ is differentiable almost everywhere and $F' = f$ almost everywhere.
+  %  then for almost every $x \in \RR^n$
+  % \[\lim_{r \to 0} \frac1{m(B_r(x))} \int_{B_r(x)} f(y) \ \mathrm{d}m(y) = f(x)\]
+\end{theorem}
+\begin{definition}
+  In $\RR^n$ averages over ball $B(x, r) = \{y : |y-x| < r\}$
+  \[\mathcal{A}_r f(x) = \frac{1}{m(B(x, r))} \int_{B(x, r)} |f| \ \mathrm{d}m\]
+\end{definition}
+\begin{definition}
+  \[M_{\mathrm HL}f(x) = \sup_{r > 0} \mathcal{A}_r |f|\] 
+\end{definition}
+
+\begin{remark}
+  Note the function
+  $x \mapsto \mathcal{A}_r f(x)$ is continuous
+  \[\left|\int_{B(x, r)} |f| - \int_{B(\widetilde{x}, r)} |f| \right| \le \int_{B(x, r) \bigtriangleup B(\widetilde{x}, r)} |f| \to 0\]
+  as $x \to \widetilde{x}$
+  Observe that
+  \[\Omega_\alpha = \left\{x : \sup_{r > 0} \mathcal{A}_r f(x) > \alpha\right\}\]
+  is an open set because union of open sets are open set
+\end{remark}
+
+\begin{theorem}[Hardy and Littlewood]
+  $M$ satisfies the inequality
+  \begin{enumerate}[(i)]
+    \item $m\left(\left\{x : M_{\mathrm HL}f(x) > \alpha\right\}\right) \le C_n \frac{\|f\|_1}{\alpha}$
+    \item If $p > 1$, $\|M_{\mathrm HL}f\|_p \le C_{p, n} \|f\|_p$
+    \item is clearly true for $p = \infty$ (for simplicity for continuous $f$)
+  \end{enumerate}
+  In general part (ii) is an instance of an interpolation.
+\end{theorem}
+
+We say that a constant $A$ essentially bounds a function $f$ if 
+$|f(x)| \le A$ for almost every $x$.
+%TODO: define operator esssup
+\[\esssup |f(x)| = \inf \{A : A \text{ essentially bounds } |f|\}\]
+\[|f(x)| \le B + \frac1n \text{ for } x\in X \setminus N_n \implies |f(x)| < B \text{ for } x \in X \setminus \bigcup N_n\]
+
+\begin{proof}
+  $\Omega_\alpha = \{x : M_{\mathrm HL}f(x) > \alpha\}$,
+  $m(\Omega_\alpha) = \sup_{K \subseteq \Omega_\alpha} m(K)$.
+  It suffices to show that for every compact set $K$ contained in $\Omega_\alpha$, 
+  $m(K) \le 3^n \frac{\|f\|_1}\alpha$
+  fix $x \in K$ then there exists a ball $B(x, r(x))$ such that 
+  \[\frac1{m(B(x, r(x)))} \int_{B(x, r(x))} |f| \ \mathrm{d}m> \alpha \implies m(B(x, r(x))) < \frac1\alpha\int_{{B(x, r(x))}} |f| \ \mathrm dm\]
+  there is a finite family of ball $B(x_i, r(x_i))$, for $i = 1, \dotsc, L$ such that 
+  \[K \subseteq \bigcup_{B \in \kB} B\]
+  $K$ is compact
+
+  \textbf{Covering Lemma} Given ball $\kB = \{B_1, \dotsc, B_L\}$ there exists subcollection $\widetilde{\kB} \subseteq \kB$
+  of ball $\{B : B \in \widetilde{B}\}$ which is pairwise disjoint such that the three fold balls
+  $\{3B : B \in \widetilde{B}\}$ contain 
+  \[\bigcup_{B \in \kB} B\]
+  (union of the original ball) then
+  Notice that $B^* \equiv 3B\equiv$ ball of radius 3 radius of $B$ centered at the center of $B$.
+  ($x_B + 3(B - x_B)$) 
+
+  \textbf{Proof by induction} on the cardinality of $\kB$. $|\kB| = N > 1$,
+  find ball $B_1 \in \kB$ with the maximal radius. Observe that for any $B \in \kB$, if $B \cap B_1 \neq \emptyset$
+  then $B \subseteq B_1^*$.
+  Consider the collection $\kB_{2} = \{\text{all ball in } \kB \text{ which are disjoint from }B_1\}$
+  By the induction hypothesis (and $|\kB_2| < |\kB| = N$)
+  there are finitely many balls $B_2, \dotsc, B_M$ disjoint and 
+  \[\bigcup_{j=2}^M B_j^* \supseteq \bigcup_{B \in \kB_2}B\]
+  All balls in $\kB$, that intersect $B_1$ are contained in $B_1^*$.
+  \[m(B(x, r(x_j))) \le \frac1\alpha \int_{B(x_j, r(x_j))} |f|\]
+  Apply the covering lemma, we get balls
+  \[B_1 = B(x_1, r(x_1)), \dotsc, B_M = B(x_M, r(x_M))\]
+  disjoint, and 
+  \[\bigcup B_i^* \supseteq K\]
+  then 
+  \begin{align*}
+    m(K) &\le m\left(\bigcup_{i=1}^M B_i^*\right) 
+    \le \sum_{i=1}^M m(B_i^*)  = 3^n \sum_{i=1}^Mm(B_i) \\
+    &\le 3^n\sum_{i=1}^n\frac1\alpha \int_{B_i} |f| \ \mathrm{d}m\le \frac{3^n}\alpha \int|f|\ \mathrm{d}m = 3^n\alpha^{-1}\|f\|_{1}
+  \end{align*}
+\end{proof}
+
+
+
+Claim in the Lebesgue differentiation theorem
+Let $f \in L^1$ then for almost every where $x \in \RR^n$ 
+\[\frac1{m(B(x, r))}\int_{B(x, r)} f(y) \ \mathrm{d}m(y) = f(x)\]
+slightly strong statement
+\[\frac1{m(B(x, r))}\int_{B(x, r)} |f(y) - f(x)| \ \mathrm{d}m(y) \to 0\]
+for almost everywhere $x$ (If this is true for a specific $x \in \RR^n$ then we call $x$ a Lebesgue point)
+
+\begin{theorem}
+  for $f \in L^1$ then for almost every $x \in \RR^n$
+  \[\lim_{r \to 0} \frac1{m(B(x, r))}\int_{B(x, r)} |f(y) - f(x)| \ \mathrm{d}m(y) = 0\]
+\end{theorem}
+
+\begin{proof}
+  Define 
+  \[E_\alpha = \left\{x : \limsup_{r \to 0} \frac1{m(B(x, r))}\int_{B(x, r)} |f(y) - f(x)| \ \mathrm{d}m(y) > \alpha\right\}\]
+  The goal is to show that for any $\alpha > 0$,
+  \[m\left(E_\alpha\right) = 0\]
+
+  We know that for every $\delta > 0$ there exists $g$ continuous with compact support that
+  \[\|f-g\|_1 < \delta\]
+  So, we can get
+  \[\frac{1}{m(B(x, r))}\int_{m(B(x, r))} |f(y) - g(y)| \ \mathrm{d}m(y) \to 0, \ r\to0\]
+  since $f(y)-f(x) = (f(y) - g(y)) + (g(y) - g(x)) + (g(x) - f(x))$ then 
+  \begin{align*}
+    &\limsup_{r\to0} \frac{1}{m(B(x, r))}\int_{m(B(x, r))} |f(y)-f(x)| \ \mathrm{d}m(y) \\
+    &=\limsup_{r\to0} \frac{1}{m(B(x, r))}\int_{m(B(x, r))} |(f-g)(y) - (f-g)(x)| \ \mathrm{d}m(y) \\
+    &\le \limsup_{r\to0} \frac{1}{m(B(x, r))}\int_{m(B(x, r))} |(f-g)(y)|  \ \mathrm{d}m(y) + |f(x)-g(x)| \\
+    &\le M_{\mathrm HL}(f-g)(x) + |f(x) - g(x)| 
+  \end{align*}
+  then 
+  \begin{align*}
+    m(E_\alpha) &\le m\left(\left\{x : M_{\mathrm HL}(f-g)(x) > \alpha/2\right\}\right) + m\left(\left\{x : |f(x) - g(x)| > \alpha/2\right\}\right) \\
+    &\le \frac{C}{\alpha/2} \|f-g\|_1 + \underbrace{\frac{1}{\alpha/2} \|f-g\|_1}_{\text{from Chebyshev}} \\
+    &\le \frac{2C+2}{\alpha} \|f-g\|_1 \\
+    &\le \frac{2C+2}{\alpha} \delta \\
+    &< \eps
+  \end{align*}
+\end{proof}
+
+\[\int_K |f| \ \mathrm{d}m < C_K\]
+for all compact set.
+Fix any ball $K$ of radius 1. show that
+\[\int_{B(x, r)}||f(y) - f(x)| \ \mathrm dm \to 0 \text{ as } r \to 0\]
+$f = f \mathbbm{1}_{K^*} + f \mathbbm{1}_{\RR^n \setminus K^*}$
+If $x \in K$ and $r$ is sufficiently small then
+\[\int_{B(x, r)} |f(x) - f(y)| \mathrm{d}m(y) = \int |f \mathbbm{1}_{K^*}(x) - f \mathbbm{1}_{K^*}(y)| \ \mathrm{d}m(y)\]
+
+Extension, if $E_r(x)$ is a sequence of sets such that
+$m(E_r(x)) \ge \gamma m(B(x, r))$
+then we shall have 
+\[\int_{E_r(x)} |f(x) - f(y)| \ \mathrm{d}m(y) \to 0\]
+when $r\to 0$ a.e.
+
+We can replace $B(x, r)$ b
+
+
+``Trivial inequality''
+\[\|Mf\|_\infty \le \|f\|_\infty\]
+where $\|\cdot\| = \esssup$
+
+\begin{theorem}
+  For $p > 1$ 
+  \[\|Mf\|_p \le C_p \|f\|_p\]
+\end{theorem}
+More generally, let $T$ defined on $L^1, L^\infty$ and therefore $L^1 + L^\infty$.
+and let $T$ be sublinear (subadditive) $T(f + g){(x)} \le T(f)(x) + T(g)(x)$
+Assume
+\begin{enumerate}[(i)]
+  \item weak type (1, 1) inequality
+  \[m(\{x : |Tf(x)| > \alpha\}) \le A \frac{\|f\|_1}{\alpha}\]
+  \item $\|Tf\|_\infty \le B\|f\|_\infty$
+\end{enumerate}
+for all $f \in L^1 \cup L^\infty$
+Then there is $C_p$ such that 
+\[\|Tf\|_p \le C_p A^{1/p} B^{1-1/p}\|f\|_p\]
+UseLayer-cake formula for $L^p$-norm of $g$.
+\[\int|g|^p \ \mathrm{d}\mu = \int_0^\infty p\alpha^{p-1} \mu(\{x : |g| > \alpha\}) \ \mathrm{d}\alpha\]
+We apply this for $Tf, \beta = \beta(\alpha)$
+\[f_\beta(x) = \begin{cases}
+  f(x) & |f(x)| \le \beta \\
+  0 & |Tf(x)| > \beta 
+\end{cases}\]
+\[f^\beta(x) = \begin{cases}
+  0 & |f(x)| \le \beta \\
+  f(x) & |f(x)| > \beta
+\end{cases}\]
+then $f = f_\beta + f^\beta$ 
+\[|Tf| \le |Tf_{\beta(\alpha)} + |Tf^{\beta(\alpha)}|\]
+we know that
+\[\{x : |Tf| > \alpha \} \subseteq \{x : |Tf_\beta| > \frac\alpha2\} \cup\{x : |Tf^\beta| > \frac\alpha2\} \]
+then
+\[m(\{x : |Tf| > \alpha \}) \le m(\{x : |Tf_\beta| > \frac\alpha2\})+ m(\{x : |Tf^\beta| > \frac\alpha2\})\]
+$|f_\beta| \le \beta$ a.e $\implies$ $|Tf_\beta| \le B\beta$ a.e.
+
+Define $\beta = \beta(\alpha) = \frac{\alpha}{2B}$ then the first term $m(\{x : |Tf_\beta| > \frac\alpha2\}) = 0$. 
+\begin{align*}
+  \|Tf\|_p^p &\le p\int_0^\infty \alpha^{p-1} m(\{x : |Tf^{\beta(\alpha)}(x)| \ge \frac\alpha2\}) \ \mathrm{d}\alpha \\
+  &\le p\int_0^\infty \alpha^{p-1} \frac{A}\alpha \int_{\{|f(x)| > \beta(\alpha)\}} |f^{\beta(\alpha)}(x)| \ \mathrm{d}m \ \mathrm{d}\alpha \\
+  &= \int_X\int_{\alpha=0}^{2B|f(x)|} p\alpha^{p-2} \ \mathrm{d}\alpha |f(x)| \ \mathrm{d}m(x) \\
+  &= \int_X |f(x)| A\frac p{p-1}(2B |f(x)|)^{p-1} \ \mathrm{d}m(x) \\
+  &= \|f\|_p^p AB^{p-1} \underbrace{\frac{2^{p-1}p}{p-1}}_{C_p^p}
+\end{align*}
+
+Weak $L^1$ also $L^{1, \infty}$
+
+\[\|f\|_{L^{1, \infty}} = \sup_{\alpha > 0} \alpha \mu({x : |f(x)| > \alpha})\]
+then 
+\begin{itemize}
+  \item $\mu_f(\alpha) \le \frac1\alpha\|f\|_{L^{1, \infty}}$
+  \item $\|cf\|_{L^{1, \infty}} = |c|\|f\|_{L^{1, \infty}}$
+  \item $\|f + g\|_{L^{1, \infty}} \le 2(\|f\|_{L^{1, \infty}} + \|g\|_{L^{1, \infty}})$
+\end{itemize}
+
+Q: Is there a norm $\|\cdot\|$ such that $\|f\| \approx \|f\|_{L^{1, \infty}}$?
+
+A: No
+
+Argue by contradiction, let $\|f\|_*$ be a norm on $L^{1, \infty}(\RR, m)$
+Goal is to show that there is a sequence $f_{N} \in L^{1, \infty}$ such that
+\[ \frac{\|f_N\|_{L^{1, \infty}}}{\|f_N\|_*}\to \infty\]
+Simple building block is $\frac1{|x|}$, $m\left(\{x : \frac1{|x|} > \alpha\}\right) = \frac2\alpha$
+$\frac1{|x-k|} \in L^{1, \infty}$ and $g_k(x)= \frac{1}{|x-k|}$ then
+$\|g_k\|_{L^{1, \infty}} = c$ then
+\begin{align*}
+  f_N = \sum_{k=1}^N g_k(x) &= \sum_{k=1}^N \frac1{|x-k|} \\
+  \|f_N\|_* &\le \sum_{k=1}^N \|g_k\|_* \le cN
+\end{align*}
+Consider this $f_N$ in $[0, N]$, for $x \in [\frac N4, \frac N2]$
+\[\sum_{k=1}^N \frac1{|x-k|} > c\sum_{1 \le l \le N/2} \frac 1l \ge c^1 \log N\]
+Conclusion on a set of measure $N/4$, $|f_N(x)| > c^1 \log N$.
+Let $\alpha = c^1 \log N$ then 
+\begin{align*}
+  \|f_N\|_{L^{1, \infty}} &\ge c^1 \log N \mu(\{x : |f_N(x)| > c^1 \log N\}) \\
+  &> \frac{N}4 c^1 \log N
+\end{align*}
+
+\section{Convolution}
+or approximation of the identity.
+Let take $\phi \in L^1$ (or much nicer)
+\[\int \phi = 1,\ \int \frac1{t^n}\phi\left(\frac yt\right) \ \mathrm{d}m(y) = \int \phi = 1\]
+\[f * \phi_t = \int f(x-y) \frac1{t^n}\phi\left(\frac yt\right) \mathrm{d}y,\ \phi_t = \frac1{t^n} \phi\left(\frac nt\right)\]
+
+If $f$ is continuous, $\lim\limits_{|x|\to\infty} f(x) = 0$
+\begin{align*}
+  \int f(x-y) \frac{1}{t^n} \phi\left(\frac yt\right) \ \mathrm{d}t - f(x) &= \int f(x-y) - f(x) \frac1{t^n} \phi\left(\frac yt\right) \ \mathrm{d}m(y) \\
+\end{align*}
+
+Claim: $f$ is uniformly continuous on $\RR$
+
+Given $\eps$, there is $\delta$ such that $|f(x-y) - f(x)| < \eps$ if $|y| < \delta$
+\begin{align*}
+  \left|\int_\RR f(x-y) - f(x) \frac1{t^n} \phi\left(\frac yt\right) \ \mathrm{d}t\right| &= \\
+  \int_{|y| < \delta} \underbrace{|f(x-y) - f(x)|}_{< \eps} \left|\frac1{t^n} \phi\left(\frac yt\right)\right| \ \mathrm{d}t& + \int_{|y| > \delta} \underbrace{|f(x-y) - f(x)|}_{< \eps} \left|\frac1{t^n} \phi\left(\frac yt\right)\right| \ \mathrm{d}t\\
+  &\le \eps \int \left|\frac1{t^n} \phi(\frac yt)\right| \mathrm{d}t + \int_{|y| \ge \delta} 2 \|f\|_{\infty} \frac{1}{t^n} |\phi(\frac yt)| \ \mathrm{d}t \\
+\end{align*}
+
+then $\int_{|y| \ge \delta} \frac1{t^n} |\phi(\frac yt)| \ \mathrm{d}t$ change variable
+$\int_{|w| > \delta /t} |\phi(w)| \mathrm{d}w \to 0$ on $t \to \infty$
+
+$f \in L^1$, $\|f(\cdot - y) - f(\cdot)\|_{L^1} \to 0$ as $|y| \to 0$
+
+There exists $g$ with compact support such that $\|f-g\|_{L^1} < \eps$
+then 
+\[\|f(\cdot - g) - f(\cdot) -(g(\cdot y) - g(\cdot)) + g(\cdot -y) - g(\cdot)\|_{L^1}\|_1 + \|g(\cdot-y)-g(\cdot)\|_1 \to 0\]
+as $y\to0$
+
+$f \in L^1$, $\phi \in L^1$, $\frac 1{t^n} \phi(\frac\cdot{t}) = \phi_t$, $\int \phi = 1$
+then 
+\begin{align*}
+  % \left\|\int f(\cdot - y) \phi_t(y) \ \mathrm{d}y - f\right\|_{L^1} \to 0 \\
+  &= \int_x\int_y |f(x-y) - f(x)||\phi_t(y)| \ \mathrm{d}y \ \mathrm{d}x \\
+  &= \int_{|y| \le \delta} |\phi_t(y)| \int_x |f(x-y) - f(x)| \ \mathrm{d}x \ \mathrm{d}y - \int_{|y| > \delta} |\phi_t(y)| \int |f(x-y) - f(x)| \ \mathrm{d}x \ \mathrm{d}y \\
+  &\le \eps \|\phi\|_{L^1} + \|f\|_12\int_{|y| > \delta} |\phi_t(y)| \ \mathrm{d}y
+\end{align*}
+
+For pointwise convergence, we would have to prove an estimate 
+\[\sup_t |\phi_t * f(x)|\le M_{\mathrm{HL}}f(x)\]
+
+Given $E, m(E) = 1$ star like with respect to the origin.
+If $f \in L^p, p > 1$
+
+\[\frac{1}{m(rE)}\int_{rE} f(x+y) \ \mathrm{d}m(y) \to f(x)\] a.e. 
+\[M_Ef = \sup_{r > 0} \frac1{m(rE)} \int_{rE} |f(x+y)| \ \mathrm{d}m\]
+Show: $M_E: L^p \to L^p, p > 1$
+
+
+For $1 < p < \infty$
+\[\|f\|_{L^p} = \sup_{\|g\|_{L^{p'}} \le 1} \left|\int f(x)g(x) \ \mathrm{d}x\right|\]
+where $g \in L^{p'}, 1/p + 1/p' = 1$
+\begin{align*}
+  \left\|\int_{I} f(x, \varphi) \ \mathrm{d}\varphi\right\|_{L^p} &= \sup_{\|g\|_{L^{p'}} \le 1} \left|\int \int f(x, \varphi) \ \mathrm{d}\varphi g(x)\ \mathrm{d}x\right| \\
+  &\le \sup_{\|g\|_{L^{p'}} \le 1}\left| \int_I \left|\int_x f(x, \varphi)g(x) \ \mathrm{d}x\right| \ \mathrm{d}\varphi \right|\\
+  &\le \int_I \sup_{\|g\|_{L^{p'}} \le 1} \int |f(x, \varphi)g(x)| \ \mathrm{d}x\ \mathrm{d}\varphi \\
+  &\le \int_I \sup_{\|g\|_{L^{p'}} \le 1} \left(\int_x |f(x, p)|^p \ \mathrm{d}x\right)^{1/p} \left(\int |g(x)|^{p'}\right)^{1/p'} \\
+  &\le \int_I \left(\int |f(x, \varphi)|^p \ \mathrm{d}x\right)^{1/p} \ \mathrm{d}\varphi \\
+  &= \int_I \|f(\cdot, \varphi)\|_{L^p} \ \mathrm{d}\varphi
+\end{align*}
+\section{Inner Product Spaces}
+
+
+\begin{definition}
+  Given $(X, \SM, \mu)$ measure space
+  \[L^2(X, \mu) \equiv L^2 =\left\{f : \left(\int |f|^2 \mathrm{d}\mu\right)^{1/2} < \infty\right\}\]
+  called the Hilbert space of square integrable functions.
+\end{definition}
+
+\begin{definition}
+  we defnote the inner product space
+  \[\langle f, g\rangle  = \int f(x) \overline{g(x)} \ \mathrm{d}\mu\]
+\end{definition}
+\begin{remark}
+  We can write
+  \[\|f\|_2 = \langle f, f\rangle\]
+\end{remark}
+
+\begin{definition}
+  The following properties hold
+  \begin{enumerate}[(i)]
+    \item Fix $g$ then under the map $f \mapsto \langle f, g\rangle$ is a linear functional on $L^2$
+    \item $\langle f, g\rangle = \overline{\langle g, f\rangle}$
+    \item $\langle f, f\rangle \ge 0$ and $\langle f, f\rangle = 0$ if $f = 0$ in $L^2$ if and only if $f = 0$ a.e.
+  \end{enumerate}
+\end{definition}
+
+\begin{example}
+  The following are examples of inner products
+  \begin{itemize}
+    \item 
+  Choose $\mu$ to be Lebesgue measure or $\mathrm{d}\mu = w \ \mathrm{d}x$, $w$ non-negative 
+  \item $X = \{1, 2, \dotsc, n\}$, $\mu$ counting measure
+  \[\langle f, g\rangle = \sum_{j=1}^n f(j)\overline{g(j)}\]
+  \end{itemize}
+  In general a vector space (over $\RR$ or $\CC$) with an inner product is called inner product space or 
+  Euclidean space.
+\end{example}
+
+\begin{lemma}
+  Properties of inner products 
+  \begin{enumerate}[(i)]
+    \item Cauchy-Schwarz inequality
+    \[\langle f, g\rangle \le \sqrt{\langle f, f\rangle} \sqrt{\langle g, g\rangle}\]
+    \item $\|f\| = \sqrt{\langle f, f\rangle}$ is a norm on $L^2$
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+  \begin{enumerate}[(i)]
+    \item We will consider the case that $\langle f, g\rangle \in \RR$.
+    \begin{align*}
+      \langle f + tg, f + tg\rangle &= \langle f, f\rangle + t\langle g, f\rangle + t \langle f, g\rangle + t^2\langle g, g\rangle \\
+      &= \langle f, f\rangle + 2t\langle f,g\rangle + t^2\langle g, g\rangle 
+    \end{align*}
+    If $\langle g, g\rangle = 0$ then $g = 0$ so $\langle f, g\rangle = 0$.
+
+    Define $p(t) := \langle f, f\rangle + 2t\langle f, g\rangle + t^2\langle g, g\rangle$ then the minimum of $p(t)$ is at $t_0 = -\frac{\langle f, g\rangle}{\langle g, g\rangle}$
+    and $p(t) \ge 0$ for all $t$ then
+    \begin{align*}
+      0 &\le \langle f, f\rangle + 2t_0 \langle f, g\rangle + t_0^2 \langle g, g\rangle \\
+      &= \langle f, f\rangle - \frac{|\langle f, g\rangle|^2}{\langle g, g\rangle} \\
+      |\langle f, g\rangle|^2 &\le \langle f, f\rangle \langle g, g\rangle \\
+      |\langle f, g\rangle| &\le \sqrt{\langle f, f\rangle} \sqrt{\langle g, g\rangle}
+    \end{align*}
+    % \[2\Re \langle f, g\rangle + 2t_0 \langle g, g\rangle^2 = 0\]
+    % Use this to prove Cauchy-Schwarz inequality
+    % \[|\Re \langle f, g\rangle \le \langle f, f\rangle^{1/2}\langle g, g\rangle^{1/2}\]
+    For general cases, then 
+    there exists $c \in \CC$ such that $|c|=1$ and $c\langle f, g\rangle = \langle cf, g\rangle \in \RR$ then
+    \[|\langle f, g \rangle| = c\langle f,g \rangle = \langle cf, g\rangle \le \sqrt{\langle cf, cf\rangle}\sqrt{\langle g, g\rangle} = \sqrt{\langle f, f\rangle}\sqrt{\langle g, g \rangle}\]
+    % if $z = \alpha + i\beta$ then $iz = i\alpha - \beta$ and $\Im(z) = -\Re(iz)$
+
+    % If $z$ is not real, it is of the form $re^{i\gamma}$ therefore $e^{i\gamma}z$ is real and $\ge 0$.
+    % $\langle f, g\rangle = re^{i\gamma} \implies e^{i\gamma} \langle f, g\rangle$ is real and $\ge 0$
+    % \begin{align*}
+    %   e^{-i\gamma} \langle f, g\rangle &= \langle fe^{-i\gamma}, g\rangle \\ 
+    %   &\le \langle fe^{-i\gamma}, fe^{-i\gamma}\rangle^{1/2} \langle g, g\rangle^{1/2} \\
+    % \end{align*}
+    \item \begin{align*}
+      \|f+g\|^2 &= \langle f+g, f+g\rangle \\
+      &= \langle f, f+g\rangle + \langle g, f+g\rangle \\
+      &\le \sqrt{\langle f, f\rangle} \sqrt{\langle f+g, f+g\rangle} + \sqrt{\langle g, g\rangle} \sqrt{\langle f+g, f+g\rangle} \\
+      &= \|f\| \|f+g\| + \|g\| \|f+g\| \\
+      &\le (\|f\| + \|g\|) \|f+g\| \\
+      \|f+g\| &\le \|f\| + \|g\|
+    \end{align*}
+  \end{enumerate}
+\end{proof}
+
+\begin{definition}
+  An inner product space $H$ is a Hilbert space if 
+  $H$ is complete as a normed space
+  \[\|f\| = \langle f, f\rangle^{1/2}\]
+\end{definition}
+
+\begin{lemma}
+  Let $\lambda_g(f) = \langle f, g\rangle$ then $\lambda_g$ is a bounded linear functional on $H$.
+  and 
+  \[\|\lambda_g\|_{H'} = \|g\|_H\]
+\end{lemma}
+\begin{remark}
+  $H'$ is the dual space of bounded linear function of $H$.
+\end{remark}
+\begin{proof}
+  From the Cauchy-Schwarz inequality, for any $f \in H$, 
+  \[|\lambda_g(f)| = |\langle f,g\rangle| \le \|g\|_H \|f\|_H \]
+  Thus,
+  \[\|\lambda_g\|_{H'} \le \|g\|_H\]
+  Next, 
+  \[ |\lambda_g(g)| = |\langle g, g\rangle| = \|g\|_H^2\\ \]
+  So, we get $\|\lambda_g\|_{H'} = \|g\|_H$
+\end{proof}
+
+\begin{theorem}[Characterizations of all bounded linear functionals]
+  If $H$ is a Hilbert space then all bounded linear functions on $H$ are of the form $\lambda_g$ 
+  for some $g \in H$.
+\end{theorem}
+
+\begin{example}
+  $\mathbb{V} = \SC[-1, 1]$, 
+  \[\langle f, g\rangle = \int_{-1}^1 f(x)\overline{g(x)} \ \mathrm{d}x\]
+  $$g = \begin{cases}
+    1 & x > 0 \\
+    -1 & x \leq 0 
+  \end{cases}$$
+  \[\lambda_g(f) = \int_0^1 f(x) \ \mathrm{d}x - \int_{-1}^0 f(x) \ \mathrm{d}x\]
+\end{example}
+
+\begin{proof}
+  Let $\lambda \in H'$. WLOG, $\|\lambda\| = 1$. (Otherwise, using $\lambda$ devided by $\|\lambda\|$)
+  where
+  \[\|\lambda\| = \sup_{f \neq 0} \frac{|\lambda(f)|}{\|f\|} = \sup_{\|f\|=1} |\lambda(f)|\]
+  The idea is to find a $g$ such that $\lambda(g) = \|\lambda\|_{H}$
+  
+  Parallogram identity
+  \[\|f+g\|^2 + \|f-g\|^2 = 2(\|f\|^2 + \|g\|^2)\]
+  Find a sequence $u_n \in H$, $\|u_n\|=1$ so that
+  \[|\lambda(u_n)| \ge \|\lambda\|-\frac1n = 1-\frac1n\]
+  \begin{align*}
+    \lambda(u_n) &= e^{i\theta_n}|\lambda(u_n)| \\
+    |\lambda(u_n)| &= \lambda(e^{-i\theta_n}u_n) \in [0, 1] \ge 1-\frac1n \\ 
+  \end{align*}
+  $g_n = e^{i\theta_n}u_n$, $\|g_n\| = 1$, $\lambda(g_n) \ge 1-\frac1n$
+
+  WTS: $g_n$ is a Cauchy sequence in $H$.
+  Estimate: $\|g_n - g_m\|^2$
+  \[\|g_n - g_m\|^2 = \underbrace{2\|g_n\|^2 + 2\|g_m\|^2}_{4} - \|g_n - g_m\|^2\]
+  \[\underbrace{\|\lambda\|}_{1}\cdot\|g_n + g_m\|_H \ge \lambda(g_n + g_m) = \lambda(g_n) + \lambda(g_n) \ge 1-\frac1n + 1-\frac1m\]
+  So, 
+  \[\|g_n + g_m\|_H^2 \ge \left(2 - \frac1n - \frac1m\right)^2\]
+  \[\|g_n + g_m\|_H^2 \le 4- \left(2 - \frac1n - \frac1m\right)^2 = 4\left(\frac1n + \frac1m\right) - \left(\frac1n+ \frac1m\right)^2\]
+  Now, $g_n$ Cauchy $\implies$ $g_n\to g \in H$, $\|g\|=1$, $\lambda(g) = 1$
+
+  Show: $\lambda = \lambda_g$, Do this by showing for all $f \in H$, $\Re \lambda(f) = \Re \langle f, g\rangle$, $\Im \lambda(f) = \Im \langle f, g\rangle$
+  \begin{align*}
+    \Re \lambda(f) &= \frac{\Re \lambda(g + tf) - \Re \lambda(g)}{t} \le \frac{\|g + tf\| - \|g\|}t\\
+    \Re \lambda(f) &= \frac{\Re \lambda(g) - \Re \lambda(g-tf)}{t} = \frac{\Re\lambda(g-tf) - \Re\lambda(g)}{-t} \\
+    &\ge \frac{\|g\| - \|g-tf\|}{t} = \frac{\|g -tf\| - \|g\|}{-t}
+  \end{align*}
+  So, we can bound the function $\Re \lambda(f)$ by
+  \begin{align*}
+    \frac{\|g -tf\|^2 - \|g\|^2}{-t} \le &\Re \lambda(f) \le \frac{\|g + tf\|^2 - \|g\|^2}t \\
+    \frac{\|g -tf\| - \|g\|}{-t(\|g -tf\| + \|g\|)} \le &\Re \lambda(f) \le \frac{\|g + tf\| - \|g\|}{t(\|g +tf\| + \|g\|)} 
+  \end{align*}
+  We know that $\|g \pm tf\| = \|g\|^2 \pm 2t\Re\langle g, f\rangle + t^2\|f\|^2$ and $\|g\| = 1$ we obtain
+  \[
+    \frac{2t \Re \langle g, f\rangle - t\|f\|^2}{\|g -tf\| + \|g\|} \le \Re \lambda(f) \le \frac{2t \Re \langle g, f\rangle + t\|f\|^2}{\|g +tf\| + \|g\|}
+  \]
+  then for $t \to 0^+$, we get $\Re \lambda(f) = \Re \langle f, g\rangle$
+  % Then doing the differentiation, we get
+
+  % \begin{align*}
+  %   \frac{\|g + tf\| - \|g\|}{t} &= \frac{\|g+tf\|^2 - \|g\|^2}{t\underbrace{(\|g+tf\| + \|g\|)}_{\to 2 = 2\|g\|}}\\
+  %   \frac{\|g + tf\|^2 - \|g\|^2}{t} &= \frac{\|g\|^2 + 2t\Re\langle f, g\rangle + t^2\|f\|^2 - \|g\|^2}{t} = 2\Re\langle f, g\rangle 
+  % \end{align*}
+  % So, $\Re \lambda(f) = \Re \langle f, g\rangle$ 
+  
+  For complex case, we derive
+  \begin{align*}
+    \Im \lambda(f) &= -\Re(i\lambda(f)) \\
+    &= -\Re\lambda(if) = -\Re\langle if, g\rangle = -\Re i\langle f, g\rangle \\
+    &= \Im \langle f, g\rangle
+  \end{align*}
+  Since $\|\lambda\| = 1$, drop the assumption $\|\lambda\| =1$,
+  $\frac{\lambda}{\|\lambda\|}$ then there is a $g$ such that
+  \[\frac{\lambda(f)}{\|\lambda\|} = \langle f,g\rangle \implies \lambda(f) = \langle f, \|\lambda\|g\rangle\]
+  for all $f \in H$.
+\end{proof}
