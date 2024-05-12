@@ -426,6 +426,11 @@ functions of sets of finite measure.
   $L^{p_1}(\NN, \mu_a) \subseteq L^{p_2}(\NN, \mu_a)$ is true.
 \end{problem}
 
+\begin{proof}[solution]
+  For $a > 1$, we have $\mu_a(\NN) < \infty$ then if $p_1 \ge p_2$ then $L^{p_1} \subseteq L^{p_2}$.
+
+\end{proof}
+
 %q2
 \begin{problem}
   Let $b \in \RR$. On $[0, 1]$ (with the Lebesgue $\sigma$-algebra) 
@@ -438,7 +443,7 @@ functions of sets of finite measure.
 \begin{problem}
   Let $f$ be continuous on $[0, 1]$
   \begin{enumerate}[(i)]
-    \item Show that $\lim_{n\to\infty} f(x)\sin(2\pi nx) \ \mathrm{d}x = 0$.
+    \item Show that $\lim_{n\to\infty} \int_0^1f(x)\sin(2\pi nx) \ \mathrm{d}x = 0$.
     \item *Does the limit
     \[\lim_{n\to\infty} \int_0^1 f(x)|\sin(2 \pi nx)|\ \mathrm{d}x\]
     exist? If yes, determine its value.
@@ -446,9 +451,27 @@ functions of sets of finite measure.
   \end{enumerate}
 \end{problem}
 
+\begin{proof}[solution]
+  \begin{enumerate}[(i)]
+    \item Since $f$ is continuous on compact set, there exists $s$ step function such that 
+    \[\int_0^1 |f - g| \ \mathrm{d}x < \frac\eps2\]
+    then
+    \begin{align*}
+      \left|\int_0^1 f\sin(2\pi nx) - s \sin(2\pi nx) \ \mathrm{d}x\right| &\le \int_0^1 |f - s||\sin(2\pi nx)| \ \mathrm{d}x\\
+      \left|\int_0^1 f\sin(2\pi nx) \ \mathrm{d}x\right| - \left|\int_0^1 s\sin(2\pi nx) \ \mathrm{d}x\right| &\le \frac\eps2
+    \end{align*}
+    Want to show that
+    \[\left|\int_0^1 s \sin(2\pi nx) \ \mathrm{d}x\right| < \frac\eps2\]
+    fix one segment $[a, b]$ with $s = c$ for some constant $c$. Let $u = nx$ then
+    \[\left|\int_0^1 s \sin(2\pi nx) \ \mathrm{d}x\right| = \left|\frac sn\int_0^1  \sin(2\pi u) \ \mathrm{d}u\right|\]
+    As $n \to \infty$, $\frac sn \to 0$
+    \item 
+  \end{enumerate} 
+\end{proof}
+
 %q4
 \begin{problem}
-  Let $f \in L^1([0, 2\pi))$.
+  Let $f \in L^1([0, 2\pi])$.
   \begin{enumerate}[(i)]
     \item Prove that
     \[\lim_{n\to\infty} \int_0^{2\pi} f(x) e^{-inx} \ \mathrm{d}x = 0\]
@@ -460,6 +483,24 @@ functions of sets of finite measure.
     that $\lim_{n\to\infty} a_n = 0$ and $\lim_{n\to\infty} b_n = 0$.
   \end{enumerate}
 \end{problem}
+
+\begin{proof}
+  \begin{enumerate}[(i)]
+    \item 
+    \[\lim_{n\to\infty} \int_0^{2\pi} f(x) e^{-inx} \ \mathrm{d}x = \lim_{n\to\infty} \int_0^{2\pi} f(x) (\cos(-nx) + i\sin(-nx)) \ \mathrm{d}x\]
+    Approimate $f$ by step function and use substitution $u = -nx$. we get
+    \[\lim_{n\to\infty} \int_0^{2\pi} f(x) e^{-inx} \ \mathrm{d}x = 0\]
+    \item \begin{align*}
+      \cos^2(nx + \gamma_n) &= \frac12(1 + \cos(2nx + 2\gamma_n))\\
+      &= \frac12(1 + \cos(2nx)\cos(2\gamma_n) - \sin(2nx)\sin(2\gamma_n))\\
+    \end{align*}
+    We konw that 
+    \[\lim_{n\to \infty}\int_E \cos(2nx) \ \mathrm{d}x = \lim_{n\to \infty}\int_E \sin(2nx) \ \mathrm{d}x = 0\]
+    and $|\cos(2\gamma_n)| \le 1, |\sin(2\gamma_n)| \le 1$ then
+    \[\lim_{n\to\infty}\int_E \cos^2(nx + \gamma_n)\ \mathrm{d}x = \int_E \frac12 \ \mathrm{d}x = \frac{m(E)}{2}\]
+    \item 
+  \end{enumerate}
+\end{proof}
 
 %q5
 \begin{problem}
@@ -487,6 +528,18 @@ functions of sets of finite measure.
   Hint: It may help to consider the cases $n=2,3$ first.
 \end{problem}
 
+\begin{proof}[solution]
+  Inductive step:
+  \begin{align*}
+    \int_{\RR^n} \prod_{j=1}^n g_j(\pi_j(x))\ \mathrm{d}x &= \int_{\RR^{n-1}} g_1(\pi_1(x))\left(\int_{\RR} \prod_{j=2}^{n} g_j(\pi_j(x))\ \mathrm{d}x_1\right)\ \mathrm{d}(x_2,\dotsc,x_{n})\\  
+    % &= \int_{\RR^{n-1}} g_1(\pi_1(x))\left(\int_{\RR} \prod_{j=2}^{n} g_j(\pi_j(x))\ \mathrm{d}x_1\right)\ \mathrm{d}(x_2,\dotsc,x_{n})\\
+    &\le \|g_1\|_{L^{n-1}(\RR^{n-1})} \left\|\int_{\RR} \prod_{j=2}^{n} g_j(\pi_j(x))\ \mathrm{d}x_1\right\|_{L^{(n-1)/(n-2)}(\RR^{n-1})} \\
+    &= \|g_1\|_{L^{n-1}(\RR^{n-1})} \left(\int_{\RR^{n-1}}\left|\int_{\RR} \prod_{j=2}^{n} g_j(\pi_j(x))\mathrm{d}x_1\right|^{\frac{n-1}{n-2}}\mathrm{d}(x_2,\dotsc,x_{n})\right)^{\frac{n-2}{n-1}}\\
+    &\le \|g_1\|_{L^{n-1}(\RR^{n-1})} \left(\int_{\RR^{n-1}}\left|\prod_{j=2}^{n} g_j(\pi_j(x))\right|^{\frac{1}{n-2}}\mathrm{d}(x_2,\dotsc,x_{n})\right)^{\frac{n-2}{n-1}}\\
+    &\le \prod_{j=1}^n \|g_j\|_{L^{n-1}(\RR^{n-1})}
+  \end{align*} 
+\end{proof}
+
 %q7
 \begin{problem}
   Let $E \subseteq \RR$ be a Lebesgue measurable set of positive Lebesgue measure, $m(E) > 0$. 
@@ -495,6 +548,12 @@ functions of sets of finite measure.
   Hint: Argue by contradiction and think about the definition of the outer measure
   that determines Lebesgue measure.
 \end{problem}
+
+\begin{proof}[solution]
+  Suppose not, there exists $\beta < 1$ such that for every open interval $I$, $m(E \cap I) \le \beta m(I)$. 
+  There exists $\{J_i\}_{i=1}^\infty$ such that $E \subseteq \bigcup_{i=1}^\infty J_i$ and $\sum_{i=1}^\infty m(J_i) < m(E) + \eps$. 
+  Then $m(E) \le \sum_{i=1}^\infty m(E \cap J_i) \le \beta \sum_{i=1}^\infty m(J_i) < \beta m(E)$, a contradiction.
+\end{proof}
 
 %q8
 \begin{problem}
@@ -536,6 +595,21 @@ functions of sets of finite measure.
     \item Show there exist $t > 0$ and $x$ such that $x, x+t$ and $x+t^2$ belong to $E$.
   \end{enumerate}
 \end{problem}
+\pagebreak
+\begin{proof}[solution]
+  \begin{enumerate}[(i)]
+    \item Similar as Steinhaus' theorem, assuming $E$ is compact, there exists $U$ open set such that
+    \[m(U) < (1+p)m(E)\]
+    select $a$ such that $(N-1)a < \frac12\mathrm{dist}(E, U^\complement)$ then
+    define
+    \[K = \bigcap_{n=0}^{N-1} E-na\]
+    Want to show that $m(K) > 0$ then
+    \[
+      m(K) \ge m(U) - \sum_{n=0}^{N-1} m(U\setminus(E-na)) \ge m(E) - Npm(E) = (1-Np)m(E)
+    \]
+    Select $p$ such that $1-Np > 0$ then $m(K) > 0$.
+  \end{enumerate} 
+\end{proof}
 
 %q10
 \begin{problem}
